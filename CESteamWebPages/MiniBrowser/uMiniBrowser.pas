@@ -42,45 +42,33 @@ unit uMiniBrowser;
 interface
 
 uses
-  {$IFDEF DELPHI16_UP}
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics, Vcl.Menus, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.StdCtrls, Vcl.ExtCtrls, System.Types, Vcl.ComCtrls, Vcl.ClipBrd,
-  System.UITypes, Vcl.AppEvnts, Winapi.ActiveX, Winapi.ShlObj,
-  System.NetEncoding,
-  {$ELSE}
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Menus,
-  Controls, Forms, Dialogs, StdCtrls, ExtCtrls, Types, ComCtrls, ClipBrd,
-  AppEvnts, ActiveX, ShlObj, NetEncoding,
-  {$ENDIF}
-  uCEFChromium, uCEFWindowParent, uCEFInterfaces, uCEFApplication, uCEFTypes,
-  uCEFConstants, uCEFWinControl, uCEFSentinel, uCEFChromiumCore;
+	{$IFDEF DELPHI16_UP}
+	Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+	System.Classes, Vcl.Graphics, Vcl.Menus, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+	Vcl.StdCtrls, Vcl.ExtCtrls, System.Types, Vcl.ComCtrls, Vcl.ClipBrd,
+	System.UITypes, Vcl.AppEvnts, Winapi.ActiveX, Winapi.ShlObj,
+	System.NetEncoding,
+	{$ELSE}
+	Windows, Messages, SysUtils, Variants, Classes, Graphics, Menus,
+	Controls, Forms, Dialogs, StdCtrls, ExtCtrls, Types, ComCtrls, ClipBrd,
+	AppEvnts, ActiveX, ShlObj, NetEncoding,
+	{$ENDIF}
+	uCEFChromium, uCEFWindowParent, uCEFInterfaces, uCEFApplication, uCEFTypes,
+	uCEFConstants, uCEFWinControl, uCEFSentinel, uCEFChromiumCore;
 
 const
-  MINIBROWSER_SHOWDEVTOOLS     = WM_APP + $101;
-  MINIBROWSER_HIDEDEVTOOLS     = WM_APP + $102;
-  MINIBROWSER_COPYHTML         = WM_APP + $103;
-  MINIBROWSER_SHOWRESPONSE     = WM_APP + $104;
-  MINIBROWSER_COPYFRAMEIDS     = WM_APP + $105;
-  MINIBROWSER_COPYFRAMENAMES   = WM_APP + $106;
-  MINIBROWSER_SAVEPREFERENCES  = WM_APP + $107;
-  MINIBROWSER_COPYALLTEXT      = WM_APP + $108;
-  MINIBROWSER_TAKESNAPSHOT     = WM_APP + $109;
-  MINIBROWSER_SHOWNAVIGATION   = WM_APP + $10A;
-  MINIBROWSER_COOKIESFLUSHED   = WM_APP + $10B;
-  MINIBROWSER_PDFPRINT_END     = WM_APP + $10C;
-  MINIBROWSER_PREFS_AVLBL      = WM_APP + $10D;
-  MINIBROWSER_DTDATA_AVLBL     = WM_APP + $10E;
-
-  MINIBROWSER_HOMEPAGE = 'https://steamcommunity.com/sharedfiles/filedetails/?id=2193453594';
+	MINIBROWSER_SHOWRESPONSE     = WM_APP + $104;
+	MINIBROWSER_SHOWNAVIGATION   = WM_APP + $10A;
+	MINIBROWSER_COOKIESFLUSHED   = WM_APP + $10B;
+	MINIBROWSER_HOMEPAGE = 'https://steamcommunity.com/sharedfiles/filedetails/?id=2193453594';
 
 type
-  TMiniBrowserFrm = class(TForm)
-    NavControlPnl: TPanel;
-    NavButtonPnl: TPanel;
-    URLEditPnl: TPanel;
-    CEFWindowParent1: TCEFWindowParent;
-    Chromium1: TChromium;
+	TMiniBrowserFrm = class(TForm)
+		NavControlPnl: TPanel;
+		NavButtonPnl: TPanel;
+		URLEditPnl: TPanel;
+		CEFWindowParent1: TCEFWindowParent;
+		Chromium1: TChromium;
     DevTools: TCEFWindowParent;
     StatusBar1: TStatusBar;
     ApplicationEvents1: TApplicationEvents;
@@ -98,7 +86,6 @@ type
     procedure Chromium1LoadingStateChange(Sender: TObject; const browser: ICefBrowser; isLoading, canGoBack, canGoForward: Boolean);
     procedure Chromium1TitleChange(Sender: TObject; const browser: ICefBrowser; const title: ustring);
     procedure Chromium1StatusMessage(Sender: TObject; const browser: ICefBrowser; const value: ustring);
-    procedure Chromium1FullScreenModeChange(Sender: TObject; const browser: ICefBrowser; fullscreen: Boolean);
     procedure Chromium1PreKeyEvent(Sender: TObject; const browser: ICefBrowser; const event: PCefKeyEvent; osEvent: TCefEventHandle; out isKeyboardShortcut, Result: Boolean);
     procedure Chromium1KeyEvent(Sender: TObject; const browser: ICefBrowser; const event: PCefKeyEvent; osEvent: TCefEventHandle; out Result: Boolean);
     procedure Chromium1BeforeResourceLoad(Sender: TObject; const browser: ICefBrowser; const frame: ICefFrame; const request: ICefRequest; const callback: ICefRequestCallback; out Result: TCefReturnValue);
@@ -115,12 +102,9 @@ type
     procedure Inczoom1Click(Sender: TObject);
     procedure Deczoom1Click(Sender: TObject);
     procedure Resetzoom1Click(Sender: TObject);
-    procedure Simulatekeyboardpresses1Click(Sender: TObject);
     procedure Flushcookies1Click(Sender: TObject);
-    procedure Acceptlanguage1Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure Clearcache1Click(Sender: TObject);
-    procedure Useragent1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
 
   protected
@@ -136,15 +120,15 @@ type
     procedure HandleKeyUp(const aMsg : TMsg; var aHandled : boolean);
     procedure HandleKeyDown(const aMsg : TMsg; var aHandled : boolean);
 
-    procedure InspectRequest(const aRequest : ICefRequest);
+
     procedure InspectResponse(const aResponse : ICefResponse);
 
     procedure BrowserCreatedMsg(var aMessage : TMessage); message CEF_AFTERCREATED;
     procedure BrowserDestroyMsg(var aMessage : TMessage); message CEF_DESTROY;
 
-    procedure ShowResponseMsg(var aMessage : TMessage); message MINIBROWSER_SHOWRESPONSE;
-    procedure ShowNavigationMsg(var aMessage : TMessage); message MINIBROWSER_SHOWNAVIGATION;
-    procedure CookiesFlushedMsg(var aMessage : TMessage); message MINIBROWSER_COOKIESFLUSHED;
+		procedure ShowResponseMsg(var aMessage : TMessage); message MINIBROWSER_SHOWRESPONSE;
+		procedure ShowNavigationMsg(var aMessage : TMessage); message MINIBROWSER_SHOWNAVIGATION;
+		procedure CookiesFlushedMsg(var aMessage : TMessage); message MINIBROWSER_COOKIESFLUSHED;
 
 
 
@@ -239,11 +223,8 @@ procedure TMiniBrowserFrm.Chromium1BeforeResourceLoad(Sender: TObject;
 begin
   Result := RV_CONTINUE;
 
-  if Chromium1.IsSameBrowser(browser) and
-     (frame <> nil) and
-     frame.IsMain and
-     frame.IsValid then
-    InspectRequest(request);
+
+
 end;
 
 procedure TMiniBrowserFrm.Chromium1CertificateError(Sender: TObject;
@@ -281,40 +262,7 @@ end;
 
 
 
-procedure TMiniBrowserFrm.Chromium1FullScreenModeChange(Sender: TObject;
-  const browser: ICefBrowser; fullscreen: Boolean);
-begin                    
-  if not(Chromium1.IsSameBrowser(browser)) then exit;
 
-  // This event is executed in a CEF thread and this can cause problems when
-  // you change the 'Enabled' and 'Visible' properties from VCL components.
-  // It's recommended to change the 'Enabled' and 'Visible' properties
-  // in the main application thread and not in a CEF thread.
-  // It's much safer to use PostMessage to send a message to the main form with
-  // all this information and update those properties in the procedure handling
-  // that message.
-
-  if fullscreen then
-    begin
-      NavControlPnl.Visible := False;
-      StatusBar1.Visible    := False;
-
-      if (WindowState = wsMaximized) then WindowState := wsNormal;
-
-      BorderIcons := [];
-      BorderStyle := bsNone;
-      WindowState := wsMaximized;
-    end
-   else
-    begin
-      BorderIcons := [biSystemMenu, biMinimize, biMaximize];
-      BorderStyle := bsSizeable;
-      WindowState := wsNormal;
-
-      NavControlPnl.Visible := True;
-      StatusBar1.Visible    := True;
-    end;
-end;
 
 procedure TMiniBrowserFrm.Chromium1KeyEvent(Sender: TObject;
   const browser: ICefBrowser; const event: PCefKeyEvent; osEvent: TCefEventHandle;
@@ -361,15 +309,8 @@ begin
   TempMessage.lParam  := aMsg.lParam;
   TempKeyMsg          := TWMKey(TempMessage);
 
-  if (TempKeyMsg.CharCode = VK_F12) then
-    begin
-      aHandled := True;
 
-      if DevTools.Visible then
-        PostMessage(Handle, MINIBROWSER_HIDEDEVTOOLS, 0, 0)
-       else
-        PostMessage(Handle, MINIBROWSER_SHOWDEVTOOLS, 0, 0);
-    end;
+
 end;
 
 procedure TMiniBrowserFrm.HandleKeyDown(const aMsg : TMsg; var aHandled : boolean);
@@ -396,9 +337,9 @@ begin
   if Chromium1.IsSameBrowser(browser) then
     begin
       if frame.IsMain then
-        StatusBar1.Panels[1].Text := 'main frame loaded : ' + quotedstr(frame.name)
-       else
-        StatusBar1.Panels[1].Text := 'frame loaded : ' + quotedstr(frame.name);
+		 //   StatusBar1.Panels[1].Text := 'main frame loaded : ' + quotedstr(frame.name)
+			 else
+      //  StatusBar1.Panels[1].Text := 'frame loaded : ' + quotedstr(frame.name);
     end
    else
     begin
@@ -451,7 +392,7 @@ begin
     end
    else
     begin
-      StatusBar1.Panels[0].Text := 'Finished';
+      StatusBar1.Panels[0].Text := 'Done';
     end;
 end;
 
@@ -482,28 +423,6 @@ begin
     isKeyboardShortcut := True;
 end;
 
-procedure TMiniBrowserFrm.InspectRequest(const aRequest : ICefRequest);
-var
-  TempHeaderMap : ICefStringMultimap;
-  i, j : integer;
-begin
-  if (aRequest <> nil) then
-    begin
-      FRequest.Clear;
-
-      TempHeaderMap := TCefStringMultimapOwn.Create;
-      aRequest.GetHeaderMap(TempHeaderMap);
-
-      i := 0;
-      j := TempHeaderMap.Size;
-
-      while (i < j) do
-        begin
-          FRequest.Add(TempHeaderMap.Key[i] + '=' + TempHeaderMap.Value[i]);
-          inc(i);
-        end;
-    end;
-end;
 
 procedure TMiniBrowserFrm.InspectResponse(const aResponse : ICefResponse);
 var
@@ -534,39 +453,7 @@ begin
   if not(FClosing) then StatusBar1.Panels[1].Text := aText;
 end;
 
-procedure TMiniBrowserFrm.Simulatekeyboardpresses1Click(Sender: TObject);
-const
-  SIMULATED_KEY_PRESSES = 'QWERTY';
-var
-  i : integer;
-  TempKeyEvent : TCefKeyEvent;
-begin
-  // This procedure is extremely simplified.
-  // Use the SimpleOSRBrowser demo to log the real TCefKeyEvent values
-  // if you use anything different than uppercase letters.
 
-  for i := 1 to length(SIMULATED_KEY_PRESSES) do
-    begin
-      // WM_KEYDOWN
-      TempKeyEvent.kind                    := KEYEVENT_RAWKEYDOWN;
-      TempKeyEvent.modifiers               := 0;
-      TempKeyEvent.windows_key_code        := ord(SIMULATED_KEY_PRESSES[i]);
-      TempKeyEvent.native_key_code         := 0;
-      TempKeyEvent.is_system_key           := ord(False);
-      TempKeyEvent.character               := #0;
-      TempKeyEvent.unmodified_character    := #0;
-      TempKeyEvent.focus_on_editable_field := ord(False);
-      Chromium1.SendKeyEvent(@TempKeyEvent);
-
-      // WM_CHAR
-      TempKeyEvent.kind := KEYEVENT_CHAR;
-      Chromium1.SendKeyEvent(@TempKeyEvent);
-
-      // WM_KEYUP
-      TempKeyEvent.kind := KEYEVENT_KEYUP;
-      Chromium1.SendKeyEvent(@TempKeyEvent);
-    end;
-end;
 
 
 procedure TMiniBrowserFrm.Chromium1StatusMessage(Sender: TObject;
@@ -580,10 +467,10 @@ procedure TMiniBrowserFrm.Chromium1TitleChange(Sender: TObject;
 begin
   if not(Chromium1.IsSameBrowser(browser)) then exit;
 
-  if (title <> '') then
-    caption := 'MiniBrowser - ' + title
-   else
-    caption := 'MiniBrowser';
+	if (title <> '') then
+		caption := title
+	 else
+		caption := 'Conan Exiles Mod Manager';
 end;
 
 procedure TMiniBrowserFrm.Chromium1ZoomPctAvailable(Sender: TObject;
@@ -669,15 +556,6 @@ begin
     Timer1.Enabled := True;
 end;
 
-procedure TMiniBrowserFrm.Useragent1Click(Sender: TObject);
-var
-  TempUA : string;
-begin
-  TempUA := inputbox('MiniBrowser demo', 'Set new user agent string', '');
-
-  if (length(TempUA) > 0) then
-    Chromium1.SetUserAgentOverride(TempUA);
-end;
 
 procedure TMiniBrowserFrm.BrowserCreatedMsg(var aMessage : TMessage);
 begin
@@ -696,21 +574,6 @@ begin
 Chromium1.LoadURL('https://steamcommunity.com/sharedfiles/filedetails/?id=2384014945');
 
 end;
-
-procedure TMiniBrowserFrm.Acceptlanguage1Click(Sender: TObject);
-var
-  TempLanguageList : ustring;
-begin
-  TempLanguageList := Chromium1.AcceptLanguageList;
-  if (length(TempLanguageList) = 0) then TempLanguageList := Chromium1.Options.AcceptLanguageList;
-  if (length(TempLanguageList) = 0) then TempLanguageList := GlobalCEFApp.AcceptLanguageList;
-
-  Chromium1.AcceptLanguageList := InputBox('Language', 'Accept language list', TempLanguageList);
-end;
-
-
-
-
 
 procedure TMiniBrowserFrm.Inczoom1Click(Sender: TObject);
 begin

@@ -46,7 +46,6 @@ object MiniBrowserFrm: TMiniBrowserFrm
       Padding.Top = 9
       Padding.Bottom = 8
       TabOrder = 1
-      ExplicitWidth = 978
       object Button1: TButton
         Left = 456
         Top = 10
@@ -66,7 +65,6 @@ object MiniBrowserFrm: TMiniBrowserFrm
     Align = alClient
     TabStop = True
     TabOrder = 0
-    ExplicitLeft = -6
   end
   object DevTools: TCEFWindowParent
     Left = 1184
@@ -106,7 +104,6 @@ object MiniBrowserFrm: TMiniBrowserFrm
     OnPreKeyEvent = Chromium1PreKeyEvent
     OnKeyEvent = Chromium1KeyEvent
     OnTitleChange = Chromium1TitleChange
-    OnFullScreenModeChange = Chromium1FullScreenModeChange
     OnStatusMessage = Chromium1StatusMessage
     OnLoadingProgressChange = Chromium1LoadingProgressChange
     OnAfterCreated = Chromium1AfterCreated
