@@ -39,31 +39,23 @@ object MiniBrowserFrm: TMiniBrowserFrm
     object URLEditPnl: TPanel
       Left = 133
       Top = 0
-      Width = 978
+      Width = 1051
       Height = 41
       Align = alClient
       BevelOuter = bvNone
       Padding.Top = 9
       Padding.Bottom = 8
       TabOrder = 1
-      ExplicitLeft = 139
+      ExplicitWidth = 978
       object Button1: TButton
         Left = 456
-        Top = 8
+        Top = 10
         Width = 75
         Height = 25
         Caption = 'Button1'
         TabOrder = 0
+        OnClick = Button1Click
       end
-    end
-    object ConfigPnl: TPanel
-      Left = 1111
-      Top = 0
-      Width = 73
-      Height = 41
-      Align = alRight
-      BevelOuter = bvNone
-      TabOrder = 2
     end
   end
   object CEFWindowParent1: TCEFWindowParent
@@ -74,7 +66,7 @@ object MiniBrowserFrm: TMiniBrowserFrm
     Align = alClient
     TabStop = True
     TabOrder = 0
-    ExplicitWidth = 1179
+    ExplicitLeft = -6
   end
   object DevTools: TCEFWindowParent
     Left = 1184
@@ -105,18 +97,12 @@ object MiniBrowserFrm: TMiniBrowserFrm
       end>
   end
   object Chromium1: TChromium
-    OnTextResultAvailable = Chromium1TextResultAvailable
-    OnPdfPrintFinished = Chromium1PdfPrintFinished
-    OnPrefsAvailable = Chromium1PrefsAvailable
-    OnResolvedHostAvailable = Chromium1ResolvedHostAvailable
     OnNavigationVisitorResultAvailable = Chromium1NavigationVisitorResultAvailable
     OnCookiesFlushed = Chromium1CookiesFlushed
     OnZoomPctAvailable = Chromium1ZoomPctAvailable
-    OnRenderCompMsg = Chromium1RenderCompMsg
     OnLoadEnd = Chromium1LoadEnd
     OnLoadError = Chromium1LoadError
     OnLoadingStateChange = Chromium1LoadingStateChange
-    OnContextMenuCommand = Chromium1ContextMenuCommand
     OnPreKeyEvent = Chromium1PreKeyEvent
     OnKeyEvent = Chromium1KeyEvent
     OnTitleChange = Chromium1TitleChange
@@ -128,7 +114,6 @@ object MiniBrowserFrm: TMiniBrowserFrm
     OnClose = Chromium1Close
     OnCertificateError = Chromium1CertificateError
     OnBeforeResourceLoad = Chromium1BeforeResourceLoad
-    OnResourceResponse = Chromium1ResourceResponse
     OnBeforePluginLoad = Chromium1BeforePluginLoad
     Left = 32
     Top = 224

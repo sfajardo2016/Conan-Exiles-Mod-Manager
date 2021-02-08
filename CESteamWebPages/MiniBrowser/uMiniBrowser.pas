@@ -72,22 +72,7 @@ const
   MINIBROWSER_PREFS_AVLBL      = WM_APP + $10D;
   MINIBROWSER_DTDATA_AVLBL     = WM_APP + $10E;
 
-  MINIBROWSER_HOMEPAGE = 'https://www.google.com';
-
-  MINIBROWSER_CONTEXTMENU_SHOWDEVTOOLS    = MENU_ID_USER_FIRST + 1;
-  MINIBROWSER_CONTEXTMENU_HIDEDEVTOOLS    = MENU_ID_USER_FIRST + 2;
-  MINIBROWSER_CONTEXTMENU_COPYHTML        = MENU_ID_USER_FIRST + 3;
-  MINIBROWSER_CONTEXTMENU_JSWRITEDOC      = MENU_ID_USER_FIRST + 4;
-  MINIBROWSER_CONTEXTMENU_JSPRINTDOC      = MENU_ID_USER_FIRST + 5;
-  MINIBROWSER_CONTEXTMENU_SHOWRESPONSE    = MENU_ID_USER_FIRST + 6;
-  MINIBROWSER_CONTEXTMENU_COPYFRAMEIDS    = MENU_ID_USER_FIRST + 7;
-  MINIBROWSER_CONTEXTMENU_COPYFRAMENAMES  = MENU_ID_USER_FIRST + 8;
-  MINIBROWSER_CONTEXTMENU_SAVEPREFERENCES = MENU_ID_USER_FIRST + 9;
-  MINIBROWSER_CONTEXTMENU_COPYALLTEXT     = MENU_ID_USER_FIRST + 10;
-  MINIBROWSER_CONTEXTMENU_TAKESNAPSHOT    = MENU_ID_USER_FIRST + 11;
-  MINIBROWSER_CONTEXTMENU_GETNAVIGATION   = MENU_ID_USER_FIRST + 12;
-  MINIBROWSER_CONTEXTMENU_MUTEAUDIO       = MENU_ID_USER_FIRST + 13;
-  MINIBROWSER_CONTEXTMENU_UNMUTEAUDIO     = MENU_ID_USER_FIRST + 14;
+  MINIBROWSER_HOMEPAGE = 'https://steamcommunity.com/sharedfiles/filedetails/?id=2193453594';
 
 type
   TMiniBrowserFrm = class(TForm)
@@ -98,7 +83,6 @@ type
     Chromium1: TChromium;
     DevTools: TCEFWindowParent;
     StatusBar1: TStatusBar;
-    ConfigPnl: TPanel;
     ApplicationEvents1: TApplicationEvents;
     Timer1: TTimer;
     Button1: TButton;
@@ -114,19 +98,12 @@ type
     procedure Chromium1LoadingStateChange(Sender: TObject; const browser: ICefBrowser; isLoading, canGoBack, canGoForward: Boolean);
     procedure Chromium1TitleChange(Sender: TObject; const browser: ICefBrowser; const title: ustring);
     procedure Chromium1StatusMessage(Sender: TObject; const browser: ICefBrowser; const value: ustring);
-    procedure Chromium1TextResultAvailable(Sender: TObject; const aText: ustring);
     procedure Chromium1FullScreenModeChange(Sender: TObject; const browser: ICefBrowser; fullscreen: Boolean);
     procedure Chromium1PreKeyEvent(Sender: TObject; const browser: ICefBrowser; const event: PCefKeyEvent; osEvent: TCefEventHandle; out isKeyboardShortcut, Result: Boolean);
     procedure Chromium1KeyEvent(Sender: TObject; const browser: ICefBrowser; const event: PCefKeyEvent; osEvent: TCefEventHandle; out Result: Boolean);
-    procedure Chromium1ContextMenuCommand(Sender: TObject; const browser: ICefBrowser; const frame: ICefFrame; const params: ICefContextMenuParams; commandId: Integer; eventFlags: Cardinal; out Result: Boolean);
-    procedure Chromium1PdfPrintFinished(Sender: TObject; aResultOK: Boolean);
-    procedure Chromium1ResourceResponse(Sender: TObject; const browser: ICefBrowser; const frame: ICefFrame; const request: ICefRequest; const response: ICefResponse; out Result: Boolean);
-    procedure Chromium1ResolvedHostAvailable(Sender: TObject; result: Integer; const resolvedIps: TStrings);
-    procedure Chromium1PrefsAvailable(Sender: TObject; aResultOK: Boolean);
     procedure Chromium1BeforeResourceLoad(Sender: TObject; const browser: ICefBrowser; const frame: ICefFrame; const request: ICefRequest; const callback: ICefRequestCallback; out Result: TCefReturnValue);
     procedure Chromium1Close(Sender: TObject; const browser: ICefBrowser; var aAction : TCefCloseBrowserAction);
     procedure Chromium1BeforeClose(Sender: TObject; const browser: ICefBrowser);
-    procedure Chromium1RenderCompMsg(Sender: TObject; var aMessage : TMessage; var aHandled: Boolean);
     procedure Chromium1LoadingProgressChange(Sender: TObject; const browser: ICefBrowser; const progress: Double);
     procedure Chromium1LoadEnd(Sender: TObject; const browser: ICefBrowser; const frame: ICefFrame; httpStatusCode: Integer);
     procedure Chromium1LoadError(Sender: TObject; const browser: ICefBrowser; const frame: ICefFrame; errorCode: Integer; const errorText, failedUrl: ustring);
@@ -138,18 +115,15 @@ type
     procedure Inczoom1Click(Sender: TObject);
     procedure Deczoom1Click(Sender: TObject);
     procedure Resetzoom1Click(Sender: TObject);
-    procedure Resolvehost1Click(Sender: TObject);
     procedure Simulatekeyboardpresses1Click(Sender: TObject);
     procedure Flushcookies1Click(Sender: TObject);
     procedure Acceptlanguage1Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure Clearcache1Click(Sender: TObject);
     procedure Useragent1Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
 
   protected
-    FDevToolsMsgID    : integer;
-    FScreenshotMsgID  : integer;
-    FDevToolsMsgValue : ustring;
 
     FResponse   : TStringList;
     FRequest    : TStringList;
@@ -219,14 +193,6 @@ end;
 procedure TMiniBrowserFrm.Resetzoom1Click(Sender: TObject);
 begin
   Chromium1.ResetZoomStep;
-end;
-
-procedure TMiniBrowserFrm.Resolvehost1Click(Sender: TObject);
-var
-  TempURL : string;
-begin
-  TempURL := inputbox('Resolve host', 'URL :', 'http://google.com');
-  if (length(TempURL) > 0) then Chromium1.ResolveHost(TempURL);
 end;
 
 procedure TMiniBrowserFrm.Chromium1AfterCreated(Sender: TObject; const browser: ICefBrowser);
@@ -301,89 +267,7 @@ begin
     end;
 end;
 
-procedure TMiniBrowserFrm.Chromium1ContextMenuCommand(Sender: TObject;
-  const browser: ICefBrowser; const frame: ICefFrame;
-  const params: ICefContextMenuParams; commandId: Integer;
-  eventFlags: Cardinal; out Result: Boolean);
-var
-  TempParam : WParam;
-  TempInfo : TCefWindowInfo;
-  TempClient : ICefClient;
-  TempSettings : TCefBrowserSettings;
-begin
-  Result := False;
 
-  if Chromium1.IsSameBrowser(browser) then
-    case commandId of
-      MINIBROWSER_CONTEXTMENU_HIDEDEVTOOLS :
-        PostMessage(Handle, MINIBROWSER_HIDEDEVTOOLS, 0, 0);
-
-      MINIBROWSER_CONTEXTMENU_SHOWDEVTOOLS :
-        begin
-          TempParam := ((params.XCoord and $FFFF) shl 16) or (params.YCoord and $FFFF);
-          PostMessage(Handle, MINIBROWSER_SHOWDEVTOOLS, TempParam, 0);
-        end;
-
-      MINIBROWSER_CONTEXTMENU_COPYALLTEXT :
-        PostMessage(Handle, MINIBROWSER_COPYALLTEXT, 0, 0);
-
-      MINIBROWSER_CONTEXTMENU_COPYHTML :
-        PostMessage(Handle, MINIBROWSER_COPYHTML, 0, 0);
-
-      MINIBROWSER_CONTEXTMENU_COPYFRAMEIDS :
-        PostMessage(Handle, MINIBROWSER_COPYFRAMEIDS, 0, 0);
-
-      MINIBROWSER_CONTEXTMENU_COPYFRAMENAMES :
-        PostMessage(Handle, MINIBROWSER_COPYFRAMENAMES, 0, 0);
-
-      MINIBROWSER_CONTEXTMENU_SHOWRESPONSE :
-        PostMessage(Handle, MINIBROWSER_SHOWRESPONSE, 0, 0);
-
-      MINIBROWSER_CONTEXTMENU_SAVEPREFERENCES :
-        PostMessage(Handle, MINIBROWSER_SAVEPREFERENCES, 0, 0);
-
-      MINIBROWSER_CONTEXTMENU_TAKESNAPSHOT :
-        PostMessage(Handle, MINIBROWSER_TAKESNAPSHOT, 0, 0);
-
-      MINIBROWSER_CONTEXTMENU_GETNAVIGATION :
-        begin
-          FNavigation.Clear;
-          Chromium1.GetNavigationEntries(False);
-        end;
-
-      MINIBROWSER_CONTEXTMENU_JSWRITEDOC :
-        if (frame <> nil) and frame.IsValid then
-          frame.ExecuteJavaScript(
-            'var css = ' + chr(39) + '@page {size: A4; margin: 0;} @media print {html, body {width: 210mm; height: 297mm;}}' + chr(39) + '; ' +
-            'var style = document.createElement(' + chr(39) + 'style' + chr(39) + '); ' +
-            'style.type = ' + chr(39) + 'text/css' + chr(39) + '; ' +
-            'style.appendChild(document.createTextNode(css)); ' +
-            'document.head.appendChild(style);',
-            'about:blank', 0);
-
-      MINIBROWSER_CONTEXTMENU_JSPRINTDOC :
-        if (frame <> nil) and frame.IsValid then
-          frame.ExecuteJavaScript('window.print();', 'about:blank', 0);
-
-      MINIBROWSER_CONTEXTMENU_UNMUTEAUDIO :
-        Chromium1.AudioMuted := False;
-
-      MINIBROWSER_CONTEXTMENU_MUTEAUDIO :
-        Chromium1.AudioMuted := True;
-    end
-   else
-    case commandId of
-      MINIBROWSER_CONTEXTMENU_SHOWDEVTOOLS :
-        try
-          WindowInfoAsPopUp(TempInfo, browser.Host.WindowHandle, 'DevTools');
-          TempClient := TCustomClientHandler.Create(Chromium1, True);
-          FillChar(TempSettings, SizeOf(TCefBrowserSettings), 0);
-          browser.Host.ShowDevTools(@TempInfo, TempClient, @TempSettings, nil);
-        finally
-          TempClient := nil
-        end;
-    end;
-end;
 
 procedure TMiniBrowserFrm.Chromium1CookiesFlushed(Sender: TObject);
 begin
@@ -586,16 +470,6 @@ begin
     end;
 end;
 
-procedure TMiniBrowserFrm.Chromium1PdfPrintFinished(Sender: TObject; aResultOK: Boolean);
-begin
-  PostMessage(Handle, MINIBROWSER_PDFPRINT_END, 0, LPARAM(aResultOK));
-end;
-
-procedure TMiniBrowserFrm.Chromium1PrefsAvailable(Sender: TObject; aResultOK: Boolean);
-begin
-  PostMessage(Handle, MINIBROWSER_PREFS_AVLBL, 0, LPARAM(aResultOK));
-end;
-
 procedure TMiniBrowserFrm.Chromium1PreKeyEvent(Sender: TObject;
   const browser: ICefBrowser; const event: PCefKeyEvent; osEvent: TCefEventHandle;
   out isKeyboardShortcut, Result: Boolean);
@@ -606,25 +480,6 @@ begin
      (event.kind in [KEYEVENT_KEYDOWN, KEYEVENT_KEYUP]) and
      (event.windows_key_code = VK_F12) then
     isKeyboardShortcut := True;
-end;
-
-procedure TMiniBrowserFrm.Chromium1RenderCompMsg(Sender: TObject; var aMessage : TMessage; var aHandled: Boolean);
-begin
-  if not(FClosing) and (aMessage.Msg = WM_MOUSEMOVE) then
-    begin
-      StatusBar1.Panels[2].Text := 'x : ' + inttostr(aMessage.lParam and $FFFF);
-      StatusBar1.Panels[3].Text := 'y : ' + inttostr((aMessage.lParam and $FFFF0000) shr 16);
-    end;
-end;
-
-procedure TMiniBrowserFrm.Chromium1ResolvedHostAvailable(Sender: TObject;
-  result: Integer; const resolvedIps: TStrings);
-begin
-  if (result = ERR_NONE) then
-    showmessage('Resolved IPs : ' + resolvedIps.CommaText)
-   else
-    showmessage('There was a problem resolving the host.' + CRLF +
-                'Error code : ' + inttostr(result));
 end;
 
 procedure TMiniBrowserFrm.InspectRequest(const aRequest : ICefRequest);
@@ -674,20 +529,6 @@ begin
 end;
 
 
-procedure TMiniBrowserFrm.Chromium1ResourceResponse(Sender: TObject;
-  const browser: ICefBrowser; const frame: ICefFrame;
-  const request: ICefRequest; const response: ICefResponse;
-  out Result: Boolean);
-begin
-  Result := False;
-
-  if Chromium1.IsSameBrowser(browser) and
-     (frame <> nil) and
-     frame.IsMain and
-     frame.IsValid then
-    InspectResponse(response);
-end;
-
 procedure TMiniBrowserFrm.ShowStatusText(const aText : string);
 begin
   if not(FClosing) then StatusBar1.Panels[1].Text := aText;
@@ -732,11 +573,6 @@ procedure TMiniBrowserFrm.Chromium1StatusMessage(Sender: TObject;
   const browser: ICefBrowser; const value: ustring);
 begin
   if Chromium1.IsSameBrowser(browser) then ShowStatusText(value);
-end;
-
-procedure TMiniBrowserFrm.Chromium1TextResultAvailable(Sender: TObject; const aText: ustring);
-begin
-  clipboard.AsText := aText;
 end;
 
 procedure TMiniBrowserFrm.Chromium1TitleChange(Sender: TObject;
@@ -791,7 +627,7 @@ begin
   FRequest             := TStringList.Create;
   FNavigation          := TStringList.Create;
 
-  FDevToolsMsgID       := 0;
+
 
   // The MultiBrowserMode store all the browser references in TChromium.
   // The first browser reference is the browser in the main form.
@@ -852,6 +688,13 @@ end;
 procedure TMiniBrowserFrm.BrowserDestroyMsg(var aMessage : TMessage);
 begin
   FreeAndNil(CEFWindowParent1);
+end;
+
+procedure TMiniBrowserFrm.Button1Click(Sender: TObject);
+begin
+
+Chromium1.LoadURL('https://steamcommunity.com/sharedfiles/filedetails/?id=2384014945');
+
 end;
 
 procedure TMiniBrowserFrm.Acceptlanguage1Click(Sender: TObject);
