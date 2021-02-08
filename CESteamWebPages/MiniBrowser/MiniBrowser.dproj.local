@@ -1,2 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject/>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2021/02/08 14:42:57.883,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CESteamWebPages\MiniBrowser\uSimpleTextViewer.pas=</Transaction>
+  </Transactions>
+</BorlandProject>

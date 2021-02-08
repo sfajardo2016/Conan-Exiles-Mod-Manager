@@ -41,17 +41,15 @@ program MiniBrowser;
 {$I cef.inc}
 
 uses
-  {$IFDEF DELPHI16_UP}
-  WinApi.Windows,
-  Vcl.Forms,
-  {$ELSE}
-  Forms,
+	Vcl.Forms,
+	{$IFDEF DELPHI16_UP}
+	WinApi.Windows,
+	{$ELSE}
   Windows,
   {$ENDIF }
   uCEFApplication,
   uMiniBrowser in 'uMiniBrowser.pas' {MiniBrowserFrm},
   uPreferences in 'uPreferences.pas' {PreferencesFrm},
-  uSimpleTextViewer in 'uSimpleTextViewer.pas' {SimpleTextViewerFrm},
   uFindFrm in 'uFindFrm.pas' {FindFrm};
 
 {$R *.res}
@@ -63,15 +61,14 @@ begin
 
   if GlobalCEFApp.StartMainProcess then
     begin
-      Application.Initialize;
+			Application.Initialize;
       {$IFDEF DELPHI11_UP}
-      Application.MainFormOnTaskbar := True;
+			Application.MainFormOnTaskbar := True;
       {$ENDIF}
       Application.CreateForm(TMiniBrowserFrm, MiniBrowserFrm);
-      Application.CreateForm(TPreferencesFrm, PreferencesFrm);
-      Application.CreateForm(TSimpleTextViewerFrm, SimpleTextViewerFrm);
-      Application.CreateForm(TFindFrm, FindFrm);
-      Application.Run;
+  Application.CreateForm(TPreferencesFrm, PreferencesFrm);
+  Application.CreateForm(TFindFrm, FindFrm);
+  Application.Run;
     end;
 
   DestroyGlobalCEFApp;

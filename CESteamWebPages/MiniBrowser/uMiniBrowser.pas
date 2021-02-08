@@ -126,8 +126,8 @@ type
     procedure BrowserCreatedMsg(var aMessage : TMessage); message CEF_AFTERCREATED;
     procedure BrowserDestroyMsg(var aMessage : TMessage); message CEF_DESTROY;
 
-		procedure ShowResponseMsg(var aMessage : TMessage); message MINIBROWSER_SHOWRESPONSE;
-		procedure ShowNavigationMsg(var aMessage : TMessage); message MINIBROWSER_SHOWNAVIGATION;
+
+
 		procedure CookiesFlushedMsg(var aMessage : TMessage); message MINIBROWSER_COOKIESFLUSHED;
 
 
@@ -152,8 +152,12 @@ implementation
 {$R *.dfm}
 
 uses
-  uPreferences, uCefStringMultimap, uCEFMiscFunctions, uSimpleTextViewer,
-  uCEFClient, uFindFrm, uCEFDictionaryValue;
+	uPreferences, uCefStringMultimap, uCEFMiscFunctions,
+	uCEFClient, uFindFrm, uCEFDictionaryValue, uSimpleTextViewer;
+
+
+	//  uSimpleTextViewer,
+
 
 // Destruction steps
 // =================
@@ -585,32 +589,6 @@ end;
 
 
 
-
-procedure TMiniBrowserFrm.ShowResponseMsg(var aMessage : TMessage);
-begin
-  SimpleTextViewerFrm.Memo1.Lines.Clear;
-
-  SimpleTextViewerFrm.Memo1.Lines.Add('--------------------------');
-  SimpleTextViewerFrm.Memo1.Lines.Add('Request headers : ');
-  SimpleTextViewerFrm.Memo1.Lines.Add('--------------------------');
-  if (FRequest <> nil) then SimpleTextViewerFrm.Memo1.Lines.AddStrings(FRequest);
-
-  SimpleTextViewerFrm.Memo1.Lines.Add('');
-
-  SimpleTextViewerFrm.Memo1.Lines.Add('--------------------------');
-  SimpleTextViewerFrm.Memo1.Lines.Add('Response headers : ');
-  SimpleTextViewerFrm.Memo1.Lines.Add('--------------------------');
-  if (FResponse <> nil) then SimpleTextViewerFrm.Memo1.Lines.AddStrings(FResponse);
-
-  SimpleTextViewerFrm.ShowModal;
-end;
-
-procedure TMiniBrowserFrm.ShowNavigationMsg(var aMessage : TMessage);
-begin
-  SimpleTextViewerFrm.Memo1.Lines.Clear;
-  SimpleTextViewerFrm.Memo1.Lines.AddStrings(FNavigation);
-  SimpleTextViewerFrm.ShowModal;
-end;
 
 
 
