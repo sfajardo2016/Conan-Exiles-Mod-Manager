@@ -41,16 +41,14 @@ program MiniBrowser;
 {$I cef.inc}
 
 uses
-	Vcl.Forms,
-	{$IFDEF DELPHI16_UP}
-	WinApi.Windows,
-	{$ELSE}
+  Vcl.Forms,
+  {$IFDEF DELPHI16_UP}
+  WinApi.Windows,
+  {$ELSE}
   Windows,
   {$ENDIF }
   uCEFApplication,
-  uMiniBrowser in 'uMiniBrowser.pas' {MiniBrowserFrm},
-  uPreferences in 'uPreferences.pas' {PreferencesFrm},
-  uFindFrm in 'uFindFrm.pas' {FindFrm};
+  uMiniBrowser in 'uMiniBrowser.pas' {MiniBrowserFrm};
 
 {$R *.res}
 
@@ -66,8 +64,6 @@ begin
 			Application.MainFormOnTaskbar := True;
       {$ENDIF}
       Application.CreateForm(TMiniBrowserFrm, MiniBrowserFrm);
-  Application.CreateForm(TPreferencesFrm, PreferencesFrm);
-  Application.CreateForm(TFindFrm, FindFrm);
   Application.Run;
     end;
 

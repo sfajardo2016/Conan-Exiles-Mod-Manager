@@ -1,40 +1,3 @@
-// ************************************************************************
-// ***************************** CEF4Delphi *******************************
-// ************************************************************************
-//
-// CEF4Delphi is based on DCEF3 which uses CEF to embed a chromium-based
-// browser in Delphi applications.
-//
-// The original license of DCEF3 still applies to CEF4Delphi.
-//
-// For more information about CEF4Delphi visit :
-//         https://www.briskbard.com/index.php?lang=en&pageid=cef
-//
-//        Copyright © 2021 Salvador Diaz Fau. All rights reserved.
-//
-// ************************************************************************
-// ************ vvvv Original license and comments below vvvv *************
-// ************************************************************************
-(*
- *                       Delphi Chromium Embedded 3
- *
- * Usage allowed under the restrictions of the Lesser GNU General Public License
- * or alternatively the restrictions of the Mozilla Public License 1.1
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
- * the specific language governing rights and limitations under the License.
- *
- * Unit owner : Henri Gourvest <hgourvest@gmail.com>
- * Web site   : http://www.progdigy.com
- * Repository : http://code.google.com/p/delphichromiumembedded/
- * Group      : http://groups.google.com/group/delphichromiumembedded
- *
- * Embarcadero Technologies, Inc is not permitted to use or redistribute
- * this source code without explicit permission.
- *
- *)
-
 unit uMiniBrowser;
 
 {$I cef.inc}
@@ -57,10 +20,8 @@ uses
 	uCEFConstants, uCEFWinControl, uCEFSentinel, uCEFChromiumCore;
 
 const
-	MINIBROWSER_SHOWRESPONSE     = WM_APP + $104;
-	MINIBROWSER_SHOWNAVIGATION   = WM_APP + $10A;
 	MINIBROWSER_COOKIESFLUSHED   = WM_APP + $10B;
-	MINIBROWSER_HOMEPAGE = 'https://steamcommunity.com/sharedfiles/filedetails/?id=2193453594';
+	MINIBROWSER_HOMEPAGE = 'www.google.com';
 
 type
 	TMiniBrowserFrm = class(TForm)
@@ -74,6 +35,7 @@ type
     ApplicationEvents1: TApplicationEvents;
     Timer1: TTimer;
     Button1: TButton;
+    Label_1: TLabel;
 
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -94,8 +56,6 @@ type
     procedure Chromium1LoadingProgressChange(Sender: TObject; const browser: ICefBrowser; const progress: Double);
     procedure Chromium1LoadEnd(Sender: TObject; const browser: ICefBrowser; const frame: ICefFrame; httpStatusCode: Integer);
     procedure Chromium1LoadError(Sender: TObject; const browser: ICefBrowser; const frame: ICefFrame; errorCode: Integer; const errorText, failedUrl: ustring);
-    procedure Chromium1CertificateError(Sender: TObject; const browser: ICefBrowser; certError: Integer; const requestUrl: ustring; const sslInfo: ICefSslInfo; const callback: ICefRequestCallback; out Result: Boolean);
-    procedure Chromium1NavigationVisitorResultAvailable(Sender: TObject; const entry: ICefNavigationEntry; current: Boolean; index, total: Integer; var aResult: Boolean);
     procedure Chromium1CookiesFlushed(Sender: TObject);
     procedure Chromium1BeforePluginLoad(Sender: TObject; const mimeType, pluginUrl: ustring; isMainFrame: Boolean; const topOriginUrl: ustring; const pluginInfo: ICefWebPluginInfo; var pluginPolicy: TCefPluginPolicy; var aResult: Boolean);
     procedure Chromium1ZoomPctAvailable(Sender: TObject; const aZoomPct: Double);
@@ -106,6 +66,10 @@ type
     procedure Timer1Timer(Sender: TObject);
     procedure Clearcache1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure FormMouseWheelDown(Sender: TObject; Shift: TShiftState;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure FormMouseWheelUp(Sender: TObject; Shift: TShiftState;
+      MousePos: TPoint; var Handled: Boolean);
 
   protected
 
@@ -117,11 +81,9 @@ type
     FClosing  : boolean;  // Set to True in the CloseQuery event.
 
 
-    procedure HandleKeyUp(const aMsg : TMsg; var aHandled : boolean);
+		procedure HandleKeyUp(const aMsg : TMsg; var aHandled : boolean);
     procedure HandleKeyDown(const aMsg : TMsg; var aHandled : boolean);
 
-
-    procedure InspectResponse(const aResponse : ICefResponse);
 
     procedure BrowserCreatedMsg(var aMessage : TMessage); message CEF_AFTERCREATED;
     procedure BrowserDestroyMsg(var aMessage : TMessage); message CEF_DESTROY;
@@ -134,8 +96,6 @@ type
 
     procedure WMMove(var aMessage : TWMMove); message WM_MOVE;
     procedure WMMoving(var aMessage : TMessage); message WM_MOVING;
-    procedure WMEnterMenuLoop(var aMessage: TMessage); message WM_ENTERMENULOOP;
-    procedure WMExitMenuLoop(var aMessage: TMessage); message WM_EXITMENULOOP;
 
   public
     procedure ShowStatusText(const aText : string);
@@ -151,14 +111,6 @@ implementation
 
 {$R *.dfm}
 
-uses
-	uPreferences, uCefStringMultimap, uCEFMiscFunctions,
-	uCEFClient, uFindFrm, uCEFDictionaryValue, uSimpleTextViewer;
-
-
-	//  uSimpleTextViewer,
-
-
 // Destruction steps
 // =================
 // 1. FormCloseQuery sets CanClose to FALSE calls TChromium.CloseBrowser which triggers the TChromium.OnClose event.
@@ -171,8 +123,7 @@ begin
   GlobalCEFApp.LogFile             := 'debug.log';
   GlobalCEFApp.LogSeverity         := LOGSEVERITY_INFO;
   GlobalCEFApp.cache               := 'cache';
-  GlobalCEFApp.EnablePrintPreview  := True;
-
+	GlobalCEFApp.EnablePrintPreview  := True;
   // This is a workaround for the CEF4Delphi issue #324 :
   // https://github.com/salvadordf/CEF4Delphi/issues/324
   GlobalCEFApp.DisableFeatures := 'WinUseBrowserSpellChecker';
@@ -229,16 +180,6 @@ begin
 
 
 
-end;
-
-procedure TMiniBrowserFrm.Chromium1CertificateError(Sender: TObject;
-  const browser: ICefBrowser; certError: Integer;
-  const requestUrl: ustring; const sslInfo: ICefSslInfo;
-  const callback: ICefRequestCallback; out Result: Boolean);
-begin
-  CefDebugLog('Certificate error code:' + inttostr(certError) +
-              ' - URL:' + requestUrl, CEF_LOG_SEVERITY_ERROR);
-  Result := False;
 end;
 
 procedure TMiniBrowserFrm.Chromium1Close(Sender: TObject; const browser: ICefBrowser; var aAction : TCefCloseBrowserAction);
@@ -340,10 +281,6 @@ begin
 
   if Chromium1.IsSameBrowser(browser) then
     begin
-      if frame.IsMain then
-		 //   StatusBar1.Panels[1].Text := 'main frame loaded : ' + quotedstr(frame.name)
-			 else
-      //  StatusBar1.Panels[1].Text := 'frame loaded : ' + quotedstr(frame.name);
     end
    else
     begin
@@ -400,20 +337,6 @@ begin
     end;
 end;
 
-procedure TMiniBrowserFrm.Chromium1NavigationVisitorResultAvailable(Sender: TObject;
-  const entry: ICefNavigationEntry; current: Boolean; index, total: Integer;
-  var aResult: Boolean);
-begin
-  if (entry <> nil) and entry.IsValid then FNavigation.Add(entry.Url);
-
-  if (index < pred(total)) then
-    aResult := True
-   else
-    begin
-      aResult := False;
-      PostMessage(Handle, MINIBROWSER_SHOWNAVIGATION, 0, 0);
-    end;
-end;
 
 procedure TMiniBrowserFrm.Chromium1PreKeyEvent(Sender: TObject;
   const browser: ICefBrowser; const event: PCefKeyEvent; osEvent: TCefEventHandle;
@@ -428,28 +351,6 @@ begin
 end;
 
 
-procedure TMiniBrowserFrm.InspectResponse(const aResponse : ICefResponse);
-var
-  TempHeaderMap : ICefStringMultimap;
-  i, j : integer;
-begin
-  if (aResponse <> nil) then
-    begin
-      FResponse.Clear;
-
-      TempHeaderMap := TCefStringMultimapOwn.Create;
-      aResponse.GetHeaderMap(TempHeaderMap);
-
-      i := 0;
-      j := TempHeaderMap.Size;
-
-      while (i < j) do
-        begin
-          FResponse.Add(TempHeaderMap.Key[i] + '=' + TempHeaderMap.Value[i]);
-          inc(i);
-        end;
-    end;
-end;
 
 
 procedure TMiniBrowserFrm.ShowStatusText(const aText : string);
@@ -528,7 +429,10 @@ begin
   // To do that call TChromium.SelectBrowser with the browser ID that will be
   // used when you call any method or property in TChromium.
   Chromium1.MultiBrowserMode := True;
-  Chromium1.DefaultURL       := MINIBROWSER_HOMEPAGE;
+	Chromium1.DefaultURL       := MINIBROWSER_HOMEPAGE;
+
+
+
 end;
 
 procedure TMiniBrowserFrm.FormDestroy(Sender: TObject);
@@ -536,6 +440,22 @@ begin
   FResponse.Free;
   FRequest.Free;
   FNavigation.Free;
+end;
+
+procedure TMiniBrowserFrm.FormMouseWheelDown(Sender: TObject;
+	Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+begin
+if ssCtrl in Shift then Chromium1.IncZoomStep;
+Label_1.Caption := 'Down - ' + DateTimeToStr(now);
+Handled:=True;
+end;
+
+procedure TMiniBrowserFrm.FormMouseWheelUp(Sender: TObject;
+	Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+begin
+if ssCtrl in Shift then Chromium1.DecZoomStep;
+Label_1.Caption := 'Up -' + DateTimeToStr(now);
+Handled:=True;
 end;
 
 procedure TMiniBrowserFrm.FormShow(Sender: TObject);
@@ -586,43 +506,24 @@ end;
 
 
 
-
-
-
-
-
-
 procedure TMiniBrowserFrm.WMMove(var aMessage : TWMMove);
 begin
-  inherited;
+	inherited;
 
-  if (Chromium1 <> nil) then Chromium1.NotifyMoveOrResizeStarted;
+	if (Chromium1 <> nil) then Chromium1.NotifyMoveOrResizeStarted;
 end;
 
 procedure TMiniBrowserFrm.WMMoving(var aMessage : TMessage);
 begin
-  inherited;
+	inherited;
 
-  if (Chromium1 <> nil) then Chromium1.NotifyMoveOrResizeStarted;
+	if (Chromium1 <> nil) then Chromium1.NotifyMoveOrResizeStarted;
 end;
 
-procedure TMiniBrowserFrm.WMEnterMenuLoop(var aMessage: TMessage);
-begin
-  inherited;
-
-  if (aMessage.wParam = 0) and (GlobalCEFApp <> nil) then GlobalCEFApp.OsmodalLoop := True;
-end;
-
-procedure TMiniBrowserFrm.WMExitMenuLoop(var aMessage: TMessage);
-begin
-  inherited;
-
-  if (aMessage.wParam = 0) and (GlobalCEFApp <> nil) then GlobalCEFApp.OsmodalLoop := False;
-end;
 
 procedure TMiniBrowserFrm.Deczoom1Click(Sender: TObject);
 begin
-  Chromium1.DecZoomStep;
+	Chromium1.DecZoomStep;
 end;
 
 

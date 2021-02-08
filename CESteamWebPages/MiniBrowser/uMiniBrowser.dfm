@@ -15,6 +15,8 @@ object MiniBrowserFrm: TMiniBrowserFrm
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnMouseWheelDown = FormMouseWheelDown
+  OnMouseWheelUp = FormMouseWheelUp
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -46,6 +48,13 @@ object MiniBrowserFrm: TMiniBrowserFrm
       Padding.Top = 9
       Padding.Bottom = 8
       TabOrder = 1
+      object Label_1: TLabel
+        Left = 568
+        Top = 14
+        Width = 113
+        Height = 13
+        Caption = 'Label_1'
+      end
       object Button1: TButton
         Left = 456
         Top = 10
@@ -95,7 +104,6 @@ object MiniBrowserFrm: TMiniBrowserFrm
       end>
   end
   object Chromium1: TChromium
-    OnNavigationVisitorResultAvailable = Chromium1NavigationVisitorResultAvailable
     OnCookiesFlushed = Chromium1CookiesFlushed
     OnZoomPctAvailable = Chromium1ZoomPctAvailable
     OnLoadEnd = Chromium1LoadEnd
@@ -109,7 +117,6 @@ object MiniBrowserFrm: TMiniBrowserFrm
     OnAfterCreated = Chromium1AfterCreated
     OnBeforeClose = Chromium1BeforeClose
     OnClose = Chromium1Close
-    OnCertificateError = Chromium1CertificateError
     OnBeforeResourceLoad = Chromium1BeforeResourceLoad
     OnBeforePluginLoad = Chromium1BeforePluginLoad
     Left = 32
