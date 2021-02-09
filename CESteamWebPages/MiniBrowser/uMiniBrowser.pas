@@ -26,7 +26,6 @@ const
 type
 	TMiniBrowserFrm = class(TForm)
 		NavControlPnl: TPanel;
-		NavButtonPnl: TPanel;
 		URLEditPnl: TPanel;
 		CEFWindowParent1: TCEFWindowParent;
 		Chromium1: TChromium;
@@ -127,6 +126,7 @@ begin
   // This is a workaround for the CEF4Delphi issue #324 :
   // https://github.com/salvadordf/CEF4Delphi/issues/324
   GlobalCEFApp.DisableFeatures := 'WinUseBrowserSpellChecker';
+
 end;
 
 procedure TMiniBrowserFrm.Resetzoom1Click(Sender: TObject);
@@ -447,6 +447,7 @@ procedure TMiniBrowserFrm.FormMouseWheelDown(Sender: TObject;
 begin
 if ssCtrl in Shift then Chromium1.IncZoomStep;
 Label_1.Caption := 'Down - ' + DateTimeToStr(now);
+
 Handled:=True;
 end;
 

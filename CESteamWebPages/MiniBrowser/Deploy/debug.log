@@ -39,3 +39,42 @@
 [0208/162957.759:WARNING:value_store_frontend.cc(43)] Reading mhjfbmdgcfjbbpaeojofohoefgiehjai.alarms from  failed: IO error: .../MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
 [0208/164658.048:WARNING:value_store_frontend.cc(43)] Reading mhjfbmdgcfjbbpaeojofohoefgiehjai.alarms from  failed: IO error: .../MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
 [0208/165314.670:WARNING:value_store_frontend.cc(43)] Reading mhjfbmdgcfjbbpaeojofohoefgiehjai.alarms from  failed: IO error: .../MANIFEST-000001: Unable to create sequential file (ChromeMethodBFE: 7::NewSequentialFile::1)
+[0209/055833.501:ERROR:os_crypt_win.cc(93)] Failed to decrypt: Key not valid for use in specified state. (0x8009000B)
+[0209/055835.102:ERROR:backend_impl.cc(1041)] Critical error found -8
+[0209/055836.242:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.242:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.242:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.246:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.249:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.250:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.251:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.251:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.254:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.256:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.258:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.259:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.261:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.261:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.264:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.264:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.266:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.267:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.269:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.269:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.271:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.273:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.274:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.275:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.276:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.279:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.279:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.283:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.283:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.286:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.287:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.289:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.291:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.293:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.293:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.295:WARNING:storage_block-inl.h(146)] Failed data load.
+[0209/055836.297:ERROR:entry_impl.cc(998)] Failed to save user data

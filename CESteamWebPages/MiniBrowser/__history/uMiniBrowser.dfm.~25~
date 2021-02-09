@@ -15,6 +15,8 @@ object MiniBrowserFrm: TMiniBrowserFrm
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnMouseWheelDown = FormMouseWheelDown
+  OnMouseWheelUp = FormMouseWheelUp
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -46,7 +48,13 @@ object MiniBrowserFrm: TMiniBrowserFrm
       Padding.Top = 9
       Padding.Bottom = 8
       TabOrder = 1
-      ExplicitWidth = 978
+      object Label_1: TLabel
+        Left = 568
+        Top = 14
+        Width = 113
+        Height = 13
+        Caption = 'Label_1'
+      end
       object Button1: TButton
         Left = 456
         Top = 10
@@ -66,7 +74,6 @@ object MiniBrowserFrm: TMiniBrowserFrm
     Align = alClient
     TabStop = True
     TabOrder = 0
-    ExplicitLeft = -6
   end
   object DevTools: TCEFWindowParent
     Left = 1184
@@ -97,29 +104,20 @@ object MiniBrowserFrm: TMiniBrowserFrm
       end>
   end
   object Chromium1: TChromium
-    OnTextResultAvailable = Chromium1TextResultAvailable
-    OnPrefsAvailable = Chromium1PrefsAvailable
-    OnResolvedHostAvailable = Chromium1ResolvedHostAvailable
-    OnNavigationVisitorResultAvailable = Chromium1NavigationVisitorResultAvailable
     OnCookiesFlushed = Chromium1CookiesFlushed
     OnZoomPctAvailable = Chromium1ZoomPctAvailable
-    OnRenderCompMsg = Chromium1RenderCompMsg
     OnLoadEnd = Chromium1LoadEnd
     OnLoadError = Chromium1LoadError
     OnLoadingStateChange = Chromium1LoadingStateChange
     OnPreKeyEvent = Chromium1PreKeyEvent
     OnKeyEvent = Chromium1KeyEvent
     OnTitleChange = Chromium1TitleChange
-    OnFullScreenModeChange = Chromium1FullScreenModeChange
     OnStatusMessage = Chromium1StatusMessage
     OnLoadingProgressChange = Chromium1LoadingProgressChange
     OnAfterCreated = Chromium1AfterCreated
     OnBeforeClose = Chromium1BeforeClose
     OnClose = Chromium1Close
-    OnBeforeBrowse = Chromium1BeforeBrowse
-    OnCertificateError = Chromium1CertificateError
     OnBeforeResourceLoad = Chromium1BeforeResourceLoad
-    OnResourceResponse = Chromium1ResourceResponse
     OnBeforePluginLoad = Chromium1BeforePluginLoad
     Left = 32
     Top = 224
