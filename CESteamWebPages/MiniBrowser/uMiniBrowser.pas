@@ -17,7 +17,7 @@ uses
 	AppEvnts, ActiveX, ShlObj, NetEncoding,
 	{$ENDIF}
 	uCEFChromium, uCEFWindowParent, uCEFInterfaces, uCEFApplication, uCEFTypes,
-	uCEFConstants, uCEFWinControl, uCEFSentinel, uCEFChromiumCore;
+	uCEFConstants, uCEFWinControl, uCEFSentinel, uCEFChromiumCore, mswheel;
 
 const
 	MINIBROWSER_COOKIESFLUSHED   = WM_APP + $10B;
@@ -36,6 +36,7 @@ type
     Timer1: TTimer;
     Button1: TButton;
     Label_1: TLabel;
+		MSWheel_1: TMSWheel;
 
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -70,6 +71,8 @@ type
       MousePos: TPoint; var Handled: Boolean);
     procedure FormMouseWheelUp(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
+    procedure MSWheel_1IntelliZoom(zdelta, xpos, ypos,
+      ScrollLines: Integer);
 
   protected
 
@@ -445,16 +448,18 @@ end;
 procedure TMiniBrowserFrm.FormMouseWheelDown(Sender: TObject;
 	Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
 begin
-if ssCtrl in Shift then Chromium1.IncZoomStep;
+if ssCtrl in Shift then begin Chromium1.IncZoomStep;
 Label_1.Caption := 'Down - ' + DateTimeToStr(now);
+end;
 Handled:=True;
 end;
 
 procedure TMiniBrowserFrm.FormMouseWheelUp(Sender: TObject;
 	Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
 begin
-if ssCtrl in Shift then Chromium1.DecZoomStep;
+if ssCtrl in Shift then begin Chromium1.DecZoomStep;
 Label_1.Caption := 'Up -' + DateTimeToStr(now);
+end;
 Handled:=True;
 end;
 
@@ -505,6 +510,12 @@ begin
 end;
 
 
+
+procedure TMiniBrowserFrm.MSWheel_1IntelliZoom(zdelta, xpos, ypos,
+  ScrollLines: Integer);
+begin
+Label_1.Caption := 'intelli zoom ' + DateTimeToStr(now);
+end;
 
 procedure TMiniBrowserFrm.WMMove(var aMessage : TWMMove);
 begin

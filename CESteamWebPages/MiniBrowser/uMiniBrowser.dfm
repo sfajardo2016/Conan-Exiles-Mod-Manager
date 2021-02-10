@@ -51,7 +51,7 @@ object MiniBrowserFrm: TMiniBrowserFrm
       object Label_1: TLabel
         Left = 568
         Top = 14
-        Width = 113
+        Width = 37
         Height = 13
         Caption = 'Label_1'
       end
@@ -133,5 +133,12 @@ object MiniBrowserFrm: TMiniBrowserFrm
     OnTimer = Timer1Timer
     Left = 32
     Top = 344
+  end
+  object MSWheel_1: TMSWheel
+    Auto = False
+    Version = '1.5.0.1'
+    OnIntelliZoom = MSWheel_1IntelliZoom
+    Left = 696
+    Top = 352
   end
 end
