@@ -1,0 +1,84 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{61ABCFD3-C884-4599-B586-958B596EA698}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="CEMM.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="LANGUAJES\ENU\CEMM_ENU.bdsproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="LANGUAJES\FRA\CEMM_FRA.bdsproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="LANGUAJES\DEU\CEMM_DEU.bdsproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="LANGUAJES\ESM\CEMM_ESM.bdsproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="CEMM">
+        <MSBuild Projects="CEMM.dproj"/>
+    </Target>
+    <Target Name="CEMM:Clean">
+        <MSBuild Projects="CEMM.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CEMM:Make">
+        <MSBuild Projects="CEMM.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="CEMM_ENU">
+        <MSBuild Projects="LANGUAJES\ENU\CEMM_ENU.bdsproj"/>
+    </Target>
+    <Target Name="CEMM_ENU:Clean">
+        <MSBuild Projects="LANGUAJES\ENU\CEMM_ENU.bdsproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CEMM_ENU:Make">
+        <MSBuild Projects="LANGUAJES\ENU\CEMM_ENU.bdsproj" Targets="Make"/>
+    </Target>
+    <Target Name="CEMM_FRA">
+        <MSBuild Projects="LANGUAJES\FRA\CEMM_FRA.bdsproj"/>
+    </Target>
+    <Target Name="CEMM_FRA:Clean">
+        <MSBuild Projects="LANGUAJES\FRA\CEMM_FRA.bdsproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CEMM_FRA:Make">
+        <MSBuild Projects="LANGUAJES\FRA\CEMM_FRA.bdsproj" Targets="Make"/>
+    </Target>
+    <Target Name="CEMM_DEU">
+        <MSBuild Projects="LANGUAJES\DEU\CEMM_DEU.bdsproj"/>
+    </Target>
+    <Target Name="CEMM_DEU:Clean">
+        <MSBuild Projects="LANGUAJES\DEU\CEMM_DEU.bdsproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CEMM_DEU:Make">
+        <MSBuild Projects="LANGUAJES\DEU\CEMM_DEU.bdsproj" Targets="Make"/>
+    </Target>
+    <Target Name="CEMM_ESM">
+        <MSBuild Projects="LANGUAJES\ESM\CEMM_ESM.bdsproj"/>
+    </Target>
+    <Target Name="CEMM_ESM:Clean">
+        <MSBuild Projects="LANGUAJES\ESM\CEMM_ESM.bdsproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CEMM_ESM:Make">
+        <MSBuild Projects="LANGUAJES\ESM\CEMM_ESM.bdsproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="CEMM;CEMM_ENU;CEMM_FRA;CEMM_DEU;CEMM_ESM"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="CEMM:Clean;CEMM_ENU:Clean;CEMM_FRA:Clean;CEMM_DEU:Clean;CEMM_ESM:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="CEMM:Make;CEMM_ENU:Make;CEMM_FRA:Make;CEMM_DEU:Make;CEMM_ESM:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
