@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2021/02/15 22:21:17.077,=C:\Users\sfajardo\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2021/02/15 22:21:59.680,C:\Users\sfajardo\Documents\Embarcadero\Studio\Projects\CEMM\Conan-Exiles-Mod-Manager\CEMM\MainUnit.pas=C:\Users\sfajardo\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2021/02/15 22:21:59.680,C:\Users\sfajardo\Documents\Embarcadero\Studio\Projects\CEMM\Conan-Exiles-Mod-Manager\CEMM\MainUnit.dfm=C:\Users\sfajardo\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2021/02/15 22:22:14.356,C:\Users\sfajardo\Documents\Embarcadero\Studio\Projects\CEMM\Conan-Exiles-Mod-Manager\CEMM\CEMM.dproj=C:\Users\sfajardo\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

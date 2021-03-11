@@ -29,25 +29,18 @@ object MiniBrowserFrm: TMiniBrowserFrm
     BevelOuter = bvNone
     Enabled = False
     TabOrder = 1
-    object NavButtonPnl: TPanel
+    object URLEditPnl: TPanel
       Left = 0
       Top = 0
-      Width = 133
-      Height = 41
-      Align = alLeft
-      BevelOuter = bvNone
-      TabOrder = 0
-    end
-    object URLEditPnl: TPanel
-      Left = 133
-      Top = 0
-      Width = 1051
+      Width = 1184
       Height = 41
       Align = alClient
       BevelOuter = bvNone
       Padding.Top = 9
       Padding.Bottom = 8
-      TabOrder = 1
+      TabOrder = 0
+      ExplicitLeft = 133
+      ExplicitWidth = 1051
       object Label_1: TLabel
         Left = 568
         Top = 14
@@ -74,6 +67,7 @@ object MiniBrowserFrm: TMiniBrowserFrm
     Align = alClient
     TabStop = True
     TabOrder = 0
+    ExplicitLeft = -6
   end
   object DevTools: TCEFWindowParent
     Left = 1184
