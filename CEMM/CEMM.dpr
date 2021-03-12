@@ -1,14 +1,14 @@
-program CEMM;
+program cemm;
 
 uses
   Vcl.Forms,
-  MainUnit in 'MainUnit.pas' {Form1};
+  MainUnit in 'MainUnit.pas' {FrmMain};
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TFrmMain, FrmMain);
   Application.Run;
 end.

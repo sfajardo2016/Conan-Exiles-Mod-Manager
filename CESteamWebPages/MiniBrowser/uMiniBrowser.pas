@@ -26,7 +26,6 @@ const
 type
 	TMiniBrowserFrm = class(TForm)
 		NavControlPnl: TPanel;
-		NavButtonPnl: TPanel;
 		URLEditPnl: TPanel;
 		CEFWindowParent1: TCEFWindowParent;
 		Chromium1: TChromium;
@@ -36,7 +35,6 @@ type
     Timer1: TTimer;
     Button1: TButton;
     Label_1: TLabel;
-		MSWheel_1: TMSWheel;
 
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);

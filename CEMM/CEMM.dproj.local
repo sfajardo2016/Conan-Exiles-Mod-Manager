@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions>
-    <Transaction>2021/02/15 22:21:17.077,=C:\Users\sfajardo\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2021/02/15 22:21:59.680,C:\Users\sfajardo\Documents\Embarcadero\Studio\Projects\CEMM\Conan-Exiles-Mod-Manager\CEMM\MainUnit.pas=C:\Users\sfajardo\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2021/02/15 22:21:59.680,C:\Users\sfajardo\Documents\Embarcadero\Studio\Projects\CEMM\Conan-Exiles-Mod-Manager\CEMM\MainUnit.dfm=C:\Users\sfajardo\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
-    <Transaction>2021/02/15 22:22:14.356,C:\Users\sfajardo\Documents\Embarcadero\Studio\Projects\CEMM\Conan-Exiles-Mod-Manager\CEMM\CEMM.dproj=C:\Users\sfajardo\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+	<Transactions>
+    <Transaction>2021/02/25 16:27:04.000.845,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit3.pas</Transaction>
+    <Transaction>2021/02/25 16:48:03.000.552,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit3.pas</Transaction>
+    <Transaction>2021/02/27 12:01:21.000.598,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit3.pas</Transaction>
+    <Transaction>2021/03/11 16:14:49.000.752,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit4.pas</Transaction>
+    <Transaction>2021/03/11 16:16:03.000.216,C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit4.dfm=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\MainUnit.dfm</Transaction>
+    <Transaction>2021/03/11 16:16:03.000.216,C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit4.pas=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\MainUnit.pas</Transaction>
+    <Transaction>2021/03/11 16:16:11.000.111,C:\Users\User\Documents\Embarcadero\Studio\Projects\Project3.dproj=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\cemm.dproj</Transaction>
   </Transactions>
 </BorlandProject>
