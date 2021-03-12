@@ -305,7 +305,9 @@ begin
                 ' with error ' + errorText +
                 ' (' + inttostr(errorCode) + ').</h2></body></html>';
 
-  Chromium1.LoadString(TempString, frame);
+	Chromium1.LoadString(TempString, frame);
+
+
 end;
 
 procedure TMiniBrowserFrm.Chromium1LoadingProgressChange(Sender: TObject;

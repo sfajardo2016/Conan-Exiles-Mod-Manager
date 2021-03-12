@@ -1,7 +1,7 @@
 object DataModule1: TDataModule1
   OldCreateOrder = False
-  Height = 336
-  Width = 275
+  Height = 457
+  Width = 319
   object fdgxwtcrsr1: TFDGUIxWaitCursor
     Provider = 'Forms'
     ScreenCursor = gcrDefault

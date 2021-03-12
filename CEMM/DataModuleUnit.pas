@@ -33,18 +33,23 @@ type
 
 
 
+		{ Private declarations }
+	public
+		LastMessage: string;
+		function UpdateModList(thisfolder: string): string;
+		function SetupData(s: string): Boolean;
 
-    { Private declarations }
-  public
-    LastMessage: string;
-    function IsValidInstallation: Boolean;
-    function UpdateModList(thisfolder: string): string;
-    function SetupData(s: string): Boolean;
-    function IsCurrentSettingValid: Boolean;
 
-    function SetSetting(sValue, sData: string): string;
-    function GetSetting(sValue: string): string;
-    function CreateDefaultFolders: Boolean;
+
+		function GetSetting(ThisKey:string; out ThisValue:String):Boolean; overload;
+		function GetSetting(ThisKey:string; out ThisValue: Integer):Boolean; overload;
+		function GetSetting(ThisKey:string; out ThisValue: SmallInt):Boolean; overload;
+    function SetSetting(ThisKey, ThisValue: String): Boolean;
+
+
+		function AreSettingsValid: Boolean;
+
+		function CreateDefaultFolders: Boolean;
     { Public declarations }
   end;
 
@@ -59,44 +64,71 @@ implementation
 uses MainUnit;
 
 
-
-function TDataModule1.GetSetting(sValue:string):string;
-begin
-  LastMessage := '';
-
-  with Query_settings do begin
-
-    if (Locate('value',sValue,[])) then begin
-
-      Exit(FieldByName('data').AsString);
-
-    end;
-
+{$REGION 'Get Settings Keys'}
+  
+  function TDataModule1.GetSetting(ThisKey:string; out ThisValue:String):Boolean;
+  var
+  	bRes: Boolean;
+  begin
+  	ThisValue := '';
+  
+  	bRes:= Query_settings.Locate('value',ThisKey,[]);
+  	if (bRes) then ThisValue := Query_settings.FieldByName('data').AsString;
+  	result := bRes;
+  end;
+  
+  
+  function TDataModule1.GetSetting(ThisKey:string; out ThisValue: Integer):Boolean;
+  var
+  	bRes: Boolean;
+  begin
+  	ThisValue := -1;
+  	bRes:= Query_settings.Locate('value',ThisKey,[]);
+  	if (bRes) then ThisValue := Query_settings.FieldByName('data').AsInteger;
+  	result := bRes;
+  
+  end;
+  
+  
+  function TDataModule1.GetSetting(ThisKey:string; out ThisValue: smallint):Boolean;
+  var
+  	bRes: Boolean;
+  begin
+  	ThisValue := -1;
+  	bRes:= Query_settings.Locate('value',ThisKey,[]);
+  	if (bRes) then ThisValue := Query_settings.FieldByName('data').AsInteger;
+  	result := bRes;
+  
   end;
 
-  Exit('');
+  
+{$ENDREGION}
 
-end;
 
-function TDataModule1.SetSetting(sValue,sData:string):string;
-begin
-  LastMessage := '';
 
-  with Query_settings do begin
 
-    if (Locate('value',sValue,[])) then begin
+{$REGION 'Set Settings Keys'}
 
-      Edit;
-      FieldByName('data').AsString :=sData;
-      Post;
-      Exit(sValue);
+  function TDataModule1.SetSetting(ThisKey:string; ThisValue:String):Boolean;
+	var
+  	bRes: Boolean;
+  begin
+		bRes:= Query_settings.Locate('value',ThisKey,[]);
+		if (bRes) then begin
+			Query_settings.Edit;
+			Query_settings.FieldByName('data').AsString := ThisValue;
+			Query_settings.Post;
+
     end;
-
+  	result := bRes;
   end;
 
-  Exit('');
 
-end;
+
+
+
+{$ENDREGION}
+
 
 
 
@@ -196,30 +228,19 @@ end;
 
 
 
-function TDataModule1.IsValidInstallation():Boolean;
-var
-  datavalue:string;
-begin
-
-  datavalue := GetSetting('cectmainfolder').Trim();
-  LastMessage := '';
-  Exit( IsCurrentSettingValid()  );
-
-end;
-
-
-function TDataModule1.IsCurrentSettingValid():Boolean;
+function TDataModule1.AreSettingsValid():Boolean;
 var
   thisvalue: string;
   r: Boolean;
 begin
 
-  thisvalue := GetSetting('cectvalidsettings');
+	r:= GetSetting('cectvalidsettings', ThisValue);
 
-  r:=(thisvalue='1');
-  if not (r) then LastMessage := 'Settings are not valid';
+	if (r)  then r:=(thisvalue='1');
 
-  exit(r);
+	if not (r) then LastMessage := 'Settings are not valid';
+
+	exit(r);
 
 
 
@@ -272,7 +293,7 @@ end;
 
   procedure TDataModule1.Log(m: string);
   begin
-    FrmMain.Varcoded.Log(m);
+    FrmMain.Log(m);
   end;
 
 

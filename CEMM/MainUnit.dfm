@@ -91,6 +91,145 @@ object FrmMain: TFrmMain
     SkinDataName = 'tab'
     object TabSheet_SteamModWebPage: TbsSkinTabSheet
       Caption = 'Steam Web Page'
+      object CEFWindowParent1: TCEFWindowParent
+        Left = 0
+        Top = 0
+        Width = 507
+        Height = 464
+        Align = alClient
+        TabStop = True
+        TabOrder = 0
+        ExplicitLeft = 1
+        ExplicitTop = 1
+        ExplicitWidth = 833
+        ExplicitHeight = 463
+      end
+      object StatusBar_Browser: TbsSkinStatusBar
+        Left = 0
+        Top = 464
+        Width = 507
+        Height = 34
+        HintImageIndex = 0
+        TabOrder = 1
+        SkinData = SkinData_1
+        SkinDataName = 'statusbar'
+        DefaultFont.Charset = DEFAULT_CHARSET
+        DefaultFont.Color = clWindowText
+        DefaultFont.Height = 13
+        DefaultFont.Name = 'Tahoma'
+        DefaultFont.Style = []
+        DefaultWidth = 0
+        DefaultHeight = 0
+        UseSkinFont = True
+        EmptyDrawing = False
+        RibbonStyle = False
+        ImagePosition = bsipDefault
+        TransparentMode = False
+        CaptionImageIndex = -1
+        RealHeight = -1
+        AutoEnabledControls = True
+        CheckedMode = False
+        Checked = False
+        DefaultAlignment = taLeftJustify
+        DefaultCaptionHeight = 20
+        BorderStyle = bvNone
+        CaptionMode = False
+        RollUpMode = False
+        RollUpState = False
+        NumGlyphs = 1
+        Spacing = 2
+        Caption = 'StatusBar_Browser'
+        Align = alBottom
+        SizeGrip = False
+        object StatusPanel_Browser: TbsSkinStatusPanel
+          Left = 0
+          Top = 0
+          Width = 267
+          Height = 34
+          HintImageIndex = 0
+          TabOrder = 0
+          SkinData = SkinData_1
+          SkinDataName = 'statuspanel'
+          DefaultFont.Charset = DEFAULT_CHARSET
+          DefaultFont.Color = clWindowText
+          DefaultFont.Height = 13
+          DefaultFont.Name = 'Tahoma'
+          DefaultFont.Style = []
+          DefaultWidth = 0
+          DefaultHeight = 0
+          UseSkinFont = True
+          Transparent = False
+          ShadowEffect = False
+          ShadowColor = clBlack
+          ShadowOffset = 0
+          ShadowSize = 3
+          ReflectionEffect = False
+          ReflectionOffset = -5
+          EllipsType = bsetNoneEllips
+          UseSkinSize = True
+          UseSkinFontColor = True
+          BorderStyle = bvFrame
+          Align = alClient
+          Caption = 'Realdy'
+          AutoSize = False
+          ImageIndex = -1
+          NumGlyphs = 1
+          ExplicitWidth = 185
+        end
+        object Slider_BrowserZoom: TbsSkinSlider
+          Left = 357
+          Top = 0
+          Width = 150
+          Height = 34
+          HintImageIndex = 0
+          TabOrder = 1
+          SkinData = SkinData_1
+          SkinDataName = 'slider'
+          ThumbImageIndex = 0
+          ThumbActiveImageIndex = 1
+          Align = alRight
+          MinValue = -40
+          MaxValue = 40
+          Transparent = False
+          UseSkinThumb = True
+          OnChange = Slider_BrowserZoomChange
+        end
+        object StatusPanel_Zoom: TbsSkinStatusPanel
+          Left = 267
+          Top = 0
+          Width = 90
+          Height = 34
+          HintImageIndex = 0
+          TabOrder = 2
+          SkinData = SkinData_1
+          SkinDataName = 'statuspanel'
+          DefaultFont.Charset = DEFAULT_CHARSET
+          DefaultFont.Color = clWindowText
+          DefaultFont.Height = 13
+          DefaultFont.Name = 'Tahoma'
+          DefaultFont.Style = []
+          DefaultWidth = 0
+          DefaultHeight = 0
+          UseSkinFont = True
+          Transparent = False
+          ShadowEffect = False
+          ShadowColor = clBlack
+          ShadowOffset = 0
+          ShadowSize = 3
+          ReflectionEffect = False
+          ReflectionOffset = -5
+          EllipsType = bsetNoneEllips
+          UseSkinSize = True
+          UseSkinFontColor = True
+          BorderStyle = bvFrame
+          Align = alRight
+          Caption = 'Zoom'
+          AutoSize = False
+          ImageIndex = -1
+          NumGlyphs = 1
+          ExplicitLeft = 280
+        end
+      end
     end
     object TabSheet_ModSets: TbsSkinTabSheet
       Caption = 'TabSheet_ModSets'
@@ -99,12 +238,31 @@ object FrmMain: TFrmMain
       Caption = 'TabSheet_SteamSetUp'
     end
     object TabSheet_Config: TbsSkinTabSheet
-      Caption = 'TabSheet_Config'
-      object OfficeComboBox_Languages: TbsSkinOfficeComboBox
-        Left = 76
-        Top = 56
-        Width = 261
-        Height = 41
+      Caption = 'Settings'
+      ExplicitLeft = 17
+      ExplicitTop = -13
+      object Label_1: TbsSkinStdLabel
+        Left = 268
+        Top = 16
+        Width = 131
+        Height = 13
+        EllipsType = bsetNone
+        UseSkinFont = True
+        UseSkinColor = True
+        DefaultFont.Charset = DEFAULT_CHARSET
+        DefaultFont.Color = clWindowText
+        DefaultFont.Height = -11
+        DefaultFont.Name = 'Tahoma'
+        DefaultFont.Style = []
+        SkinData = SkinData_1
+        SkinDataName = 'stdlabel'
+        Caption = 'Show mod steam web page'
+      end
+      object ComboBox_ShowWebPage: TbsSkinComboBoxEx
+        Left = 268
+        Top = 35
+        Width = 120
+        Height = 20
         HintImageIndex = 0
         TabOrder = 0
         SkinData = SkinData_1
@@ -117,85 +275,54 @@ object FrmMain: TFrmMain
         DefaultWidth = 0
         DefaultHeight = 0
         UseSkinFont = True
-        UseSkinSize = False
+        UseSkinSize = True
         ToolButtonStyle = False
+        ItemsEx = <
+          item
+            Caption = 'Yes'
+          end
+          item
+            Caption = 'No'
+          end>
+        Style = bscbFixedStyle
+        HideSelection = True
+        AutoComplete = True
+        ListBoxUseSkinFont = True
+        ListBoxUseSkinItemHeight = True
+        ListBoxWidth = 0
         AlphaBlend = False
         AlphaBlendValue = 0
         AlphaBlendAnimation = False
-        AlternateRow = False
-        ListBoxHeaderLeftAlignment = False
+        ListBoxCaption = 'This caption'
+        ListBoxCaptionMode = True
         ListBoxDefaultFont.Charset = DEFAULT_CHARSET
         ListBoxDefaultFont.Color = clWindowText
         ListBoxDefaultFont.Height = 13
         ListBoxDefaultFont.Name = 'Tahoma'
         ListBoxDefaultFont.Style = []
-        ListBoxUseSkinFont = True
-        ListBoxWidth = 0
-        ListBoxHeight = 0
-        ListBoxShowItemTitles = True
-        ListBoxSkinDataName = 'listbox'
-        ListBoxShowLines = False
-        ListBoxItemHeight = 30
-        ListBoxHeaderHeight = 20
-        HideSelection = True
-        ShowItemTitle = True
-        ShowItemImage = True
-        ShowItemText = True
-        DefaultColor = clWindow
-        Items = <
-          item
-            Header = True
-            Enabled = True
-            Title = 'Select a language'
-            Caption = 'Select a language'
-            Checked = False
-          end
-          item
-            Header = False
-            Enabled = True
-            Title = 'Language'
-            Caption = 'English'
-            Checked = False
-          end
-          item
-            Header = False
-            Enabled = True
-            Title = 'Language'
-            Caption = 'Espa'#241'ol'
-            Checked = False
-          end
-          item
-            Header = False
-            Enabled = True
-            Title = 'Language'
-            Caption = 'Fran'#231'ais'
-            Checked = False
-          end
-          item
-            Header = False
-            Enabled = True
-            Title = 'Language'
-            Caption = 'Deutsch'
-            Checked = False
-          end>
-        ItemIndex = -1
-        DropDownCount = 7
+        ListBoxDefaultCaptionFont.Charset = DEFAULT_CHARSET
+        ListBoxDefaultCaptionFont.Color = clWindowText
+        ListBoxDefaultCaptionFont.Height = 13
+        ListBoxDefaultCaptionFont.Name = 'Tahoma'
+        ListBoxDefaultCaptionFont.Style = []
+        ListBoxDefaultItemHeight = 20
+        ListBoxCaptionAlignment = taLeftJustify
+        DropDownCount = 8
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = 13
         Font.Name = 'Tahoma'
         Font.Style = []
-        OnChange = OfficeComboBox_LanguagesChange
       end
-      object OfficeComboBox_Skin: TbsSkinOfficeComboBox
-        Left = 76
-        Top = 103
-        Width = 263
-        Height = 46
+      object Panel_UISettings: TbsSkinExPanel
+        Left = 5
+        Top = 16
+        Width = 257
+        Height = 145
         HintImageIndex = 0
         TabOrder = 1
         SkinData = SkinData_1
-        SkinDataName = 'combobox'
+        SkinDataName = 'expanel'
         DefaultFont.Charset = DEFAULT_CHARSET
         DefaultFont.Color = clWindowText
         DefaultFont.Height = 13
@@ -204,75 +331,341 @@ object FrmMain: TFrmMain
         DefaultWidth = 0
         DefaultHeight = 0
         UseSkinFont = True
-        UseSkinSize = False
-        ToolButtonStyle = False
-        AlphaBlend = False
-        AlphaBlendValue = 0
-        AlphaBlendAnimation = False
-        AlternateRow = False
-        ListBoxHeaderLeftAlignment = False
-        ListBoxDefaultFont.Charset = DEFAULT_CHARSET
-        ListBoxDefaultFont.Color = clWindowText
-        ListBoxDefaultFont.Height = 13
-        ListBoxDefaultFont.Name = 'Tahoma'
-        ListBoxDefaultFont.Style = []
-        ListBoxUseSkinFont = True
-        ListBoxWidth = 0
-        ListBoxHeight = 0
-        ListBoxShowItemTitles = True
-        ListBoxSkinDataName = 'listbox'
-        ListBoxShowLines = False
-        ListBoxItemHeight = 30
-        ListBoxHeaderHeight = 20
-        HideSelection = True
-        ShowItemTitle = True
-        ShowItemImage = True
-        ShowItemText = True
-        DefaultColor = clWindow
-        Items = <
-          item
-            Header = True
-            Enabled = True
-            Title = 'Select a UI theme'
-            Caption = 'Select a UI theme'
-            Checked = False
-          end
-          item
-            Header = False
-            Enabled = True
-            Title = 'Theme'
-            Caption = 'Light'
-            Checked = False
-          end
-          item
-            Header = False
-            Enabled = True
-            Title = 'Theme'
-            Caption = 'Dark'
-            Checked = False
-          end
-          item
-            Header = False
-            Enabled = True
-            Title = 'Theme'
-            Caption = 'Windows Light'
-            Checked = False
-          end
-          item
-            Header = False
-            Enabled = True
-            Title = 'Theme'
-            Caption = 'Windows Dark'
-            Checked = False
-          end>
-        ItemIndex = -1
-        DropDownCount = 7
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = 13
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        OnChange = OfficeComboBox_SkinChange
+        UseSkinSize = True
+        CaptionImageIndex = -1
+        NumGlyphs = 1
+        Spacing = 2
+        RealWidth = 0
+        RealHeight = 0
+        ShowRollButton = False
+        ShowCloseButton = False
+        DefaultCaptionHeight = 21
+        RollState = False
+        RollKind = rkRollVertical
+        Moveable = False
+        Sizeable = False
+        Caption = 'UI'
+        object OfficeComboBox_Languages: TbsSkinOfficeComboBox
+          Left = 1
+          Top = 21
+          Width = 255
+          Height = 41
+          HintImageIndex = 0
+          TabOrder = 0
+          SkinData = SkinData_1
+          SkinDataName = 'combobox'
+          DefaultFont.Charset = DEFAULT_CHARSET
+          DefaultFont.Color = clWindowText
+          DefaultFont.Height = 13
+          DefaultFont.Name = 'Tahoma'
+          DefaultFont.Style = []
+          DefaultWidth = 0
+          DefaultHeight = 0
+          UseSkinFont = True
+          UseSkinSize = False
+          ToolButtonStyle = False
+          AlphaBlend = False
+          AlphaBlendValue = 0
+          AlphaBlendAnimation = False
+          AlternateRow = False
+          ListBoxHeaderLeftAlignment = False
+          ListBoxDefaultFont.Charset = DEFAULT_CHARSET
+          ListBoxDefaultFont.Color = clWindowText
+          ListBoxDefaultFont.Height = 13
+          ListBoxDefaultFont.Name = 'Tahoma'
+          ListBoxDefaultFont.Style = []
+          ListBoxUseSkinFont = True
+          ListBoxWidth = 0
+          ListBoxHeight = 0
+          ListBoxShowItemTitles = True
+          ListBoxSkinDataName = 'listbox'
+          ListBoxShowLines = False
+          ListBoxItemHeight = 30
+          ListBoxHeaderHeight = 20
+          HideSelection = True
+          ShowItemTitle = True
+          ShowItemImage = True
+          ShowItemText = True
+          DefaultColor = clWindow
+          Align = alTop
+          Items = <
+            item
+              Header = True
+              Enabled = True
+              Title = 'Select a language'
+              Caption = 'Select a language'
+              Checked = False
+            end
+            item
+              Header = False
+              Enabled = True
+              Title = 'Language'
+              Caption = 'English'
+              Checked = False
+            end
+            item
+              Header = False
+              Enabled = True
+              Title = 'Language'
+              Caption = 'Espa'#241'ol'
+              Checked = False
+            end
+            item
+              Header = False
+              Enabled = True
+              Title = 'Language'
+              Caption = 'Fran'#231'ais'
+              Checked = False
+            end
+            item
+              Header = False
+              Enabled = True
+              Title = 'Language'
+              Caption = 'Deutsch'
+              Checked = False
+            end>
+          ItemIndex = -1
+          DropDownCount = 7
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = 13
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          OnChange = OfficeComboBox_LanguagesChange
+          ExplicitLeft = 5
+          ExplicitTop = 48
+          ExplicitWidth = 261
+        end
+        object OfficeComboBox_Skin: TbsSkinOfficeComboBox
+          Left = 1
+          Top = 62
+          Width = 255
+          Height = 46
+          HintImageIndex = 0
+          TabOrder = 1
+          SkinData = SkinData_1
+          SkinDataName = 'combobox'
+          DefaultFont.Charset = DEFAULT_CHARSET
+          DefaultFont.Color = clWindowText
+          DefaultFont.Height = 13
+          DefaultFont.Name = 'Tahoma'
+          DefaultFont.Style = []
+          DefaultWidth = 0
+          DefaultHeight = 0
+          UseSkinFont = True
+          UseSkinSize = False
+          ToolButtonStyle = False
+          AlphaBlend = False
+          AlphaBlendValue = 0
+          AlphaBlendAnimation = False
+          AlternateRow = False
+          ListBoxHeaderLeftAlignment = False
+          ListBoxDefaultFont.Charset = DEFAULT_CHARSET
+          ListBoxDefaultFont.Color = clWindowText
+          ListBoxDefaultFont.Height = 13
+          ListBoxDefaultFont.Name = 'Tahoma'
+          ListBoxDefaultFont.Style = []
+          ListBoxUseSkinFont = True
+          ListBoxWidth = 0
+          ListBoxHeight = 0
+          ListBoxShowItemTitles = True
+          ListBoxSkinDataName = 'listbox'
+          ListBoxShowLines = False
+          ListBoxItemHeight = 30
+          ListBoxHeaderHeight = 20
+          HideSelection = True
+          ShowItemTitle = True
+          ShowItemImage = True
+          ShowItemText = True
+          DefaultColor = clWindow
+          Align = alTop
+          Items = <
+            item
+              Header = True
+              Enabled = True
+              Title = 'Select a UI theme'
+              Caption = 'Select a UI theme'
+              Checked = False
+            end
+            item
+              Header = False
+              Enabled = True
+              Title = 'Theme'
+              Caption = 'Light'
+              Checked = False
+            end
+            item
+              Header = False
+              Enabled = True
+              Title = 'Theme'
+              Caption = 'Dark'
+              Checked = False
+            end
+            item
+              Header = False
+              Enabled = True
+              Title = 'Theme'
+              Caption = 'Windows Light'
+              Checked = False
+            end
+            item
+              Header = False
+              Enabled = True
+              Title = 'Theme'
+              Caption = 'Windows Dark'
+              Checked = False
+            end>
+          ItemIndex = -1
+          DropDownCount = 7
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = 13
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          OnChange = OfficeComboBox_SkinChange
+          ExplicitLeft = 21
+          ExplicitTop = 143
+          ExplicitWidth = 263
+        end
+      end
+      object Panel_GameFolders: TbsSkinExPanel
+        Left = 5
+        Top = 167
+        Width = 492
+        Height = 114
+        HintImageIndex = 0
+        TabOrder = 2
+        SkinData = SkinData_1
+        SkinDataName = 'expanel'
+        DefaultFont.Charset = DEFAULT_CHARSET
+        DefaultFont.Color = clWindowText
+        DefaultFont.Height = 13
+        DefaultFont.Name = 'Tahoma'
+        DefaultFont.Style = []
+        DefaultWidth = 0
+        DefaultHeight = 0
+        UseSkinFont = True
+        UseSkinSize = True
+        CaptionImageIndex = -1
+        NumGlyphs = 1
+        Spacing = 2
+        RealWidth = 0
+        RealHeight = 0
+        ShowRollButton = False
+        ShowCloseButton = False
+        DefaultCaptionHeight = 21
+        RollState = False
+        RollKind = rkRollVertical
+        Moveable = False
+        Sizeable = False
+        Caption = 'Game folders and files'
+      end
+      object Panel_SettingsOKButton: TbsSkinPanel
+        Left = 0
+        Top = 408
+        Width = 507
+        Height = 90
+        HintImageIndex = 0
+        TabOrder = 3
+        SkinData = SkinData_1
+        SkinDataName = 'panel'
+        DefaultFont.Charset = DEFAULT_CHARSET
+        DefaultFont.Color = clWindowText
+        DefaultFont.Height = 13
+        DefaultFont.Name = 'Tahoma'
+        DefaultFont.Style = []
+        DefaultWidth = 0
+        DefaultHeight = 0
+        UseSkinFont = True
+        EmptyDrawing = False
+        RibbonStyle = False
+        ImagePosition = bsipDefault
+        TransparentMode = False
+        CaptionImageIndex = -1
+        RealHeight = -1
+        AutoEnabledControls = True
+        CheckedMode = False
+        Checked = False
+        DefaultAlignment = taLeftJustify
+        DefaultCaptionHeight = 20
+        BorderStyle = bvFrame
+        CaptionMode = False
+        RollUpMode = False
+        RollUpState = False
+        NumGlyphs = 1
+        Spacing = 2
+        Caption = 'Panel_SettingsOKButton'
+        Align = alBottom
+        object Button_SaveSettings: TbsSkinButton
+          Left = 72
+          Top = 16
+          Width = 123
+          Height = 57
+          HintImageIndex = 0
+          TabOrder = 0
+          SkinData = SkinData_1
+          SkinDataName = 'button'
+          DefaultFont.Charset = DEFAULT_CHARSET
+          DefaultFont.Color = clWindowText
+          DefaultFont.Height = 13
+          DefaultFont.Name = 'Tahoma'
+          DefaultFont.Style = []
+          DefaultWidth = 0
+          DefaultHeight = 0
+          UseSkinFont = True
+          Transparent = False
+          CheckedMode = False
+          ImageIndex = -1
+          AlwaysShowLayeredFrame = False
+          UseSkinSize = False
+          UseSkinFontColor = True
+          RepeatMode = False
+          RepeatInterval = 100
+          AllowAllUp = False
+          TabStop = True
+          CanFocused = True
+          Down = False
+          GroupIndex = 0
+          Caption = 'Save settings'
+          NumGlyphs = 1
+          Spacing = 1
+          OnClick = Button_SaveSettingsClick
+        end
+        object Button_CancelSettings: TbsSkinButton
+          Left = 272
+          Top = 16
+          Width = 123
+          Height = 57
+          HintImageIndex = 0
+          TabOrder = 1
+          SkinData = SkinData_1
+          SkinDataName = 'button'
+          DefaultFont.Charset = DEFAULT_CHARSET
+          DefaultFont.Color = clWindowText
+          DefaultFont.Height = 13
+          DefaultFont.Name = 'Tahoma'
+          DefaultFont.Style = []
+          DefaultWidth = 0
+          DefaultHeight = 0
+          UseSkinFont = True
+          Transparent = False
+          CheckedMode = False
+          ImageIndex = -1
+          AlwaysShowLayeredFrame = False
+          UseSkinSize = False
+          UseSkinFontColor = True
+          RepeatMode = False
+          RepeatInterval = 100
+          AllowAllUp = False
+          TabStop = True
+          CanFocused = True
+          Down = False
+          GroupIndex = 0
+          Caption = 'Cancel settings changes'
+          NumGlyphs = 1
+          Spacing = 1
+          OnClick = Button_CancelSettingsClick
+        end
       end
     end
   end
@@ -318,6 +711,7 @@ object FrmMain: TFrmMain
       object DBTableView_1: TcxGridDBTableView
         DragMode = dmAutomatic
         Navigator.Buttons.CustomButtons = <>
+        OnCellClick = DBTableView_1CellClick
         DataController.DataSource = DataModule1.ds_query_mods
         DataController.Summary.DefaultGroupSummaryItems = <>
         DataController.Summary.FooterSummaryItems = <>
@@ -393,7 +787,7 @@ object FrmMain: TFrmMain
     ClientInActiveEffectType = bsieSemiTransparent
     DisableSystemMenu = False
     AlwaysResize = False
-    PositionInMonitor = bspDefault
+    PositionInMonitor = bspDesktopCenter
     StatusBar = StatusBar_1
     UseFormCursorInNCArea = False
     MaxMenuItemsInWindow = 0
@@ -5407,213 +5801,102 @@ object FrmMain: TFrmMain
       610001000D000A00500061006700650043006F006E00740072006F006C005F00
       4D00610069006E0001005400610068006F006D00610001005400610068006F00
       6D00610001005400610068006F006D00610001005400610068006F006D006100
-      01000D000A004F006600660069006300650043006F006D0062006F0042006F00
-      78005F004C0061006E0067007500610067006500730001005400610068006F00
-      6D00610001005400610068006F006D00610001005400610068006F006D006100
-      01005400610068006F006D00610001000D000A004F0066006600690063006500
-      43006F006D0062006F0042006F0078005F0053006B0069006E00010054006100
-      68006F006D00610001005400610068006F006D00610001005400610068006F00
-      6D00610001005400610068006F006D00610001000D000A00730074004D007500
-      6C00740069004C0069006E00650073005F0055006E00690063006F0064006500
-      0D000A007300740044006C0067007300430061007000740069006F006E007300
-      5F0055006E00690063006F00640065000D000A00730074005300740072006900
-      6E00670073005F0055006E00690063006F00640065000D000A00730074004F00
-      740068006500720053007400720069006E00670073005F0055006E0069006300
-      6F00640065000D000A005300740061007400750073004200610072005F003100
-      2E0053006B0069006E0044006100740061004E0061006D006500010073007400
-      610074007500730062006100720001000100010001000D000A0053006B006900
-      6E0044006100740061005F0031002E0044006C0067004C006900730074005600
-      6900650077004900740065006D0053006B0069006E0044006100740061004E00
-      61006D00650001006C0069007300740062006F00780001000100010001000D00
-      0A0053006B0069006E0044006100740061005F0031002E0044006C0067005400
-      72006500650056006900650077004900740065006D0053006B0069006E004400
-      6100740061004E0061006D00650001006C0069007300740062006F0078000100
-      0100010001000D000A00500061006700650043006F006E00740072006F006C00
-      5F004D00610069006E002E0042007500740074006F006E005400610062005300
+      01000D000A00730074004D0075006C00740069004C0069006E00650073005F00
+      55006E00690063006F00640065000D000A007300740044006C00670073004300
+      61007000740069006F006E0073005F0055006E00690063006F00640065000D00
+      0A007300740053007400720069006E00670073005F0055006E00690063006F00
+      640065000D000A00730074004F00740068006500720053007400720069006E00
+      670073005F0055006E00690063006F00640065000D000A005300740061007400
+      750073004200610072005F0031002E0053006B0069006E004400610074006100
+      4E0061006D006500010073007400610074007500730062006100720001000100
+      010001000D000A0053006B0069006E0044006100740061005F0031002E004400
+      6C0067004C0069007300740056006900650077004900740065006D0053006B00
+      69006E0044006100740061004E0061006D00650001006C006900730074006200
+      6F00780001000100010001000D000A0053006B0069006E004400610074006100
+      5F0031002E0044006C0067005400720065006500560069006500770049007400
+      65006D0053006B0069006E0044006100740061004E0061006D00650001006C00
+      69007300740062006F00780001000100010001000D000A005000610067006500
+      43006F006E00740072006F006C005F004D00610069006E002E00420075007400
+      74006F006E0054006100620053006B0069006E0044006100740061004E006100
+      6D006500010072006500730069007A00650074006F006F006C00620075007400
+      74006F006E0001000100010001000D000A00500061006700650043006F006E00
+      740072006F006C005F004D00610069006E002E0053006B0069006E0044006100
+      740061004E0061006D006500010074006100620001000100010001000D000A00
+      500061006E0065006C005F004D006F00640073004F006E00500043002E005300
+      6B0069006E0044006100740061004E0061006D00650001006500780070006100
+      6E0065006C0001000100010001000D000A004700720069006400440042004300
+      6F006C0075006D006E005F005F005F0047007200690064003100440042005400
+      610062006C006500560069006500770031006D006F006400730069007A006500
+      2E00500072006F00700065007200740069006500730043006C00610073007300
+      4E0061006D00650001005400630078005300700069006E004500640069007400
+      500072006F00700065007200740069006500730001000100010001000D000A00
+      530070006C0069007400740065007200450078005F0031002E0053006B006900
+      6E0044006100740061004E0061006D00650001007600730070006C0069007400
+      74006500720001000100010001000D000A0053006B0069006E00410064006100
+      70007400650072005F0031002E0042007500740074006F006E0053006B006900
+      6E0044006100740061004E0061006D006500010072006500730069007A006500
+      62007500740074006F006E0001000100010001000D000A0053006B0069006E00
+      41006400610070007400650072005F0031002E0043006F006F006C0042006100
+      720053006B0069006E0044006100740061004E0061006D006500010070006100
+      6E0065006C0001000100010001000D000A0053006B0069006E00410064006100
+      70007400650072005F0031002E0048005300630072006F006C006C0053006B00
+      69006E0044006100740061004E0061006D006500010068007300630072006F00
+      6C006C0062006100720001000100010001000D000A0053006B0069006E004100
+      6400610070007400650072005F0031002E00500061006E0065006C0053006B00
+      69006E0044006100740061004E0061006D0065000100700061006E0065006C00
+      01000100010001000D000A0053006B0069006E00410064006100700074006500
+      72005F0031002E005300700065006500640042007500740074006F006E005300
       6B0069006E0044006100740061004E0061006D00650001007200650073006900
       7A00650074006F006F006C0062007500740074006F006E000100010001000100
-      0D000A00500061006700650043006F006E00740072006F006C005F004D006100
-      69006E002E0053006B0069006E0044006100740061004E0061006D0065000100
-      74006100620001000100010001000D000A00500061006E0065006C005F004D00
-      6F00640073004F006E00500043002E0053006B0069006E004400610074006100
-      4E0061006D006500010065007800700061006E0065006C000100010001000100
-      0D000A0047007200690064004400420043006F006C0075006D006E005F005F00
-      5F0047007200690064003100440042005400610062006C006500560069006500
-      770031006D006F006400730069007A0065002E00500072006F00700065007200
-      740069006500730043006C006100730073004E0061006D006500010054006300
-      78005300700069006E004500640069007400500072006F007000650072007400
-      69006500730001000100010001000D000A00530070006C006900740074006500
-      7200450078005F0031002E0053006B0069006E0044006100740061004E006100
-      6D00650001007600730070006C00690074007400650072000100010001000100
       0D000A0053006B0069006E0041006400610070007400650072005F0031002E00
-      42007500740074006F006E0053006B0069006E0044006100740061004E006100
-      6D006500010072006500730069007A00650062007500740074006F006E000100
-      0100010001000D000A0053006B0069006E004100640061007000740065007200
-      5F0031002E0043006F006F006C0042006100720053006B0069006E0044006100
-      740061004E0061006D0065000100700061006E0065006C000100010001000100
-      0D000A0053006B0069006E0041006400610070007400650072005F0031002E00
-      48005300630072006F006C006C0053006B0069006E0044006100740061004E00
-      61006D006500010068007300630072006F006C006C0062006100720001000100
-      010001000D000A0053006B0069006E0041006400610070007400650072005F00
-      31002E00500061006E0065006C0053006B0069006E0044006100740061004E00
-      61006D0065000100700061006E0065006C0001000100010001000D000A005300
-      6B0069006E0041006400610070007400650072005F0031002E00530070006500
-      6500640042007500740074006F006E0053006B0069006E004400610074006100
-      4E0061006D006500010072006500730069007A00650074006F006F006C006200
-      7500740074006F006E0001000100010001000D000A0053006B0069006E004100
-      6400610070007400650072005F0031002E0054006F006F006C00420061007200
-      53006B0069006E0044006100740061004E0061006D0065000100720065007300
-      69007A00650074006F006F006C00700061006E0065006C000100010001000100
-      0D000A0053006B0069006E0041006400610070007400650072005F0031002E00
-      560065007200730069006F006E00010053006B0069006E004100640061007000
-      7400650072002000560065007200730069006F006E00200035002E0032003500
-      01000100010001000D000A0053006B0069006E00410064006100700074006500
-      72005F0031002E0056005300630072006F006C006C0053006B0069006E004400
-      6100740061004E0061006D006500010076007300630072006F006C006C006200
-      6100720001000100010001000D000A0056006100720063006F00640065006400
-      2E004C006F00670069006E004E0061006D00650001005300460041004A004100
-      520044004F0001000100010001000D000A006D007300670064006C0067005F00
-      31002E0042007500740074006F006E0053006B0069006E004400610074006100
-      4E0061006D006500010062007500740074006F006E0001000100010001000D00
-      0A006D007300670064006C0067005F0031002E004D0065007300730061006700
-      65004C006100620065006C0053006B0069006E0044006100740061004E006100
-      6D00650001007300740064006C006100620065006C0001000100010001000D00
-      0A004F006600660069006300650043006F006D0062006F0042006F0078005F00
-      4C0061006E006700750061006700650073002E004C0069007300740042006F00
-      780053006B0069006E0044006100740061004E0061006D00650001006C006900
-      7300740062006F00780001000100010001000D000A004F006600660069006300
-      650043006F006D0062006F0042006F0078005F004C0061006E00670075006100
-      6700650073002E0053006B0069006E0044006100740061004E0061006D006500
-      010063006F006D0062006F0062006F00780001000100010001000D000A004F00
-      6600660069006300650043006F006D0062006F0042006F0078005F0053006B00
-      69006E002E004C0069007300740042006F00780053006B0069006E0044006100
-      740061004E0061006D00650001006C0069007300740062006F00780001000100
-      010001000D000A004F006600660069006300650043006F006D0062006F004200
-      6F0078005F0053006B0069006E002E0053006B0069006E004400610074006100
-      4E0061006D006500010063006F006D0062006F0062006F007800010001000100
-      01000D000A00730074004C006F00630061006C00650073005F0055006E006900
-      63006F00640065000D000A007300740043006F006C006C006500630074006900
-      6F006E0073005F0055006E00690063006F00640065000D000A0043006F006D00
-      700072006500730073006500640053006B0069006E004C006900730074005F00
-      31002E0053006B0069006E0073005B0030005D002E0043006F006D0070007200
-      65007300730065006400460069006C0065004E0061006D006500010053006D00
-      6100720074005300740079006C0065005F00530069006C007600650072002E00
-      73006B006E0001000100010001000D000A0043006F006D007000720065007300
-      73006500640053006B0069006E004C006900730074005F0031002E0053006B00
-      69006E0073005B0031005D002E0043006F006D00700072006500730073006500
-      6400460069006C0065004E0061006D006500010053006D006100720074005300
-      740079006C0065002E0073006B006E0001000100010001000D000A0043006F00
-      6D00700072006500730073006500640053006B0069006E004C00690073007400
-      5F0031002E0053006B0069006E0073005B0032005D002E0043006F006D007000
-      720065007300730065006400460069006C0065004E0061006D00650001005700
-      69006E0064006F0077007300310030002E0073006B006E000100010001000100
+      54006F006F006C0042006100720053006B0069006E0044006100740061004E00
+      61006D006500010072006500730069007A00650074006F006F006C0070006100
+      6E0065006C0001000100010001000D000A0053006B0069006E00410064006100
+      70007400650072005F0031002E00560065007200730069006F006E0001005300
+      6B0069006E004100640061007000740065007200200056006500720073006900
+      6F006E00200035002E003200350001000100010001000D000A0053006B006900
+      6E0041006400610070007400650072005F0031002E0056005300630072006F00
+      6C006C0053006B0069006E0044006100740061004E0061006D00650001007600
+      7300630072006F006C006C0062006100720001000100010001000D000A005600
+      6100720063006F006400650064002E004C006F00670069006E004E0061006D00
+      650001005300460041004A004100520044004F0001000100010001000D000A00
+      6D007300670064006C0067005F0031002E0042007500740074006F006E005300
+      6B0069006E0044006100740061004E0061006D00650001006200750074007400
+      6F006E0001000100010001000D000A006D007300670064006C0067005F003100
+      2E004D006500730073006100670065004C006100620065006C0053006B006900
+      6E0044006100740061004E0061006D00650001007300740064006C0061006200
+      65006C0001000100010001000D000A00730074004C006F00630061006C006500
+      73005F0055006E00690063006F00640065000D000A007300740043006F006C00
+      6C0065006300740069006F006E0073005F0055006E00690063006F0064006500
       0D000A0043006F006D00700072006500730073006500640053006B0069006E00
-      4C006900730074005F0031002E0053006B0069006E0073005B0033005D002E00
+      4C006900730074005F0031002E0053006B0069006E0073005B0030005D002E00
       43006F006D007000720065007300730065006400460069006C0065004E006100
-      6D0065000100570069006E00310030004D006F006400650072006E0044006100
-      72006B002E0073006B006E0001000100010001000D000A004F00660066006900
-      6300650043006F006D0062006F0042006F0078005F004C0061006E0067007500
-      61006700650073002E004900740065006D0073005B0030005D002E0043006100
-      7000740069006F006E000100530065006C006500630074002000610020006C00
-      61006E00670075006100670065000100530065006C0065006300740069006F00
-      6E006100200075006E0020006C0065006E006700750061006A00650001000100
-      01000D000A004F006600660069006300650043006F006D0062006F0042006F00
-      78005F004C0061006E006700750061006700650073002E004900740065006D00
-      73005B0030005D002E005400690074006C0065000100530065006C0065006300
-      74002000610020006C0061006E00670075006100670065000100530065006C00
-      65006300740069006F006E006100200075006E0020006C0065006E0067007500
-      61006A0065000100010001000D000A004F006600660069006300650043006F00
-      6D0062006F0042006F0078005F004C0061006E00670075006100670065007300
-      2E004900740065006D0073005B0031005D002E00430061007000740069006F00
-      6E00010045006E0067006C00690073006800010045006E0067006C0069007300
-      6800010045006E0067006C00690073006800010045006E0067006C0069007300
-      680001000D000A004F006600660069006300650043006F006D0062006F004200
-      6F0078005F004C0061006E006700750061006700650073002E00490074006500
-      6D0073005B0031005D002E005400690074006C00650001004C0061006E006700
-      750061006700650001004C0065006E006700750061006A006500010001000100
-      0D000A004F006600660069006300650043006F006D0062006F0042006F007800
-      5F004C0061006E006700750061006700650073002E004900740065006D007300
-      5B0032005D002E00430061007000740069006F006E0001004500730070006100
-      F1006F006C0001004500730070006100F1006F006C0001004500730070006100
-      F1006F006C0001004500730070006100F1006F006C0001000D000A004F006600
-      660069006300650043006F006D0062006F0042006F0078005F004C0061006E00
-      6700750061006700650073002E004900740065006D0073005B0032005D002E00
-      5400690074006C00650001004C0061006E006700750061006700650001004C00
-      65006E006700750061006A0065000100010001000D000A004F00660066006900
-      6300650043006F006D0062006F0042006F0078005F004C0061006E0067007500
-      61006700650073002E004900740065006D0073005B0033005D002E0043006100
-      7000740069006F006E0001004600720061006E00E70061006900730001004600
-      720061006E006300E900730001004600720061006E00E7006100690073000100
-      4600720061006E00E70061006900730001000D000A004F006600660069006300
-      650043006F006D0062006F0042006F0078005F004C0061006E00670075006100
-      6700650073002E004900740065006D0073005B0033005D002E00540069007400
-      6C00650001004C0061006E006700750061006700650001004C0065006E006700
-      750061006A0065000100010001000D000A004F00660066006900630065004300
-      6F006D0062006F0042006F0078005F004C0061006E0067007500610067006500
-      73002E004900740065006D0073005B0034005D002E0043006100700074006900
-      6F006E0001004400650075007400730063006800010044006500750074007300
-      6300680065000100440065007500740073006300680065000100440065007500
-      7400730063006800650001000D000A004F006600660069006300650043006F00
-      6D0062006F0042006F0078005F004C0061006E00670075006100670065007300
-      2E004900740065006D0073005B0034005D002E005400690074006C0065000100
-      4C0061006E006700750061006700650001004C0065006E006700750061006A00
-      65000100010001000D000A004F006600660069006300650043006F006D006200
-      6F0042006F0078005F0053006B0069006E002E004900740065006D0073005B00
-      30005D002E00430061007000740069006F006E000100530065006C0065006300
-      74002000610020005500490020007400680065006D0065000100530065006C00
-      65006300630069006F006E006100200075006E002000740065006D0061002000
-      64006500200069006E0074006500720066006100730065000100010001000D00
-      0A004F006600660069006300650043006F006D0062006F0042006F0078005F00
-      53006B0069006E002E004900740065006D0073005B0030005D002E0054006900
-      74006C0065000100530065006C00650063007400200061002000550049002000
-      7400680065006D0065000100530065006C0065006300630069006F006E006100
-      200075006E002000740065006D006100200064006500200069006E0074006500
-      720066006100730065000100010001000D000A004F0066006600690063006500
-      43006F006D0062006F0042006F0078005F0053006B0069006E002E0049007400
-      65006D0073005B0031005D002E00430061007000740069006F006E0001004C00
-      690067006800740001000100010001000D000A004F0066006600690063006500
-      43006F006D0062006F0042006F0078005F0053006B0069006E002E0049007400
-      65006D0073005B0031005D002E005400690074006C0065000100540068006500
-      6D0065000100540065006D0061000100010001000D000A004F00660066006900
-      6300650043006F006D0062006F0042006F0078005F0053006B0069006E002E00
-      4900740065006D0073005B0032005D002E00430061007000740069006F006E00
-      01004400610072006B0001000100010001000D000A004F006600660069006300
-      650043006F006D0062006F0042006F0078005F0053006B0069006E002E004900
-      740065006D0073005B0032005D002E005400690074006C006500010054006800
-      65006D0065000100540065006D0061000100010001000D000A004F0066006600
-      69006300650043006F006D0062006F0042006F0078005F0053006B0069006E00
-      2E004900740065006D0073005B0033005D002E00430061007000740069006F00
-      6E000100570069006E0064006F007700730020004C0069006700680074000100
-      0100010001000D000A004F006600660069006300650043006F006D0062006F00
-      42006F0078005F0053006B0069006E002E004900740065006D0073005B003300
-      5D002E005400690074006C00650001005400680065006D006500010054006500
-      6D0061000100010001000D000A004F006600660069006300650043006F006D00
-      62006F0042006F0078005F0053006B0069006E002E004900740065006D007300
-      5B0034005D002E00430061007000740069006F006E000100570069006E006400
-      6F007700730020004400610072006B0001000100010001000D000A004F006600
-      660069006300650043006F006D0062006F0042006F0078005F0053006B006900
-      6E002E004900740065006D0073005B0034005D002E005400690074006C006500
-      01005400680065006D0065000100540065006D0061000100010001000D000A00
-      73007400430068006100720053006500740073005F0055006E00690063006F00
-      640065000D000A005400460072006D004D00610069006E000100440045004600
-      410055004C0054005F004300480041005200530045005400010041004E005300
-      49005F004300480041005200530045005400010041004E00530049005F004300
-      480041005200530045005400010041004E00530049005F004300480041005200
-      53004500540001000D000A00500061006700650043006F006E00740072006F00
-      6C005F004D00610069006E000100440045004600410055004C0054005F004300
-      480041005200530045005400010041004E00530049005F004300480041005200
-      530045005400010041004E00530049005F004300480041005200530045005400
-      010041004E00530049005F00430048004100520053004500540001000D000A00
-      4F006600660069006300650043006F006D0062006F0042006F0078005F004C00
-      61006E006700750061006700650073000100440045004600410055004C005400
-      5F004300480041005200530045005400010041004E00530049005F0043004800
-      41005200530045005400010041004E00530049005F0043004800410052005300
-      45005400010041004E00530049005F0043004800410052005300450054000100
-      0D000A004F006600660069006300650043006F006D0062006F0042006F007800
-      5F0053006B0069006E000100440045004600410055004C0054005F0043004800
-      41005200530045005400010041004E00530049005F0043004800410052005300
-      45005400010041004E00530049005F0043004800410052005300450054000100
-      41004E00530049005F00430048004100520053004500540001000D000A00}
+      6D006500010053006D006100720074005300740079006C0065005F0053006900
+      6C007600650072002E0073006B006E0001000100010001000D000A0043006F00
+      6D00700072006500730073006500640053006B0069006E004C00690073007400
+      5F0031002E0053006B0069006E0073005B0031005D002E0043006F006D007000
+      720065007300730065006400460069006C0065004E0061006D00650001005300
+      6D006100720074005300740079006C0065002E0073006B006E00010001000100
+      01000D000A0043006F006D00700072006500730073006500640053006B006900
+      6E004C006900730074005F0031002E0053006B0069006E0073005B0032005D00
+      2E0043006F006D007000720065007300730065006400460069006C0065004E00
+      61006D0065000100570069006E0064006F0077007300310030002E0073006B00
+      6E0001000100010001000D000A0043006F006D00700072006500730073006500
+      640053006B0069006E004C006900730074005F0031002E0053006B0069006E00
+      73005B0033005D002E0043006F006D0070007200650073007300650064004600
+      69006C0065004E0061006D0065000100570069006E00310030004D006F006400
+      650072006E004400610072006B002E0073006B006E0001000100010001000D00
+      0A0073007400430068006100720053006500740073005F0055006E0069006300
+      6F00640065000D000A005400460072006D004D00610069006E00010044004500
+      4600410055004C0054005F004300480041005200530045005400010041004E00
+      530049005F004300480041005200530045005400010041004E00530049005F00
+      4300480041005200530045005400010041004E00530049005F00430048004100
+      520053004500540001000D000A00500061006700650043006F006E0074007200
+      6F006C005F004D00610069006E000100440045004600410055004C0054005F00
+      4300480041005200530045005400010041004E00530049005F00430048004100
+      5200530045005400010041004E00530049005F00430048004100520053004500
+      5400010041004E00530049005F00430048004100520053004500540001000D00
+      0A00}
   end
   object Timer_StartUp: TTimer
     Enabled = False
@@ -5621,28 +5904,10 @@ object FrmMain: TFrmMain
     OnTimer = Timer_StartUpTimer
     Left = 424
   end
-  object SkinAdapter_1: TbsaSkinAdapter
-    SkinData = SkinData_1
-    AdapterType = bsaUseNames
-    TabsBGTransparent = False
-    AutoAddNames = False
-    AutoAddClasses = False
-    VScrollSkinDataName = 'vscrollbar'
-    HScrollSkinDataName = 'hscrollbar'
-    Version = 'SkinAdapter Version 5.25'
-    ButtonSkinDataName = 'resizebutton'
-    SpeedButtonSkinDataName = 'resizetoolbutton'
-    ButtonUseSkinSize = False
-    SpeedButtonUseSkinSize = False
-    PanelSkinDataName = 'panel'
-    ToolBarSkinDataName = 'resizetoolpanel'
-    CoolBarSkinDataName = 'panel'
-    Left = 232
-  end
   object Varcoded: TVarCodedxe8
     IsValidUser = False
     LoginName = 'SFAJARDO'
-    Left = 472
+    Left = 424
     Top = 256
   end
   object msgdlg_1: TbsSkinMessage
@@ -5668,5 +5933,44 @@ object FrmMain: TFrmMain
     UseSkinFont = True
     Left = 416
     Top = 48
+  end
+  object SkinAdapter_1: TbsaSkinAdapter
+    SkinData = SkinData_1
+    AdapterType = bsaUseNames
+    TabsBGTransparent = False
+    AutoAddNames = False
+    AutoAddClasses = False
+    VScrollSkinDataName = 'vscrollbar'
+    HScrollSkinDataName = 'hscrollbar'
+    Version = 'SkinAdapter Version 5.25'
+    ButtonSkinDataName = 'resizebutton'
+    SpeedButtonSkinDataName = 'resizetoolbutton'
+    ButtonUseSkinSize = False
+    SpeedButtonUseSkinSize = False
+    PanelSkinDataName = 'panel'
+    ToolBarSkinDataName = 'resizetoolpanel'
+    CoolBarSkinDataName = 'panel'
+    Left = 232
+  end
+  object Timer_BrowserSetUp: TTimer
+    Enabled = False
+    Interval = 300
+    OnTimer = Timer_BrowserSetUpTimer
+    Left = 416
+    Top = 104
+  end
+  object Chromium1: TChromium
+    OnCookiesFlushed = Chromium1CookiesFlushed
+    OnLoadEnd = Chromium1LoadEnd
+    OnLoadError = Chromium1LoadError
+    OnLoadingStateChange = Chromium1LoadingStateChange
+    OnTitleChange = Chromium1TitleChange
+    OnLoadingProgressChange = Chromium1LoadingProgressChange
+    OnAfterCreated = Chromium1AfterCreated
+    OnBeforeClose = Chromium1BeforeClose
+    OnClose = Chromium1Close
+    OnBeforeResourceLoad = Chromium1BeforeResourceLoad
+    Left = 424
+    Top = 360
   end
 end
