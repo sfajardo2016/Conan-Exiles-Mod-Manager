@@ -22,16 +22,27 @@ uses
 	 uCEFTypes,
 	 uCEFApplication,
 
+	 uCEFStringVisitor,
+
+
+
+
+
+
 	 uCEFSentinel,
 	 uCEFWinControl, uCEFWindowParent, uCEFChromiumCore,
 	 uCEFChromium,
+
+
 
 
 	varcodedxe8,
 	DataModuleUnit,
 
 	bsMessages,
-	Vcl.StdCtrls, bsSkinBoxCtrls;
+	Vcl.StdCtrls, bsSkinBoxCtrls, Vcl.Mask, dxPDFCore, dxPDFBase, dxPDFText,
+  dxPDFRecognizedObject, dxPDFDocument, dxBarBuiltInMenu, dxCustomPreview,
+  dxPDFDocumentViewer, dxPDFViewer;
 
 
 	CONST
@@ -78,6 +89,8 @@ type
     StatusPanel_Browser: TbsSkinStatusPanel;
     Slider_BrowserZoom: TbsSkinSlider;
     StatusPanel_Zoom: TbsSkinStatusPanel;
+    Button_1: TButton;
+    PDFViewer1: TdxPDFViewer;
     procedure OfficeComboBox_LanguagesChange(Sender: TObject);
     procedure Timer_StartUpTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -111,6 +124,7 @@ type
       const browser: ICefBrowser; isLoading, canGoBack,
       canGoForward: Boolean);
     procedure Slider_BrowserZoomChange(Sender: TObject);
+    procedure Button_1Click(Sender: TObject);
   private
 		dm: TDataModule1;
 		/// <remarks>
@@ -157,8 +171,8 @@ implementation
 procedure CreateGlobalCEFApp;
 begin
   GlobalCEFApp                     := TCefApplication.Create;
-  GlobalCEFApp.LogFile             := 'debug.log';
-  GlobalCEFApp.LogSeverity         := LOGSEVERITY_INFO;
+//  GlobalCEFApp.LogFile             := 'debug.log';
+//  GlobalCEFApp.LogSeverity         := LOGSEVERITY_INFO;
   GlobalCEFApp.cache               := 'cache';
 	GlobalCEFApp.EnablePrintPreview  := True;
   // This is a workaround for the CEF4Delphi issue #324 :
@@ -166,6 +180,24 @@ begin
   GlobalCEFApp.DisableFeatures := 'WinUseBrowserSpellChecker';
 end;
 
+
+procedure StringVisitor(const str: ustring);
+begin
+  //str is the SourceHtml
+showmessage(str);
+end;
+
+
+procedure TFrmMain.Button_1Click(Sender: TObject);
+begin
+
+Chromium1.PrintToPDF('.\page.pdf','CE web browser',Chromium1.DocumentURL );
+
+PDFViewer1.LoadFromFile('.\page.pdf' );
+
+
+
+end;
 
 procedure TFrmMain.Button_CancelSettingsClick(Sender: TObject);
 begin
@@ -178,9 +210,9 @@ SaveSettings();
 end;
 
 procedure TFrmMain.Chromium1AfterCreated(Sender: TObject;
-  const browser: ICefBrowser);
+	const browser: ICefBrowser);
 begin
-  if Chromium1.IsSameBrowser(browser) then
+	if Chromium1.IsSameBrowser(browser) then
     PostMessage(Handle, CEF_AFTERCREATED, 0, 0)
    else
     SendMessage(browser.Host.WindowHandle, WM_SETICON, 1, application.Icon.Handle); // Use the same icon in the popup window
@@ -228,20 +260,51 @@ procedure TFrmMain.Chromium1LoadEnd(Sender: TObject;
   const browser: ICefBrowser; const frame: ICefFrame;
   httpStatusCode: Integer);
 var
-  TempHandle : THandle;
-begin
-  if FClosing or (frame = nil) or not(frame.IsValid) or (browser = nil) then exit;
+	TempHandle : THandle;
+	LastSteamWebPageContent: String;
+	CefStringVisitor: ICefStringVisitor;
+	TempVisitor     : ICefStringVisitor;
 
-  if Chromium1.IsSameBrowser(browser) then
-    begin
-    end
-   else
-    begin
-      // This is a workaround for a focus issue in popup windows handled by CEF
-      TempHandle := WinApi.Windows.GetWindow(Browser.Host.WindowHandle, GW_OWNER);
-      if (TempHandle <> Handle) then
-        WinApi.Windows.SetFocus(TempHandle);
-    end;
+
+begin
+	if FClosing or (frame = nil) or not(frame.IsValid) or (browser = nil) then exit;
+
+	//cache the page
+//	 Chromium1.Browser.MainFrame.GetSource();
+
+//	LastSteamWebPageContent :=
+
+
+if frame.IsMain then begin
+
+					TempVisitor := TCustomCefStringVisitor.Create(Chromium1);
+					Chromium1.Browser.MainFrame.GetSource(TempVisitor);
+
+
+//					frame.GetSource(TempVisitor);
+
+
+
+//					TempFrame.GetSource(TempVisitor);
+
+
+//	CefStringVisitor := TCefFastStringVisitor.Create(StringVisitor);
+//  Chromium1.Browser.MainFrame.GetSource(CefStringVisitor);
+end;
+
+
+
+
+	if Chromium1.IsSameBrowser(browser) then
+		begin
+		end
+	 else
+		begin
+			// This is a workaround for a focus issue in popup windows handled by CEF
+			TempHandle := WinApi.Windows.GetWindow(Browser.Host.WindowHandle, GW_OWNER);
+			if (TempHandle <> Handle) then
+				WinApi.Windows.SetFocus(TempHandle);
+		end;
 
 end;
 
@@ -320,7 +383,7 @@ end;
 
 procedure TFrmMain.ShowSteamModPage();
 var
-  thisurl: string;
+	thisurl: string;
 	thismodid:string;
 
 begin

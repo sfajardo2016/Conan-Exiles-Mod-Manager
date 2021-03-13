@@ -20,9 +20,9 @@ object FrmMain: TFrmMain
   TextHeight = 13
   object StatusBar_1: TbsSkinStatusBar
     Left = 0
-    Top = 518
+    Top = 504
     Width = 965
-    Height = 46
+    Height = 60
     HintImageIndex = 0
     TabOrder = 0
     SkinData = SkinData_1
@@ -34,7 +34,7 @@ object FrmMain: TFrmMain
     DefaultFont.Style = []
     DefaultWidth = 0
     DefaultHeight = 0
-    UseSkinFont = True
+    UseSkinFont = False
     EmptyDrawing = False
     RibbonStyle = False
     ImagePosition = bsipDefault
@@ -55,13 +55,22 @@ object FrmMain: TFrmMain
     Caption = 'StatusBar_1'
     Align = alBottom
     SizeGrip = False
+    object Button_1: TButton
+      Left = 448
+      Top = 8
+      Width = 161
+      Height = 49
+      Caption = 'Button_1'
+      TabOrder = 0
+      OnClick = Button_1Click
+    end
   end
   object PageControl_Main: TbsSkinPageControl
     Left = 456
     Top = 0
     Width = 509
-    Height = 518
-    ActivePage = TabSheet_SteamModWebPage
+    Height = 504
+    ActivePage = TabSheet_SteamSetUp
     Align = alRight
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBtnText
@@ -95,18 +104,14 @@ object FrmMain: TFrmMain
         Left = 0
         Top = 0
         Width = 507
-        Height = 464
+        Height = 450
         Align = alClient
         TabStop = True
         TabOrder = 0
-        ExplicitLeft = 1
-        ExplicitTop = 1
-        ExplicitWidth = 833
-        ExplicitHeight = 463
       end
       object StatusBar_Browser: TbsSkinStatusBar
         Left = 0
-        Top = 464
+        Top = 450
         Width = 507
         Height = 34
         HintImageIndex = 0
@@ -174,7 +179,6 @@ object FrmMain: TFrmMain
           AutoSize = False
           ImageIndex = -1
           NumGlyphs = 1
-          ExplicitWidth = 185
         end
         object Slider_BrowserZoom: TbsSkinSlider
           Left = 357
@@ -227,7 +231,6 @@ object FrmMain: TFrmMain
           AutoSize = False
           ImageIndex = -1
           NumGlyphs = 1
-          ExplicitLeft = 280
         end
       end
     end
@@ -236,11 +239,92 @@ object FrmMain: TFrmMain
     end
     object TabSheet_SteamSetUp: TbsSkinTabSheet
       Caption = 'TabSheet_SteamSetUp'
+      object PDFViewer1: TdxPDFViewer
+        Left = 0
+        Top = 0
+        Width = 507
+        Height = 484
+        Align = alClient
+        OptionsBehavior.ShowHints = False
+        OptionsFindPanel.DisplayMode = fpdmNever
+        OptionsNavigationPane.Attachments.Glyph.SourceDPI = 96
+        OptionsNavigationPane.Attachments.Glyph.Data = {
+          3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D227574
+          662D38223F3E0D0A3C212D2D2047656E657261746F723A2041646F626520496C
+          6C7573747261746F722032302E312E302C20535647204578706F727420506C75
+          672D496E202E205356472056657273696F6E3A20362E3030204275696C642030
+          2920202D2D3E0D0A3C21444F435459504520737667205055424C494320222D2F
+          2F5733432F2F4454442053564720312E312F2F454E222022687474703A2F2F77
+          77772E77332E6F72672F47726170686963732F5356472F312E312F4454442F73
+          766731312E647464223E0D0A3C7376672076657273696F6E3D22312E31222069
+          643D224C617965725F312220786D6C6E733D22687474703A2F2F7777772E7733
+          2E6F72672F323030302F7376672220786D6C6E733A786C696E6B3D2268747470
+          3A2F2F7777772E77332E6F72672F313939392F786C696E6B2220783D22307078
+          2220793D22307078220D0A092076696577426F783D2230203020333220333222
+          207374796C653D22656E61626C652D6261636B67726F756E643A6E6577203020
+          302033322033323B2220786D6C3A73706163653D227072657365727665223E0D
+          0A3C7374796C6520747970653D22746578742F637373223E0D0A092E426C6163
+          6B7B66696C6C3A233732373237323B7D0D0A3C2F7374796C653E0D0A3C706174
+          682069643D224174746163686D656E742220636C6173733D22426C61636B2220
+          643D224D31372C3263332E392C302C372C332E312C372C37763133682D325639
+          63302D322E382D322E322D352D352D35732D352C322E322D352C357631366330
+          2C312E372C312E332C332C332C3373332D312E332C332D335631310D0A096330
+          2D302E362D302E342D312D312D31732D312C302E342D312C31763131682D3256
+          313163302D312E372C312E332D332C332D3373332C312E332C332C3376313463
+          302C322E382D322E322C352D352C35732D352D322E322D352D3556394331302C
+          352E312C31332E312C322C31372C327A222F3E0D0A3C2F7376673E0D0A}
+        OptionsNavigationPane.Bookmarks.Glyph.SourceDPI = 96
+        OptionsNavigationPane.Bookmarks.Glyph.Data = {
+          3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D227574
+          662D38223F3E0D0A3C212D2D2047656E657261746F723A2041646F626520496C
+          6C7573747261746F722032302E312E302C20535647204578706F727420506C75
+          672D496E202E205356472056657273696F6E3A20362E3030204275696C642030
+          2920202D2D3E0D0A3C21444F435459504520737667205055424C494320222D2F
+          2F5733432F2F4454442053564720312E312F2F454E222022687474703A2F2F77
+          77772E77332E6F72672F47726170686963732F5356472F312E312F4454442F73
+          766731312E647464223E0D0A3C7376672076657273696F6E3D22312E31222069
+          643D224C617965725F312220786D6C6E733D22687474703A2F2F7777772E7733
+          2E6F72672F323030302F7376672220786D6C6E733A786C696E6B3D2268747470
+          3A2F2F7777772E77332E6F72672F313939392F786C696E6B2220783D22307078
+          2220793D22307078220D0A092076696577426F783D2230203020333220333222
+          207374796C653D22656E61626C652D6261636B67726F756E643A6E6577203020
+          302033322033323B2220786D6C3A73706163653D227072657365727665223E0D
+          0A3C7374796C6520747970653D22746578742F637373223E0D0A092E426C6163
+          6B7B66696C6C3A233732373237323B7D0D0A3C2F7374796C653E0D0A3C706F6C
+          79676F6E2069643D22426F6F6B6D61726B732220636C6173733D22426C61636B
+          2220706F696E74733D2232342C33302031362C323220382C333020382C342032
+          342C3420222F3E0D0A3C2F7376673E0D0A}
+        OptionsNavigationPane.Thumbnails.Glyph.SourceDPI = 96
+        OptionsNavigationPane.Thumbnails.Glyph.Data = {
+          3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D227574
+          662D38223F3E0D0A3C212D2D2047656E657261746F723A2041646F626520496C
+          6C7573747261746F722032302E312E302C20535647204578706F727420506C75
+          672D496E202E205356472056657273696F6E3A20362E3030204275696C642030
+          2920202D2D3E0D0A3C21444F435459504520737667205055424C494320222D2F
+          2F5733432F2F4454442053564720312E312F2F454E222022687474703A2F2F77
+          77772E77332E6F72672F47726170686963732F5356472F312E312F4454442F73
+          766731312E647464223E0D0A3C7376672076657273696F6E3D22312E31222069
+          643D224C617965725F312220786D6C6E733D22687474703A2F2F7777772E7733
+          2E6F72672F323030302F7376672220786D6C6E733A786C696E6B3D2268747470
+          3A2F2F7777772E77332E6F72672F313939392F786C696E6B2220783D22307078
+          2220793D22307078220D0A092076696577426F783D2230203020333220333222
+          207374796C653D22656E61626C652D6261636B67726F756E643A6E6577203020
+          302033322033323B2220786D6C3A73706163653D227072657365727665223E0D
+          0A3C7374796C6520747970653D22746578742F637373223E0D0A092E426C6163
+          6B7B66696C6C3A233732373237323B7D0D0A3C2F7374796C653E0D0A3C706174
+          682069643D225468756D626E61696C732220636C6173733D22426C61636B2220
+          643D224D32382C38682D34563448313276364836763138683136762D36683656
+          387A204D32302C32364838563132683476313068385632367A204D32362C3230
+          682D34682D32682D36762D38762D3256366838763468345632307A220D0A092F
+          3E0D0A3C2F7376673E0D0A}
+        ExplicitLeft = 74
+        ExplicitTop = 64
+        ExplicitWidth = 433
+        ExplicitHeight = 393
+      end
     end
     object TabSheet_Config: TbsSkinTabSheet
       Caption = 'Settings'
-      ExplicitLeft = 17
-      ExplicitTop = -13
       object Label_1: TbsSkinStdLabel
         Left = 268
         Top = 16
@@ -432,9 +516,6 @@ object FrmMain: TFrmMain
           Font.Name = 'Tahoma'
           Font.Style = []
           OnChange = OfficeComboBox_LanguagesChange
-          ExplicitLeft = 5
-          ExplicitTop = 48
-          ExplicitWidth = 261
         end
         object OfficeComboBox_Skin: TbsSkinOfficeComboBox
           Left = 1
@@ -523,9 +604,6 @@ object FrmMain: TFrmMain
           Font.Name = 'Tahoma'
           Font.Style = []
           OnChange = OfficeComboBox_SkinChange
-          ExplicitLeft = 21
-          ExplicitTop = 143
-          ExplicitWidth = 263
         end
       end
       object Panel_GameFolders: TbsSkinExPanel
@@ -562,7 +640,7 @@ object FrmMain: TFrmMain
       end
       object Panel_SettingsOKButton: TbsSkinPanel
         Left = 0
-        Top = 408
+        Top = 394
         Width = 507
         Height = 90
         HintImageIndex = 0
@@ -673,7 +751,7 @@ object FrmMain: TFrmMain
     Left = 0
     Top = 0
     Width = 406
-    Height = 518
+    Height = 504
     HintImageIndex = 0
     TabOrder = 2
     SkinData = SkinData_1
@@ -705,7 +783,7 @@ object FrmMain: TFrmMain
       Left = 1
       Top = 21
       Width = 404
-      Height = 496
+      Height = 482
       Align = alClient
       TabOrder = 0
       object DBTableView_1: TcxGridDBTableView
@@ -768,7 +846,7 @@ object FrmMain: TFrmMain
     Left = 406
     Top = 0
     Width = 50
-    Height = 518
+    Height = 504
     HintImageIndex = 0
     TabOrder = 3
     SkinData = SkinData_1
@@ -5934,24 +6012,6 @@ object FrmMain: TFrmMain
     Left = 416
     Top = 48
   end
-  object SkinAdapter_1: TbsaSkinAdapter
-    SkinData = SkinData_1
-    AdapterType = bsaUseNames
-    TabsBGTransparent = False
-    AutoAddNames = False
-    AutoAddClasses = False
-    VScrollSkinDataName = 'vscrollbar'
-    HScrollSkinDataName = 'hscrollbar'
-    Version = 'SkinAdapter Version 5.25'
-    ButtonSkinDataName = 'resizebutton'
-    SpeedButtonSkinDataName = 'resizetoolbutton'
-    ButtonUseSkinSize = False
-    SpeedButtonUseSkinSize = False
-    PanelSkinDataName = 'panel'
-    ToolBarSkinDataName = 'resizetoolpanel'
-    CoolBarSkinDataName = 'panel'
-    Left = 232
-  end
   object Timer_BrowserSetUp: TTimer
     Enabled = False
     Interval = 300
@@ -5972,5 +6032,23 @@ object FrmMain: TFrmMain
     OnBeforeResourceLoad = Chromium1BeforeResourceLoad
     Left = 424
     Top = 360
+  end
+  object SkinAdapter_1: TbsaSkinAdapter
+    SkinData = SkinData_1
+    AdapterType = bsaUseNames
+    TabsBGTransparent = False
+    AutoAddNames = False
+    AutoAddClasses = False
+    VScrollSkinDataName = 'vscrollbar'
+    HScrollSkinDataName = 'hscrollbar'
+    Version = 'SkinAdapter Version 5.25'
+    ButtonSkinDataName = 'resizebutton'
+    SpeedButtonSkinDataName = 'resizetoolbutton'
+    ButtonUseSkinSize = False
+    SpeedButtonUseSkinSize = False
+    PanelSkinDataName = 'panel'
+    ToolBarSkinDataName = 'resizetoolpanel'
+    CoolBarSkinDataName = 'panel'
+    Left = 232
   end
 end
