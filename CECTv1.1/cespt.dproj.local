@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2019/05/17 13:48:44.000.801,=C:\Users\sfajardo.HNA\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/05/17 13:48:58.000.268,=C:\Users\sfajardo.HNA\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/05/23 15:47:49.768,=C:\Users\sfajardo.HNA\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/05/23 15:48:49.102,D:\dev\varcoded\TestsXE6\ConanSP Tools\CESPTv1.1\Main.pas=C:\Users\sfajardo.HNA\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/05/23 15:48:49.102,D:\dev\varcoded\TestsXE6\ConanSP Tools\CESPTv1.1\Main.dfm=C:\Users\sfajardo.HNA\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2019/05/23 15:48:54.866,D:\dev\varcoded\TestsXE6\ConanSP Tools\CESPTv1.1\cespt.dproj=C:\Users\sfajardo.HNA\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

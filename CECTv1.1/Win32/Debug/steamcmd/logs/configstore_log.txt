@@ -1,0 +1,24 @@
+
+
+[2019-07-09 10:19:04] Failed to read store 'install' from 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\config\config.vdf.tmp'
+[2019-07-09 10:19:04] Failed to read store 'install' from 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\config\config.vdf.tmp'
+[2019-07-09 10:19:05] Failed to read store 'install' from 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\config\config.vdf.tmp'
+[2019-07-09 10:19:05] Flushed store 'install' to 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\config\config.vdf'
+[2019-07-09 10:19:06] Flushed store 'install' to 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\config\config.vdf'
+[2019-07-09 10:19:06] Failed to read store 'userlocal' from 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\userdata\anonymous\config\localconfig.vdf.tmp'
+[2019-07-09 10:19:07] Flushed store 'install' to 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\config\config.vdf'
+[2019-07-09 10:19:20] Flushed store 'install' to 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\config\config.vdf'
+
+
+[2019-07-09 10:25:56] Loaded store 'install' from 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\config\config.vdf' successfully
+[2019-07-09 10:25:56] Loaded store 'install' from 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\config\config.vdf' successfully
+[2019-07-09 10:25:56] Loaded store 'install' from 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\config\config.vdf' successfully
+[2019-07-09 10:26:00] Failed to read store 'userlocal' from 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\userdata\anonymous\config\localconfig.vdf.tmp'
+[2019-07-09 10:26:00] Flushed store 'install' to 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\config\config.vdf'
+
+
+[2019-07-09 10:39:53] Loaded store 'install' from 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\config\config.vdf' successfully
+[2019-07-09 10:39:54] Loaded store 'install' from 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\config\config.vdf' successfully
+[2019-07-09 10:39:54] Loaded store 'install' from 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\config\config.vdf' successfully
+[2019-07-09 10:39:55] Failed to read store 'userlocal' from 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\userdata\anonymous\config\localconfig.vdf.tmp'
+[2019-07-09 10:39:55] Flushed store 'install' to 'd:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\config\config.vdf'

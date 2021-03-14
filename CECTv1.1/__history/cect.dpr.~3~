@@ -1,0 +1,16 @@
+program cect;
+
+uses
+  Vcl.Forms,
+  Main in 'Main.pas' {FrmMain},
+  sets in 'sets.pas' {FrmSet};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFrmMain, FrmMain);
+  Application.CreateForm(TFrmSet, FrmSet);
+  Application.Run;
+end.

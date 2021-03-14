@@ -1,0 +1,27 @@
+
+
+[2019-07-09 10:19:04] Attempting to find current bucket; temporary dir: d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\shader_cache_temp_dir_gl_64
+[2019-07-09 10:19:04] Creating shader cache directory: d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\shader_cache_temp_dir_gl_64
+[2019-07-09 10:19:04] Unknown shader cache type, ignoring.
+[2019-07-09 10:19:05] Attempting to find current bucket; temporary dir: d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\shader_cache_temp_dir_gl_32
+[2019-07-09 10:19:05] Creating shader cache directory: d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\shader_cache_temp_dir_gl_32
+[2019-07-09 10:19:05] Unknown shader cache type, ignoring.
+[2019-07-09 10:19:05] Found 0 current buckets:
+
+
+[2019-07-09 10:25:56] Attempting to find current bucket; temporary dir: d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\shader_cache_temp_dir_gl_64
+[2019-07-09 10:25:56] Creating shader cache directory: d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\shader_cache_temp_dir_gl_64
+[2019-07-09 10:25:56] Unknown shader cache type, ignoring.
+[2019-07-09 10:25:57] Attempting to find current bucket; temporary dir: d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\shader_cache_temp_dir_gl_32
+[2019-07-09 10:25:57] Creating shader cache directory: d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\shader_cache_temp_dir_gl_32
+[2019-07-09 10:25:57] Unknown shader cache type, ignoring.
+[2019-07-09 10:25:58] Found 0 current buckets:
+
+
+[2019-07-09 10:39:54] Attempting to find current bucket; temporary dir: d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\shader_cache_temp_dir_gl_64
+[2019-07-09 10:39:54] Creating shader cache directory: d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\shader_cache_temp_dir_gl_64
+[2019-07-09 10:39:54] Unknown shader cache type, ignoring.
+[2019-07-09 10:39:54] Attempting to find current bucket; temporary dir: d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\shader_cache_temp_dir_gl_32
+[2019-07-09 10:39:54] Creating shader cache directory: d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\shader_cache_temp_dir_gl_32
+[2019-07-09 10:39:54] Unknown shader cache type, ignoring.
+[2019-07-09 10:39:55] Found 0 current buckets:

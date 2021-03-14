@@ -1,0 +1,20 @@
+
+
+[2019-07-09 10:19:06] RequestAppInfoUpdate: nNumAppIDs 1
+[2019-07-09 10:19:07] Change number 0->6546461, apps: 0/0, packages: 0/0
+[2019-07-09 10:19:07] Requesting 1 apps, 1 packages (meta data, 1024 prev attempts)
+[2019-07-09 10:19:07] Requesting 1 apps, 1 packages (full data, 1024 prev attempts)
+[2019-07-09 10:19:07] UpdatesJob: finished OK, nAppsUpdated 1 (3 KB), nPackagesUpdated 1 (54 KB)
+[2019-07-09 10:19:07] Requesting 929 apps, 0 packages (meta data, 1024 prev attempts)
+[2019-07-09 10:19:08] Requested 495 access tokens, 36 received, 459 denied
+[2019-07-09 10:19:08] Updated SHAs with 36 new access tokens
+[2019-07-09 10:19:09] Downloaded 39 apps via HTTP, 912 KB (202 KB compressed)
+[2019-07-09 10:19:09] Requesting 890 apps, 0 packages (full data, 1024 prev attempts)
+[2019-07-09 10:19:20] UpdatesJob: finished OK, nAppsUpdated 929 (2298 KB), nPackagesUpdated 0 (0 KB)
+[2019-07-09 10:19:20] Starting async write d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd/appcache/appinfo.vdf (1696474 bytes)
+
+
+[2019-07-09 10:26:00] RequestAppInfoUpdate: nNumAppIDs 1
+
+
+[2019-07-09 10:39:55] RequestAppInfoUpdate: nNumAppIDs 1

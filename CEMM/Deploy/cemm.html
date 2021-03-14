@@ -9,10 +9,36 @@
             <h1>Conan Exiles Web Browser</h1>
         </div>
         <div class="contentText">
-            <p>Select a <b>mod</b> from the list on your left to get its steam web page here.</p>
+            <p><span id="AppMsg" ></span></p>
             <p>&nbsp;</p>
         </div>
 
 
 
-</div></body></html>
+</div>
+
+
+
+
+<script language="JavaScript">
+
+	function addComment()
+	{
+		var parameters = location.search.substring(1).split("&");
+		var temp = parameters[0].split("=");
+		Msg = unescape(temp[1]);
+        document.getElementById("AppMsg").innerHTML = Msg;
+	}
+
+    
+
+
+    addComment();
+
+
+
+</script>
+
+
+
+</body></html>

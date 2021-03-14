@@ -1,0 +1,1 @@
+\src\steamnetworkingsockets\clientlib\steamnetworkingsockets_lowlevel.cpp (117) : Assertion Failed: SteamDatagramTransportLock held for 78.3ms!

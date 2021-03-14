@@ -1,0 +1,35 @@
+object DataModule1: TDataModule1
+  OldCreateOrder = False
+  Height = 483
+  Width = 532
+  object fdgxwtcrsr1: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    ScreenCursor = gcrDefault
+    Left = 88
+    Top = 10
+  end
+  object con_1: TFDConnection
+    Params.Strings = (
+      'LockingMode=Normal'
+      
+        'Database=C:\devsfajardo\varcoded\Ark Mod Maintenance\win32\Debug' +
+        '\acm.sfp'
+      'DriverID=SQLite')
+    LoginPrompt = False
+    Left = 32
+    Top = 8
+  end
+  object query_mods: TFDQuery
+    Connection = con_1
+    SQL.Strings = (
+      'select * from mods')
+    Left = 24
+    Top = 72
+  end
+  object ds_query_mods: TDataSource
+    AutoEdit = False
+    DataSet = query_mods
+    Left = 24
+    Top = 128
+  end
+end

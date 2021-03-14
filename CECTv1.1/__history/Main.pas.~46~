@@ -1,0 +1,218 @@
+unit Main;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, bsMessages, varcoded, Vcl.ExtCtrls,
+  JvFormPlacement, JvComponentBase, JvAppStorage, JvAppIniStorage,
+
+  UnitInstalledMods,
+  UnitDataModule,
+
+
+  bsSkinData, BusinessSkinForm, bsSkinCtrls, Vcl.ImgList, Vcl.Menus;
+
+type
+  TFrmMain = class(TForm)
+    skinform_1: TbsBusinessSkinForm;
+    compressedstoredskin_1: TbsCompressedStoredSkin;
+    skindata_1: TbsSkinData;
+    AppIniFileStorage_main: TJvAppIniFileStorage;
+    FormStorage_main: TJvFormStorage;
+    timer_1: TTimer;
+    varcoded: tvarcoded;
+    msgdlg_1: TbsSkinMessage;
+    statusbar_1: TbsSkinStatusBar;
+    statuspanel_msg: TbsSkinStatusPanel;
+    ImageList1: TImageList;
+    MainMenu1: TMainMenu;
+    N12: TMenuItem;
+    MenuItem_exit: TMenuItem;
+    bsSkinMainMenuBar1: TbsSkinMainMenuBar;
+    N1: TMenuItem;
+    Deleteset1: TMenuItem;
+    bsSkinMDITabsBar1: TbsSkinMDITabsBar;
+    menuitem_Window: TMenuItem;
+    menuitem_Tools: TMenuItem;
+    menuitem_installedmods: TMenuItem;
+    ImageList_Icons: TImageList;
+    procedure MenuItem_exitClick(Sender: TObject);
+    procedure menuitem_installedmodsClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure timer_1Timer(Sender: TObject);
+  private
+
+    FrmInstalledMods: TFrmInstalledMods;
+    LastMessage: string;
+
+    procedure CreateNewSet;
+    function BeginSession: Boolean;
+    procedure StatusMsg(msg: string);
+
+
+    { Private declarations }
+  public
+    DM: TDataModule1;
+    IsInstalledModWindowVisible: Boolean;
+   procedure Log(m:string); overload;
+   procedure Log(m,t:string); overload;
+
+
+    { Public declarations }
+  end;
+
+var
+  FrmMain: TFrmMain;
+
+implementation
+
+{$R *.dfm}
+
+uses UnitSet;
+
+procedure TFrmMain.FormCreate(Sender: TObject);
+begin
+timer_1.Enabled:=true;
+end;
+
+procedure TFrmMain.MenuItem_exitClick(Sender: TObject);
+begin
+Close;
+end;
+
+procedure TFrmMain.menuitem_installedmodsClick(Sender: TObject);
+
+begin
+
+  if (IsInstalledModWindowVisible) then Exit;
+
+  FrmInstalledMods:= TFrmInstalledMods.Create(FrmMain);
+  FrmInstalledMods.dbtableview_Grid1DBTableView1.DataController.DataSource := DM.ds_query_mods;
+
+  FrmInstalledMods.Show;
+  IsInstalledModWindowVisible := True;
+
+
+
+
+
+
+
+
+
+end;
+
+procedure TFrmMain.timer_1Timer(Sender: TObject);
+begin
+
+
+
+timer_1.Enabled:= false;
+  if not (BeginSession) then begin
+    msgdlg_1.MessageDlg('Can not continue'+#13+#13+ LastMessage + #13+#13+ 'Reinstalling the application will solve the problem',
+    mtWarning, [mbOk], 0);
+    Close;
+  end;
+
+  //checkfirst run
+  (*
+  if (dm.query1.RecordCount<=0) then begin
+      msgdlg_1.MessageDlg('Mods, I need mods and I can not find any !!!'#13+
+                          'Don''''t forget to update your mod list!', mtConfirmation, [mbOk], 0);
+
+
+
+
+
+
+  end;
+
+    *)
+
+
+end;
+
+
+procedure TFrmMain.Log(m: string);
+begin
+  varcoded.Log(m);
+end;
+
+
+procedure TFrmMain.Log(m, t: string);
+begin
+  varcoded.Log(m,t);
+end;
+
+
+
+
+Function TFrmMain.BeginSession():Boolean;
+var
+  r: boolean;
+  db:string;
+
+begin
+  r:= false;
+
+
+  LastMessage := '';
+
+
+  DM:= TDataModule1.Create(FrmMain);
+
+  db := ExtractFilePath(Application.ExeName) + 'cect.sfp';
+
+  if (dm.SetupData ( db )) then begin
+
+    r:= varcoded.SetUpLog('');
+
+
+    LastMessage := varcoded.LastMessage;
+
+    Log('Database:' + db);
+
+
+    //load the mods
+
+    menuitem_installedmodsClick(nil);
+
+    StatusMsg('Ready');
+    Log('Ready');
+
+
+
+  end else     LastMessage:= dm.LastMessage;
+
+
+  result := r;
+
+
+
+
+
+
+end;
+
+procedure TFrmMain.StatusMsg(msg:string);
+begin
+  statuspanel_msg.Caption := msg;
+end;
+
+
+
+procedure TFrmMain.CreateNewSet();
+var
+  FrmSet: TFrmSet;
+
+begin
+
+
+  FrmSet:= TFrmSet.Create(FrmMain);
+  FrmSet.Show;
+
+
+end;
+
+end.

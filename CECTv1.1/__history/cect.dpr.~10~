@@ -1,0 +1,16 @@
+program cect;
+
+uses
+  Vcl.Forms,
+  Main in 'Main.pas' {FrmMain},
+  UnitSet in 'UnitSet.pas' {FrmSet},
+  UnitInstalledMods in 'UnitInstalledMods.pas' {FrmInstalledMods};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFrmMain, FrmMain);
+  Application.Run;
+end.

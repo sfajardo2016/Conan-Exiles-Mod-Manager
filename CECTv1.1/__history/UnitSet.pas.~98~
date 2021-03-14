@@ -1,0 +1,257 @@
+unit UnitSet;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, BusinessSkinForm, bsSkinCtrls,
+  bsSkinExCtrls, bsSkinShellCtrls, JvComponentBase, JvFormPlacement,
+  bsSkinBoxCtrls;
+
+type
+  TFrmSet = class(TForm)
+    skinform_1: TbsBusinessSkinForm;
+    Panel_Buttons: TbsSkinPanel;
+    bsSkinButton1: TbsSkinButton;
+    bsSkinButton2: TbsSkinButton;
+    bsSkinButton3: TbsSkinButton;
+    bsSkinButton4: TbsSkinButton;
+    bsSkinDivider1: TbsSkinDivider;
+    SaveDialog_1: TbsSkinSaveDialog;
+    FormStorage_main: TJvFormStorage;
+    Panel_mods: TbsSkinExPanel;
+    statusbar_1: TbsSkinStatusBar;
+    statuspanel_msg: TbsSkinStatusPanel;
+    gauge_1: TbsSkinGauge;
+    ListBox_Mods: TbsSkinListBox;
+    Label_setname: TbsSkinLabel;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure bsSkinButton1Click(Sender: TObject);
+    procedure ListBox_ModsDragOver(Sender, Source: TObject; X, Y: Integer;
+      State: TDragState; var Accept: Boolean);
+    procedure ListBox_ModsDragDrop(Sender, Source: TObject; X, Y: Integer);
+    procedure FormDragOver(Sender, Source: TObject; X, Y: Integer;
+      State: TDragState; var Accept: Boolean);
+    procedure ListBox_ModsListBoxKeyPress(Sender: TObject; var Key: Char);
+    procedure ListBox_ModsListBoxKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+  private
+    procedure AddNewItem;
+    procedure ReorderList(Key: Char);
+    procedure SaveSet;
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmSet: TFrmSet;
+
+implementation
+
+{$R *.dfm}
+Uses Main;
+
+
+procedure TFrmSet.SaveSet();
+var
+  SaveIt:Boolean;
+  FinalList: TStringList;
+  i:Integer;
+
+begin
+
+SaveIt := false;
+statuspanel_msg.Caption:='Ready';
+
+if (ListBox_Mods.Items.Count>0) then begin
+
+
+    if (Label_setname.Caption='?') then begin
+          //new
+          if (SaveDialog_1.Execute) then begin
+            Label_setname.Caption:= SaveDialog_1.FileName;
+            //verify
+            if ( FileExists ( SaveDialog_1.FileName  ))  then begin
+
+
+
+
+
+            end;
+
+
+            SaveIt := True;
+          end;
+
+    end else SaveIt := True;
+
+end; //not an empty list
+
+
+if (SaveIt) then begin
+//  SaveThefile
+    FinalList := TStringList.Create;
+(*
+    with (FrmMain.DM.query_mods) do begin
+      DisableControls;
+      for I := 0 to ListBox_Mods.Items.Count-1 do begin
+
+        if (Locate('modname',ListBox_Mods.Items[i],[] )) then begin
+          FinalList.Add( FieldByName('modfile').AsString     );
+        end;
+
+     end;
+     EnableControls;
+    end;
+  *)
+  //  FinalList.SaveToFile( SaveDialog_1.FileName );
+    ListBox_Mods.Items.SaveToFile(  SaveDialog_1.FileName);
+   statuspanel_msg.Caption:='File saved';
+end;
+
+
+
+end;
+
+procedure TFrmSet.bsSkinButton1Click(Sender: TObject);
+
+begin
+
+SaveSet();
+
+
+end;
+
+procedure TFrmSet.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+
+Action := caFree;
+
+end;
+
+procedure TFrmSet.FormDragOver(Sender, Source: TObject; X, Y: Integer;
+  State: TDragState; var Accept: Boolean);
+begin
+Accept := True;
+end;
+
+procedure TFrmSet.ListBox_ModsDragDrop(Sender, Source: TObject; X,
+  Y: Integer);
+begin
+
+AddNewItem();
+
+end;
+
+
+procedure TFrmSet.AddNewItem();
+var
+  NewItem: string;
+  i:Integer;
+  ItemFound: Boolean;
+begin
+
+
+
+
+  NewItem := FrmMain.DM.query_mods.FieldByName('modfile').AsString;
+  ItemFound := False;
+
+
+
+  for I := 0 to ListBox_Mods.Items.Count-1 do begin
+
+    if ( ListBox_Mods.Items[i] = NewItem  ) then ItemFound := True;
+  end;
+
+
+
+  if not (ItemFound)  then ListBox_Mods.Items.Add( NewItem);
+
+
+
+
+
+
+//  ListBox_Mods.Items.Add( FrmMain.DM.query_mods.FieldByName('modname').AsString);
+//ShowMessage( FrmMain.ModInfoDragged  );
+
+
+
+
+end;
+procedure TFrmSet.ListBox_ModsDragOver(Sender, Source: TObject; X,
+  Y: Integer; State: TDragState; var Accept: Boolean);
+begin
+Accept := True;
+end;
+
+procedure TFrmSet.ListBox_ModsListBoxKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if (Key = VK_DELETE) then       ListBox_Mods.Items.Delete( ListBox_Mods.ItemIndex  );
+
+end;
+
+procedure TFrmSet.ListBox_ModsListBoxKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+
+if (ListBox_Mods.Items.Count>0) then begin
+  if (Key='+') or  (Key='-') then ReorderList(Key);
+end;
+
+
+
+end;
+
+
+procedure TFrmSet.ReorderList(Key:Char);
+var
+  OriginalItem: string;
+  MovedItem: string;
+begin
+
+if (Key='+') then begin //up
+
+  if not (ListBox_Mods.ItemIndex=0) then  begin
+
+    OriginalItem:= ListBox_Mods.Items[ ListBox_Mods.ItemIndex];
+    MovedItem := ListBox_Mods.Items[ ListBox_Mods.ItemIndex-1];
+
+    ListBox_Mods.Items[ ListBox_Mods.ItemIndex] := MovedItem;
+    ListBox_Mods.Items[ ListBox_Mods.ItemIndex-1] := OriginalItem;
+    ListBox_Mods.ItemIndex := ListBox_Mods.ItemIndex -1;
+
+  end;
+
+End;
+
+
+if (Key='-') then begin //up
+
+  if not (ListBox_Mods.ItemIndex=  ListBox_Mods.Items.Count-1   ) then  begin
+
+    OriginalItem:= ListBox_Mods.Items[ ListBox_Mods.ItemIndex];
+    MovedItem := ListBox_Mods.Items[ ListBox_Mods.ItemIndex+1];
+
+    ListBox_Mods.Items[ ListBox_Mods.ItemIndex] := MovedItem;
+    ListBox_Mods.Items[ ListBox_Mods.ItemIndex+1] := OriginalItem;
+    ListBox_Mods.ItemIndex := ListBox_Mods.ItemIndex +1;
+
+
+
+
+
+  end;
+
+End;
+
+
+
+
+
+
+end;
+end.

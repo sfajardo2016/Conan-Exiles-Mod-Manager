@@ -1,0 +1,42 @@
+object DataModule1: TDataModule1
+  OldCreateOrder = False
+  Height = 483
+  Width = 532
+  object fdgxwtcrsr1: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    ScreenCursor = gcrDefault
+    Left = 88
+    Top = 10
+  end
+  object con_1: TFDConnection
+    Params.Strings = (
+      'LockingMode=Normal'
+      
+        'Database=D:\dev\varcoded\TestsXE6\ConanSP Tools\CECTv1.1\Win32\D' +
+        'ebug\cect.sfp'
+      'DriverID=SQLite')
+    Connected = True
+    LoginPrompt = False
+    Left = 32
+    Top = 8
+  end
+  object query_mods: TFDQuery
+    Active = True
+    Connection = con_1
+    SQL.Strings = (
+      'select * from mods')
+    Left = 24
+    Top = 72
+  end
+  object ds_query_mods: TDataSource
+    AutoEdit = False
+    DataSet = query_mods
+    Left = 56
+    Top = 128
+  end
+  object query_INI: TFDQuery
+    Connection = con_1
+    Left = 40
+    Top = 264
+  end
+end

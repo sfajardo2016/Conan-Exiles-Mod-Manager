@@ -42,7 +42,7 @@ uses
 	bsMessages,
 	Vcl.StdCtrls, bsSkinBoxCtrls, Vcl.Mask, dxPDFCore, dxPDFBase, dxPDFText,
   dxPDFRecognizedObject, dxPDFDocument, dxBarBuiltInMenu, dxCustomPreview,
-  dxPDFDocumentViewer, dxPDFViewer;
+  dxPDFDocumentViewer, dxPDFViewer, bsSkinShellCtrls;
 
 
 	CONST
@@ -89,8 +89,22 @@ type
     StatusPanel_Browser: TbsSkinStatusPanel;
     Slider_BrowserZoom: TbsSkinSlider;
     StatusPanel_Zoom: TbsSkinStatusPanel;
-    Button_1: TButton;
     PDFViewer1: TdxPDFViewer;
+    Button_1: TButton;
+    Label_11: TbsSkinStdLabel;
+    DirectoryEdit_ModList: TbsSkinDirectoryEdit;
+    Label_12: TbsSkinStdLabel;
+    Label_13: TbsSkinStdLabel;
+    DirectoryEdit_Mods: TbsSkinDirectoryEdit;
+    Label_14: TbsSkinStdLabel;
+    Label_15: TbsSkinStdLabel;
+    FileEdit_CEEXEFile: TbsSkinFileEdit;
+    Label_16: TbsSkinStdLabel;
+    Label_17: TbsSkinStdLabel;
+    Label_18: TbsSkinStdLabel;
+    DirectoryEdit_1: TbsSkinDirectoryEdit;
+    Button_ValidateFolders: TbsSkinSpeedButton;
+    TabSheet_Steam: TbsSkinTabSheet;
     procedure OfficeComboBox_LanguagesChange(Sender: TObject);
     procedure Timer_StartUpTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -141,7 +155,7 @@ type
     procedure SaveSettings;
     procedure ShowSteamModPage;
     procedure SetupBrowser;
-    procedure LoadDefaultWebPage;
+    procedure LoadDefaultWebPage(IsActive: Boolean);
 
 
     { Private declarations }
@@ -377,7 +391,7 @@ procedure TFrmMain.DBTableView_1CellClick(Sender: TcxCustomGridTableView;
   ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
   AShift: TShiftState; var AHandled: Boolean);
 begin
-ShowSteamModPage();
+if (bShowSteamWebPage) then ShowSteamModPage() else LoadDefaultWebPage(bShowSteamWebPage);
 end;
 
 
@@ -390,7 +404,8 @@ begin
 
 
 
-	if not (bShowSteamWebPage) then exit;
+
+
 	thismodid:= dm.query_mods.FieldByName('modid').AsString.Trim;
 	if (thismodid.IsEmpty)  then Exit;
 
@@ -455,7 +470,9 @@ begin
 	dm.SetSetting('showsteamwebpage', ComboBox_ShowWebPage.ItemIndex.tostring() );
 
 	bShowSteamWebPage := ComboBox_ShowWebPage.ItemIndex = 0;
-	CEFWindowParent1.Visible:= bShowSteamWebPage;
+
+  LoadDefaultWebPage(bShowSteamWebPage);
+
 
 end;
 
@@ -540,7 +557,7 @@ procedure TFrmMain.Timer_BrowserSetUpTimer(Sender: TObject);
 begin
 	Timer_BrowserSetUp.Enabled := False;
 	if not(Chromium1.CreateBrowser(CEFWindowParent1, '')) and not(Chromium1.Initialized) then
-		Timer_BrowserSetUp.Enabled := True else LoadDefaultWebPage();
+		Timer_BrowserSetUp.Enabled := True else LoadDefaultWebPage(bShowSteamWebPage);
 
 end;
 
@@ -634,18 +651,19 @@ result := ThisResult;
 end;
 
 
-procedure TFrmMain.LoadDefaultWebPage();
+procedure TFrmMain.LoadDefaultWebPage(IsActive: Boolean);
 var
 	TempString:String;
 
 begin
 
-	CEFWindowParent1.Visible:= bShowSteamWebPage;
+//	CEFWindowParent1.Visible:= bShowSteamWebPage;
 
-	 TempString := '<html><body bgcolor="white">' +
-								'<h2>Select a mod to load the steam web page</h2></body></html>';
 
-	Chromium1.LoadString(TempString);
+	if  (bShowSteamWebPage) then
+    	Chromium1.LoadURL('file:///'+ ChangeFileExt( Application.ExeName, '.html?Msg=To get the mod steam web page, click on a mod in your left list' ))
+  		else
+      Chromium1.LoadURL('file:///'+ ChangeFileExt( Application.ExeName, '.html?Msg=To get the mod steam web page, change your settings' ));
 
 end;
 
@@ -660,8 +678,14 @@ begin
 
 
 	Chromium1.MultiBrowserMode := False;
-//	Chromium1.DefaultURL       := 'https://store.steampowered.com/app/440900/Conan_Exiles/';
-	Chromium1.DefaultURL       := 'file:///'+ ChangeFileExt( Application.ExeName, '.html' );
+
+	if  (bShowSteamWebPage) then
+    	Chromium1.DefaultUrl := 'file:///'+ ChangeFileExt( Application.ExeName, '.html?Msg=To get the mod steam web page, click on a mod in your left list' )
+  		else
+      Chromium1.DefaultUrl := 'file:///'+ ChangeFileExt( Application.ExeName, '.html?Msg=To get the mod steam web page, change your settings' );
+
+
+
 
 	//    D:/Dev/varcoded/ConanExiles/Conan-Exiles-Mod-Manager/CEMM/Deploy/cemm.html';
 
@@ -672,7 +696,7 @@ begin
 
 
 
- if not(Chromium1.CreateBrowser(CEFWindowParent1, '')) then Timer_BrowserSetUp.Enabled := True else LoadDefaultWebPage();
+ if not(Chromium1.CreateBrowser(CEFWindowParent1, '')) then Timer_BrowserSetUp.Enabled := True else LoadDefaultWebPage(bShowSteamWebPage);
 
 
 

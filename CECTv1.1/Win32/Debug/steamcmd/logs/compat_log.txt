@@ -1,0 +1,9 @@
+
+
+[2019-07-09 10:19:04] No local tool list detected at d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd/compatibilitytools.vdf.
+
+
+[2019-07-09 10:25:56] No local tool list detected at d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd/compatibilitytools.vdf.
+
+
+[2019-07-09 10:39:54] No local tool list detected at d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd/compatibilitytools.vdf.

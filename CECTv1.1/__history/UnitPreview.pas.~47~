@@ -1,0 +1,111 @@
+unit UnitPreview;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, BusinessSkinForm, Vcl.OleCtrls,
+
+  SHDocVw, JvComponentBase, JvFormPlacement;
+
+type
+  TFrmPreview = class(TForm)
+    skinform_1: TbsBusinessSkinForm;
+    WebBrowser1: TWebBrowser;
+    FormStorage_main: TJvFormStorage;
+    procedure WebBrowser1DocumentComplete(ASender: TObject;
+      const pDisp: IDispatch; const URL: OleVariant);
+    procedure WebBrowser1BeforeNavigate2(ASender: TObject;
+      const pDisp: IDispatch; const URL, Flags, TargetFrameName, PostData,
+      Headers: OleVariant; var Cancel: WordBool);
+    procedure FormCreate(Sender: TObject);
+    procedure WebBrowser1NewWindow2(ASender: TObject;
+      var ppDisp: IDispatch; var Cancel: WordBool);
+    procedure WebBrowser1NewWindow3(ASender: TObject;
+      var ppDisp: IDispatch; var Cancel: WordBool; dwFlags: Cardinal;
+      const bstrUrlContext, bstrUrl: WideString);
+    procedure WebBrowser1NewProcess(ASender: TObject; lCauseFlag: Integer;
+      const pWB2: IDispatch; var Cancel: WordBool);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+
+    { Private declarations }
+
+  public
+    { Public declarations }
+    CanLoadPage: Boolean;
+    procedure ShowPage(thisurl: string);
+
+  end;
+
+var
+  FrmPreview: TFrmPreview;
+
+
+implementation
+
+{$R *.dfm}
+
+uses Main;
+
+procedure TFrmPreview.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  FrmMain.PreviewWasClosed := False;
+
+
+end;
+
+
+
+procedure TFrmPreview.FormCreate(Sender: TObject);
+begin
+CanLoadPage := True;
+end;
+
+procedure TFrmPreview.ShowPage(thisurl:string);
+begin
+  CanLoadPage := True;
+  WebBrowser1.Stop;
+  WebBrowser1.Navigate(thisurl);
+end;
+
+
+
+
+
+
+procedure TFrmPreview.WebBrowser1BeforeNavigate2(ASender: TObject;
+  const pDisp: IDispatch; const URL, Flags, TargetFrameName, PostData,
+  Headers: OleVariant; var Cancel: WordBool);
+begin
+Cancel := not (CanLoadPage);
+end;
+
+procedure TFrmPreview.WebBrowser1DocumentComplete(ASender: TObject;
+  const pDisp: IDispatch; const URL: OleVariant);
+begin
+CanLoadPage := False;
+end;
+
+procedure TFrmPreview.WebBrowser1NewProcess(ASender: TObject;
+  lCauseFlag: Integer; const pWB2: IDispatch; var Cancel: WordBool);
+begin
+Cancel := not (CanLoadPage);
+end;
+
+procedure TFrmPreview.WebBrowser1NewWindow2(ASender: TObject;
+  var ppDisp: IDispatch; var Cancel: WordBool);
+begin
+Cancel := not (CanLoadPage);
+end;
+
+procedure TFrmPreview.WebBrowser1NewWindow3(ASender: TObject;
+  var ppDisp: IDispatch; var Cancel: WordBool; dwFlags: Cardinal;
+  const bstrUrlContext, bstrUrl: WideString);
+begin
+Cancel := not (CanLoadPage);
+end;
+
+end.
+
+

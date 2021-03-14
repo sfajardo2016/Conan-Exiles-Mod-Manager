@@ -1,0 +1,13 @@
+
+
+[2019-07-09 10:19:04] Loaded 0 apps from install folder "d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\steamapps\appmanifest_*.acf".
+[2019-07-09 10:19:07] Got 67 content servers from directory
+[2019-07-09 10:19:20] Loaded 0 apps from install folder "d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\cectmods\steamapps\appmanifest_*.acf".
+
+
+[2019-07-09 10:25:56] Loaded 0 apps from install folder "d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\steamapps\appmanifest_*.acf".
+[2019-07-09 10:26:00] Loaded 0 apps from install folder "d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\cectmods\steamapps\appmanifest_*.acf".
+
+
+[2019-07-09 10:39:53] Loaded 0 apps from install folder "d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\steamapps\appmanifest_*.acf".
+[2019-07-09 10:39:55] Loaded 0 apps from install folder "d:\dev\varcoded\testsxe6\conansp tools\cectv1.1\win32\debug\steamcmd\cectmods\steamapps\appmanifest_*.acf".

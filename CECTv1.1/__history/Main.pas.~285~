@@ -1,0 +1,337 @@
+unit Main;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, bsMessages, varcoded, Vcl.ExtCtrls,
+  JvFormPlacement, JvComponentBase, JvAppStorage, JvAppIniStorage,
+
+
+  System.Generics.Collections,
+
+  UnitInstalledMods,
+  UnitDataModule,
+
+
+  bsSkinData, BusinessSkinForm, bsSkinCtrls, Vcl.ImgList, Vcl.Menus,
+  bsDialogs, JvErrorIndicator;
+
+type
+  TFrmMain = class(TForm)
+    skinform_1: TbsBusinessSkinForm;
+    compressedstoredskin_1: TbsCompressedStoredSkin;
+    skindata_1: TbsSkinData;
+    AppIniFileStorage_main: TJvAppIniFileStorage;
+    FormStorage_main: TJvFormStorage;
+    timer_1: TTimer;
+    varcoded: tvarcoded;
+    msgdlg_1: TbsSkinMessage;
+    statusbar_1: TbsSkinStatusBar;
+    statuspanel_msg: TbsSkinStatusPanel;
+    ImageList1: TImageList;
+    MainMenu1: TMainMenu;
+    N12: TMenuItem;
+    MenuItem_exit: TMenuItem;
+    bsSkinMainMenuBar1: TbsSkinMainMenuBar;
+    bsSkinMDITabsBar1: TbsSkinMDITabsBar;
+    menuitem_Window: TMenuItem;
+    menuitem_installedmods: TMenuItem;
+    ImageList_Icons: TImageList;
+    InputDialog_1: TbsSkinInputDialog;
+    N1: TMenuItem;
+    MenuItem_settings: TMenuItem;
+    menuitem_Help: TMenuItem;
+    menuitem_About: TMenuItem;
+    ErrorIndicator: TJvErrorIndicator;
+    ImageList2: TImageList;
+    MenuItem_configuration: TMenuItem;
+    procedure MenuItem_exitClick(Sender: TObject);
+    procedure menuitem_installedmodsClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure timer_1Timer(Sender: TObject);
+    procedure MenuItem_configurationClick(Sender: TObject);
+  private
+
+    FrmInstalledMods: TFrmInstalledMods;
+
+    LastMessage: string;
+
+
+
+    function BeginSession: Boolean;
+    procedure StatusMsg(msg: string);
+
+    function CreateFolder(thisfolder: string): Boolean;
+    function IsValidInstallation: Boolean;
+
+
+
+    { Private declarations }
+  public
+    DM: TDataModule1;
+    IsInstalledModWindowVisible: Boolean;
+    SetToOpen:string;
+    IsPreviewEnabled: Boolean;
+    PreviewWasClosed: Boolean;
+    NeedsToSetUp: Boolean;
+
+
+   procedure Log(m:string); overload;
+   procedure Log(m,t:string); overload;
+   procedure CreateNewSet;
+   procedure OpenSet(thisset: string);
+
+    { Public declarations }
+  end;
+
+var
+  FrmMain: TFrmMain;
+
+implementation
+
+{$R *.dfm}
+
+uses UnitSettings, UnitSet;
+
+procedure TFrmMain.FormCreate(Sender: TObject);
+begin
+
+
+timer_1.Enabled:=true;
+
+
+end;
+
+procedure TFrmMain.MenuItem_configurationClick(Sender: TObject);
+var
+  FrmSettings: TFrmSettings;
+begin
+
+
+  FrmSettings:= TFrmSettings.Create(FrmMain);
+  FrmSettings.ShowModal();
+
+
+end;
+
+procedure TFrmMain.MenuItem_exitClick(Sender: TObject);
+begin
+Close;
+end;
+
+procedure TFrmMain.menuitem_installedmodsClick(Sender: TObject);
+
+begin
+
+  if (IsInstalledModWindowVisible) then Exit;
+
+  if not ( FrmMain.DM.IsValidInstallation()) then begin
+
+
+    msgdlg_1.MessageDlg('CECT is not setup, please setup it now'+#13+'or some features will be disabled'+#13+
+                        '('+dm.LastMessage+')',   mtWarning, [mbOk], 0);
+
+    MenuItem_configurationClick(nil);
+    Exit;
+  end;
+
+  FrmInstalledMods:= TFrmInstalledMods.Create(FrmMain);
+  FrmInstalledMods.dbtableview_Grid1DBTableView1.DataController.DataSource := DM.ds_query_mods;
+
+  FrmInstalledMods.Show;
+  IsInstalledModWindowVisible := True;
+
+
+
+
+
+
+
+
+
+end;
+
+procedure TFrmMain.timer_1Timer(Sender: TObject);
+begin
+
+
+
+timer_1.Enabled:= false;
+  if not (BeginSession) then begin
+    msgdlg_1.MessageDlg('Can not continue'+#13+#13+ LastMessage + #13+#13+ 'Reinstalling the application may solve the problem',
+    mtWarning, [mbOk], 0);
+    Close;
+  end;
+
+  if not ( NeedsToSetUp )  then menuitem_installedmodsClick(nil) else MenuItem_settingsClick(nil);
+
+
+  //checkfirst run
+  (*
+  if (dm.query1.RecordCount<=0) then begin
+      msgdlg_1.MessageDlg('Mods, I need mods and I can not find any !!!'#13+
+                          'Don''''t forget to update your mod list!', mtConfirmation, [mbOk], 0);
+
+
+
+
+
+
+  end;
+
+    *)
+
+
+end;
+
+
+procedure TFrmMain.Log(m: string);
+begin
+  varcoded.Log(m);
+end;
+
+
+procedure TFrmMain.Log(m, t: string);
+begin
+  varcoded.Log(m,t);
+end;
+
+
+
+
+
+
+
+function TFrmMain.CreateFolder(thisfolder:string):Boolean;
+var
+  r:Boolean;
+begin
+  r:=False;
+
+
+
+  result := r;
+
+end;
+
+
+Function TFrmMain.IsValidInstallation():Boolean;
+var
+  r: boolean;
+
+
+begin
+
+  r:= dm.IsValidInstallation;
+
+
+  if not (r)  then LastMessage:= dm.LastMessage;
+  
+  Exit( r );
+
+
+end;
+
+
+
+
+
+Function TFrmMain.BeginSession():Boolean;
+var
+  r: boolean;
+  db:string;
+
+begin
+  r:= false;
+
+
+  LastMessage := '';
+  SetToOpen := '';
+
+  IsPreviewEnabled:=False;
+  PreviewWasClosed := False;
+
+
+  DM:= TDataModule1.Create(FrmMain);
+
+  db := ExtractFilePath(Application.ExeName) + 'cect.sfp';
+
+  if (dm.SetupData ( db )) then begin
+
+    r:= varcoded.SetUpLog('');
+
+
+    LastMessage := varcoded.LastMessage;
+
+    Log('Database:' + db);
+
+
+
+  NeedsToSetUp := not (IsValidInstallation());
+
+  if ( NeedsToSetUp) then begin
+    msgdlg_1.MessageDlg('CECT is not setup, please setup it now'+#13+'or some features will be disabled'+#13+
+                        '('+dm.LastMessage+')',   mtWarning, [mbOk], 0);
+  end;
+
+//    NeedsToSetUpCmd:= (IsSteamCMDNeeded());
+
+
+
+    StatusMsg('Ready');
+    Log('Ready');
+
+
+
+  end else     LastMessage:= dm.LastMessage;
+
+
+
+
+
+  result := r;
+
+
+
+
+
+
+end;
+
+procedure TFrmMain.StatusMsg(msg:string);
+begin
+  statuspanel_msg.Caption := msg;
+end;
+
+
+
+procedure TFrmMain.OpenSet(thisset:string);
+var
+  FrmSet: TFrmSet;
+
+begin
+
+  SetToOpen := thisset;
+  FrmSet:= TFrmSet.Create(FrmMain);
+  FrmSet.Show;
+
+
+end;
+
+
+
+procedure TFrmMain.CreateNewSet();
+var
+  FrmSet: TFrmSet;
+
+begin
+
+  SetToOpen := '';
+  FrmSet:= TFrmSet.Create(FrmMain);
+  FrmSet.Show;
+
+
+end;
+
+end.

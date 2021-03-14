@@ -1,0 +1,951 @@
+unit UnitInstalledMods;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+
+
+  Winapi.ShellAPI,
+  UnitPreview,
+  ClipBrd,
+
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, BusinessSkinForm, bsSkinShellCtrls,
+  Vcl.StdCtrls, Vcl.Mask, bsSkinBoxCtrls, bsSkinCtrls, cxGraphics,
+  cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxStyles,
+  cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
+  Data.DB, cxDBData, cxSpinEdit, cxGridLevel, cxGridCustomTableView,
+  cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
+  JvComponentBase, JvFormPlacement, Vcl.ImgList, JvValidators,
+  JvErrorIndicator, bsSkinExCtrls, Vcl.ExtCtrls, Vcl.OleCtrls, SHDocVw,
+  Vcl.Menus, bsSkinMenus, Vcl.ComCtrls, JvExControls, JvSwitch, bsSkinTabs,
+  bsDialogs;
+
+type
+  TFrmInstalledMods = class(TForm)
+    skinform_1: TbsBusinessSkinForm;
+    FormStorage_main: TJvFormStorage;
+    ImageList1: TImageList;
+    JvValidators1: TJvValidators;
+    statusbar_1: TbsSkinStatusBar;
+    statuspanel_msg: TbsSkinStatusPanel;
+    gauge_1: TbsSkinGauge;
+    Panel_sets: TbsSkinExPanel;
+    FileListView_modlist: TbsSkinFileListView;
+    Pop_modsets: TbsSkinPopupMenu;
+    MenuItem_modsetstitle: TMenuItem;
+    N3: TMenuItem;
+    MenuItem_set_new: TMenuItem;
+    N2: TMenuItem;
+    MenuItem_set_open: TMenuItem;
+    Pop_preview: TbsSkinPopupMenu;
+    MenuItem1: TMenuItem;
+    MenuItem2: TMenuItem;
+    MenuItem_mods_open: TMenuItem;
+    Timer1: TTimer;
+    N1: TMenuItem;
+    MenuItem_set_active: TMenuItem;
+    MenuItem_set_delete: TMenuItem;
+    Panel_MainTop: TbsSkinExPanel;
+    Panel_modsonthiscomputer: TbsSkinExPanel;
+    grid_mods: TcxGrid;
+    dbtableview_Grid1DBTableView1: TcxGridDBTableView;
+    dbcol__Grid1DBTableView1modid: TcxGridDBColumn;
+    dbcol__Grid1DBTableView1modname1: TcxGridDBColumn;
+    dbtableview_Grid1DBTableView1Column1: TcxGridDBColumn;
+    dbcol__Grid1DBTableView1modsize: TcxGridDBColumn;
+    dbcol__Grid1DBTableView1Column1: TcxGridDBColumn;
+    gridlevelGrid1Level2: TcxGridLevel;
+    N5: TMenuItem;
+    MenuItem_mods_preview: TMenuItem;
+    Pop_set: TbsSkinPopupMenu;
+    MenuItem_set_title: TMenuItem;
+    MenuItem3: TMenuItem;
+    MenuItem_set_save: TMenuItem;
+    N6: TMenuItem;
+    MenuItem_set_clear: TMenuItem;
+    N7: TMenuItem;
+    MenuItem_set_export: TMenuItem;
+    PageControl_1: TbsSkinPageControl;
+    bsSkinTabSheet1: TbsSkinTabSheet;
+    bsSkinTabSheet2: TbsSkinTabSheet;
+    Panel_set: TbsSkinExPanel;
+    ListBox_Set: TbsSkinListBox;
+    Button_modup: TbsSkinButton;
+    Button_moddown: TbsSkinButton;
+    WebBrowser1: TWebBrowser;
+    ImageList2: TImageList;
+    SelectValueDialog_ImporType: TbsSkinSelectValueDialog;
+    MenuItem_set_openfolder: TMenuItem;
+    bsSkinTabSheet3: TbsSkinTabSheet;
+    bsSkinPanel1: TbsSkinPanel;
+    RadioButton_Numeric: TbsSkinRadioButton;
+    RadioButton_modlisttxt: TbsSkinRadioButton;
+    RadioButton_files: TbsSkinRadioButton;
+    bsSkinStdLabel3: TbsSkinStdLabel;
+    bsSkinExPanel1: TbsSkinExPanel;
+    Memo_impoexpo: TbsSkinMemo;
+    Button_export: TbsSkinSpeedButton;
+    button_impo: TbsSkinSpeedButton;
+    bsSkinStatusBar1: TbsSkinStatusBar;
+    StatusPanel_web: TbsSkinStatusPanel;
+    Gauge_web: TbsSkinGauge;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure dbtableview_Grid1DBTableView1CellClick(
+      Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
+    procedure FormCreate(Sender: TObject);
+    procedure menuitem_newmodsetClick(Sender: TObject);
+    procedure MenuItem_set_newClick(Sender: TObject);
+    procedure MenuItem_mods_openClick(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure MenuItem_set_openClick(Sender: TObject);
+    procedure MenuItem_set_deleteClick(Sender: TObject);
+    procedure MenuItem_set_activeClick(Sender: TObject);
+    procedure FileListView_modlistDblClick(Sender: TObject);
+    procedure FileListView_modlistKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure MenuItem_mods_previewClick(Sender: TObject);
+    procedure MenuItem_set_clearClick(Sender: TObject);
+    procedure MenuItem_set_saveClick(Sender: TObject);
+    procedure ListBox_SetListBoxKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure ListBox_SetListBoxKeyPress(Sender: TObject; var Key: Char);
+    procedure Button_modupClick(Sender: TObject);
+    procedure Button_moddownClick(Sender: TObject);
+    procedure ListBox_SetListBoxDragOver(Sender, Source: TObject; X,
+      Y: Integer; State: TDragState; var Accept: Boolean);
+    procedure ListBox_SetListBoxDragDrop(Sender, Source: TObject; X,
+      Y: Integer);
+    procedure ListBox_SetListBoxStartDrag(Sender: TObject;
+      var DragObject: TDragObject);
+    procedure PageControl_1Change(Sender: TObject);
+    procedure dbtableview_Grid1DBTableView1CellDblClick(
+      Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
+    procedure MenuItem_set_openfolderClick(Sender: TObject);
+    procedure MenuItem_set_exportClick(Sender: TObject);
+    procedure button_impoClick(Sender: TObject);
+    procedure Button_exportClick(Sender: TObject);
+    procedure WebBrowser1BeforeNavigate2(ASender: TObject;
+      const pDisp: IDispatch; const URL, Flags, TargetFrameName, PostData,
+      Headers: OleVariant; var Cancel: WordBool);
+    procedure WebBrowser1DocumentComplete(ASender: TObject;
+      const pDisp: IDispatch; const URL: OleVariant);
+    procedure WebBrowser1NewProcess(ASender: TObject; lCauseFlag: Integer;
+      const pWB2: IDispatch; var Cancel: WordBool);
+    procedure WebBrowser1NewWindow2(ASender: TObject;
+      var ppDisp: IDispatch; var Cancel: WordBool);
+    procedure WebBrowser1NewWindow3(ASender: TObject;
+      var ppDisp: IDispatch; var Cancel: WordBool; dwFlags: Cardinal;
+      const bstrUrlContext, bstrUrl: WideString);
+  private
+    ThisParentForm: TForm;
+    LastUrlVisited: string;
+    CanLoadPage: Boolean;
+    ListBoxSetSelftDrag: Boolean;
+
+    procedure StatusMsg(msg: string);
+
+    procedure UpdateBarProgress(i: integer);
+    procedure ShowModWebPage;
+    procedure DeleteSet;
+    function IsValidSetSelected(): Boolean;
+    procedure AddNewItem;
+    procedure NewSet;
+    function IsValidFileName(thisfile: string): Boolean;
+    procedure SaveSet;
+    procedure ReorderList(Key: Char);
+    procedure ActiveSet;
+    procedure Import;
+    procedure Export;
+    function IsValidImportExport(b: boolean): Boolean;
+
+
+    { Private declarations }
+  public
+    { Public declarations }
+    FrmPreview: TFrmPreview;
+    PreviewWasClosed: Boolean;
+    ValidConfiguration:Boolean;
+    procedure DeactivatePreview;
+
+  end;
+
+var
+  FrmInstalledMods: TFrmInstalledMods;
+
+implementation
+
+{$R *.dfm}
+
+uses Main;
+
+
+procedure TFrmInstalledMods.Button_moddownClick(Sender: TObject);
+begin
+ReorderList('-');
+ListBox_Set.SetFocus;
+end;
+
+procedure TFrmInstalledMods.Button_modupClick(Sender: TObject);
+var
+  i:Integer;
+begin
+  ReorderList('+');
+  ListBox_Set.SetFocus;
+
+end;
+
+procedure TFrmInstalledMods.UpdateBarProgress(i:integer);
+begin
+
+if (i<=0) then begin
+
+  gauge_1.Value := 0;
+  gauge_1.Visible:= False;
+end else begin
+
+
+
+  gauge_1.Visible := True;
+  gauge_1.Value := i;
+
+end;
+
+FrmInstalledMods.Update;
+
+end;
+
+
+
+
+procedure TFrmInstalledMods.WebBrowser1BeforeNavigate2(ASender: TObject;
+  const pDisp: IDispatch; const URL, Flags, TargetFrameName, PostData,
+  Headers: OleVariant; var Cancel: WordBool);
+begin
+Cancel := not (CanLoadPage);
+end;
+
+procedure TFrmInstalledMods.WebBrowser1DocumentComplete(ASender: TObject;
+  const pDisp: IDispatch; const URL: OleVariant);
+begin
+CanLoadPage := False;
+Gauge_web.Visible := False;
+Gauge_web.Value:=0;
+end;
+
+procedure TFrmInstalledMods.WebBrowser1NewProcess(ASender: TObject;
+  lCauseFlag: Integer; const pWB2: IDispatch; var Cancel: WordBool);
+begin
+Cancel := not (CanLoadPage);
+end;
+
+procedure TFrmInstalledMods.WebBrowser1NewWindow2(ASender: TObject;
+  var ppDisp: IDispatch; var Cancel: WordBool);
+begin
+Cancel := not (CanLoadPage);
+end;
+
+procedure TFrmInstalledMods.WebBrowser1NewWindow3(ASender: TObject;
+  var ppDisp: IDispatch; var Cancel: WordBool; dwFlags: Cardinal;
+  const bstrUrlContext, bstrUrl: WideString);
+begin
+Cancel := not (CanLoadPage);
+end;
+
+procedure TFrmInstalledMods.dbtableview_Grid1DBTableView1CellClick(
+  Sender: TcxCustomGridTableView;
+  ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+  AShift: TShiftState; var AHandled: Boolean);
+begin
+
+  ShowModWebPage();
+end;
+
+
+procedure TFrmInstalledMods.dbtableview_Grid1DBTableView1CellDblClick(
+  Sender: TcxCustomGridTableView;
+  ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+  AShift: TShiftState; var AHandled: Boolean);
+begin
+if (PageControl_1.TabIndex<>1)  then PageControl_1.TabIndex := 1;
+  AddNewItem;
+end;
+
+procedure TFrmInstalledMods.ShowModWebPage();
+var
+  thisurl: string;
+begin
+
+
+  thisurl := 'http://steamcommunity.com/sharedfiles/filedetails/?id=' +  FrmMain.dm.query_mods.FieldByName('modid').AsString;
+
+  if (thisurl<> LastUrlVisited)  then begin //show
+
+    if (PageControl_1.TabIndex=0) and (MenuItem_mods_preview.Checked) then begin
+        CanLoadPage := True;
+        LastUrlVisited := thisurl;
+        WebBrowser1.Stop;
+        Gauge_web.Visible:=True;
+        Gauge_web.Value:=30;
+        StatusPanel_web.Caption:='Loading ' + thisurl;
+
+        WebBrowser1.Navigate(thisurl);
+        WebBrowser1.Visible := true;
+    end else begin
+
+        WebBrowser1.Stop;
+        WebBrowser1.Navigate('D:\temp\blank.html');
+
+    end;
+
+
+end;
+
+end;
+
+procedure TFrmInstalledMods.FileListView_modlistDblClick(Sender: TObject);
+begin
+MenuItem_set_openClick(nil);
+end;
+
+procedure TFrmInstalledMods.FileListView_modlistKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+if ( Key = VK_F2 ) and (IsValidSetSelected) then FileListView_modlist.ItemFocused.EditCaption;
+if ( Key = VK_DELETE  ) and (IsValidSetSelected)  then DeleteSet();
+
+end;
+
+procedure TFrmInstalledMods.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+
+FrmMain.IsInstalledModWindowVisible := False;
+
+  if (FrmPreview <> nil ) then FrmPreview.Close;
+
+
+
+Action := caFree;
+end;
+
+procedure TFrmInstalledMods.FormCreate(Sender: TObject);
+begin
+LastUrlVisited := '';
+ListBoxSetSelftDrag := False;
+PreviewWasClosed := False;
+timer1.Enabled:=True;
+end;
+
+procedure TFrmInstalledMods.AddNewItem();
+var
+  NewItem: string;
+  i:Integer;
+  ItemFound: Boolean;
+begin
+
+//  ShowMessage('here');
+  NewItem := FrmMain.DM.query_mods.FieldByName('modfile').AsString;
+  ItemFound := False;
+
+  for I := 0 to ListBox_Set.Items.Count-1 do begin
+
+    if ( ListBox_Set.Items[i] = NewItem  ) then ItemFound := True;
+  end;
+
+
+
+  if not (ItemFound)  then begin
+    ListBox_Set.Items.Add( NewItem);
+    ListBox_Set.ItemIndex := ListBox_Set.Items.Count-1;
+    StatusMsg('Added:' +NewItem );
+
+
+  end else     StatusMsg('Duplicated item, not added:' +NewItem );
+
+
+
+end;
+
+
+procedure TFrmInstalledMods.Button_exportClick(Sender: TObject);
+begin
+Export();
+end;
+
+procedure TFrmInstalledMods.button_impoClick(Sender: TObject);
+begin
+Import();
+end;
+
+
+
+function TFrmInstalledMods.IsValidImportExport(b:boolean):Boolean;
+var
+  r: Boolean;
+begin
+  r:= False;
+
+  r:= RadioButton_modlisttxt.Checked or RadioButton_Numeric.Checked or RadioButton_files.Checked;
+
+  if (r) then begin
+    r:= Memo_impoexpo.Lines.Count>0;
+   end;
+
+
+
+
+
+  result := r;
+end;
+procedure TFrmInstalledMods.Import();
+begin
+
+
+
+  FrmMain.msgdlg_1.MessageDlg('Sorry, function not implemented yet',   mtWarning, [mbOk], 0);
+
+
+
+  Exit;
+  if not (IsValidImportExport(true) ) then Exit;
+
+  if ( RadioButton_Numeric.Checked ) then begin
+
+
+
+
+
+  end;
+
+
+
+
+
+end;
+
+
+procedure TFrmInstalledMods.Export();
+begin
+
+  FrmMain.msgdlg_1.MessageDlg('Sorry, function not implemented yet',   mtWarning, [mbOk], 0);
+  Exit;
+
+
+  if not (IsValidImportExport(true) ) then Exit;
+
+
+end;
+
+
+
+procedure TFrmInstalledMods.ListBox_SetListBoxDragDrop(Sender,
+  Source: TObject; X, Y: Integer);
+  var
+    DropIndex : integer;
+    Description: string;
+    NewIndex: Integer;
+begin
+
+if (ListBoxSetSelftDrag ) then begin
+
+  if (ListBox_Set.Items.Count=0) then Exit; //no items
+  if (ListBox_Set.ItemIndex<0) then Exit; //no selected
+
+  DropIndex := ListBox_Set.ItemAtPos(point(X, Y), false);
+  Description := ListBox_Set.Items[ListBox_Set.ItemIndex];
+
+      NewIndex := ListBox_Set.ItemIndex;
+
+      ListBox_Set.Items.Insert(DropIndex, ListBox_Set.Items[ListBox_Set.ItemIndex]); //
+      ListBox_Set.Items.Delete(ListBox_Set.ItemIndex );
+      ListBox_Set.ItemIndex := ListBox_Set.Items.IndexOf( Description );
+
+end else AddNewItem();
+
+ListBoxSetSelftDrag := False;
+
+
+end;
+
+procedure TFrmInstalledMods.ListBox_SetListBoxDragOver(Sender,
+  Source: TObject; X, Y: Integer; State: TDragState; var Accept: Boolean);
+begin
+Accept := True;
+end;
+
+procedure TFrmInstalledMods.ListBox_SetListBoxKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+
+
+if ( Key = VK_DELETE  ) and (ListBox_Set.Items.Count>0)  then ListBox_Set.Items.Delete(ListBox_Set.ItemIndex   );
+
+
+end;
+
+procedure TFrmInstalledMods.ListBox_SetListBoxKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+
+  if (Key='+') or  (Key='-') then ReorderList(Key);
+
+
+
+end;
+
+procedure TFrmInstalledMods.ListBox_SetListBoxStartDrag(Sender: TObject;
+  var DragObject: TDragObject);
+begin
+
+ListBoxSetSelftDrag:=True;
+end;
+
+procedure TFrmInstalledMods.MenuItem_mods_openClick(Sender: TObject);
+var
+
+  thisurl: string;
+begin
+
+  thisurl := 'http://steamcommunity.com/sharedfiles/filedetails/?id=' +  FrmMain.dm.query_mods.FieldByName('modid').AsString;
+  ShellExecute(0, 'open', PChar(thisurl), nil, nil, SW_SHOWNORMAL);
+
+end;
+
+
+procedure TFrmInstalledMods.DeactivatePreview();
+begin
+
+MenuItem_mods_preview.Checked := False;
+grid_mods.SetFocus;
+
+
+end;
+
+procedure TFrmInstalledMods.MenuItem_mods_previewClick(Sender: TObject);
+begin
+MenuItem_mods_preview.Checked := not (MenuItem_mods_preview.Checked);
+if ( MenuItem_mods_preview.Checked   ) then ShowModWebPage();
+FrmMain.IsPreviewEnabled:= MenuItem_mods_preview.Checked;
+grid_mods.SetFocus;
+
+
+
+end;
+
+procedure TFrmInstalledMods.Timer1Timer(Sender: TObject);
+begin
+Timer1.Enabled:= False;
+
+ValidConfiguration := JvValidators1.Validate;
+
+grid_mods.SetFocus;
+
+if ( MenuItem_mods_preview.Checked   ) then ShowModWebPage();
+
+end;
+
+procedure TFrmInstalledMods.menuitem_newmodsetClick(Sender: TObject);
+begin
+FrmMain.CreateNewSet;
+end;
+
+procedure TFrmInstalledMods.MenuItem_set_activeClick(Sender: TObject);
+begin
+if (ValidConfiguration) and (IsValidSetSelected()) then begin
+
+  ActiveSet();
+
+end  else ShowMessage('Please select a set first');
+
+
+end;
+
+procedure TFrmInstalledMods.ActiveSet();
+var
+  i:Integer;
+  thisset, thissetname:string;
+begin
+
+   i:= FrmMain.msgdlg_1.MessageDlg('Are you sure to use this set?'+#13+'the current modlist.txt will be overwritted',mtWarning, [mbYes,mbNo], 1);
+
+   if (i=6) then begin
+
+
+      thisset:= FileListView_modlist.Root + '\'+  FileListView_modlist.Selected.Caption;
+      thissetname:=FileListView_modlist.Selected.Caption;
+
+
+    if ( FileExists (thisset ) ) then begin
+
+      if ( FileExists ( FileListView_modlist.Root + '\modlist.txt' ) ) then begin //backup
+
+        CopyFile(  PWideChar(FileListView_modlist.Root + '\modlist.txt'),PWideChar(FileListView_modlist.Root + '\modlist.txt.bak') ,false );
+      end;
+
+      CopyFile(  PWideChar(thisset), PWideChar(FileListView_modlist.Root + '\modlist.txt'),false );
+
+
+      StatusMsg('set ' +thissetname+' activated' );
+    end;
+   end;
+
+
+
+
+end;
+
+
+
+procedure TFrmInstalledMods.MenuItem_set_clearClick(Sender: TObject);
+begin
+  NewSet();
+end;
+
+procedure TFrmInstalledMods.MenuItem_set_deleteClick(Sender: TObject);
+begin
+if (ValidConfiguration) and (IsValidSetSelected()) then DeleteSet() else ShowMessage('Please select a set first');
+
+end;
+
+procedure TFrmInstalledMods.MenuItem_set_exportClick(Sender: TObject);
+var
+  alltext:string;
+  i:Integer;
+begin
+
+  alltext := '';
+
+  for I := 0 to (ListBox_Set.Items.Count-1) do begin
+    //alltext := alltext + ListBox_Set.Items[i]  +#13;
+    Memo_impoexpo.Lines.Add(  ListBox_Set.Items[i] );
+
+
+
+  end;
+
+//  Memo_impoexpo.Text := alltext;
+  PageControl_1.TabIndex:=2;
+
+
+
+
+end;
+
+procedure TFrmInstalledMods.MenuItem_set_newClick(Sender: TObject);
+begin
+if (ValidConfiguration) then   NewSet();
+end;
+
+
+
+procedure TFrmInstalledMods.NewSet();
+begin
+
+    ListBox_Set.Items.Clear;
+    Panel_set.Caption := 'Set';
+    grid_mods.SetFocus;
+
+
+
+end;
+procedure TFrmInstalledMods.PageControl_1Change(Sender: TObject);
+begin
+if (PageControl_1.TabIndex = 0) then ShowModWebPage;
+
+end;
+
+procedure TFrmInstalledMods.DeleteSet();
+var
+  thisset:string;
+  thissetname: string;
+
+  i:Integer;
+begin
+  thisset:= FileListView_modlist.Root + '\'+  FileListView_modlist.Selected.Caption;
+  thissetname:=FileListView_modlist.Selected.Caption;
+
+
+   i:= FrmMain.msgdlg_1.MessageDlg('Are you sure to delete this set?'+#13+#13+ thissetname,mtWarning, [mbYes,mbNo], 1);
+
+   if (i=6) then begin
+    if ( FileExists (thisset ) ) then begin
+
+      DeleteFile(thisset);
+      StatusMsg('set ' +thissetname+' deleted' );
+    end;
+   end;
+
+
+end;
+
+function TFrmInstalledMods.IsValidSetSelected():Boolean;
+var
+  thissetname:string;
+begin
+
+try
+
+    thissetname:= FileListView_modlist.Selected.Caption;
+    Exit(not (thissetname.IsEmpty));
+  //  Exit(True);
+
+
+except on E: Exception do
+  ShowMessage('X:' + e.Message);
+end;
+
+Exit(False);
+
+end;
+
+
+procedure TFrmInstalledMods.MenuItem_set_openClick(Sender: TObject);
+begin
+
+if ( ValidConfiguration  )  and (IsValidSetSelected()) then begin
+
+
+    ListBox_Set.Items.LoadFromFile(FileListView_modlist.Root + '\'+  FileListView_modlist.Selected.Caption );
+    Panel_set.Caption := FileListView_modlist.Selected.Caption;
+
+
+
+    //FrmMain.openset(FileListView_modlist.Root + '\'+  FileListView_modlist.Selected.Caption) else ShowMessage('Please select a set first');
+
+end;
+
+
+end;
+
+procedure TFrmInstalledMods.MenuItem_set_openfolderClick(Sender: TObject);
+
+begin
+if (ValidConfiguration) then ShellExecute(0, 'open', PChar(     FrmMain.DM.GetSetting('cemodlistfolder')), nil, nil, SW_SHOWNORMAL);
+
+end;
+
+procedure TFrmInstalledMods.MenuItem_set_saveClick(Sender: TObject);
+begin
+if (ValidConfiguration) then SaveSet;
+end;
+
+
+
+
+procedure TFrmInstalledMods.StatusMsg(msg:string);
+begin
+  statuspanel_msg.Caption := msg;
+end;
+
+
+procedure TFrmInstalledMods.SaveSet();
+var
+  SaveIt:Boolean;
+  FileToSave: String;
+  JustTheName: string;
+  i:Integer;
+
+begin
+
+SaveIt := false;
+statuspanel_msg.Caption:='Ready';
+
+  if (ListBox_Set.Items.Count<=0) then begin
+
+    FrmMain.msgdlg_1.MessageDlg('I don'' want to save an empty list, sorry.',
+    mtWarning, [mbOk], 0);
+    Exit;
+
+  end;
+
+
+    JustTheName:= Panel_set.Caption;
+
+    JustTheName:=JustTheName.ToLower.Replace('.txt','');
+
+
+
+    if (JustTheName='Set') then JustTheName:='';
+
+
+
+//    if not ( InputQuery('Set name', 'Write the set name', JustTheName) ) then Exit;
+
+    if not ( FrmMain.InputDialog_1.InputQuery('Set name', 'Name your mod set', JustTheName) ) then Exit;
+
+
+
+
+//    JustTheName := FrmMain.InputDialog_1.InputBox('Set name','Write the set name',JustTheName);
+    JustTheName := JustTheName.ToLower();
+
+    JustTheName := JustTheName.Replace('.txt','').Replace('.','').Replace('\','').Replace('/','').Replace(':','');
+
+
+    if (JustTheName.IsEmpty) then begin
+
+         FrmMain.msgdlg_1.MessageDlg('Invalid name set, it''s empty '+ #13+ JustTheName+#13+'Try again.',  mtWarning, [mbOk], 0);
+     Exit;
+
+
+    end;
+
+
+
+
+    JustTheName := JustTheName + '.txt';
+
+    FileToSave:=  FrmMain.DM.GetSetting('cemodlistfolder')  +'\'+JustTheName;
+
+
+    if not ( IsValidFileName(FileToSave)   ) then begin
+
+         FrmMain.msgdlg_1.MessageDlg('Invalid name set '+ #13+ FileToSave+#13+'Try again.',  mtWarning, [mbOk], 0);
+         Exit;
+    end;
+
+   Panel_set.Caption := JustTheName;
+
+   ListBox_Set.Items.SaveToFile(  FileToSave);
+   statuspanel_msg.Caption:='File saved:' + FileToSave;
+
+
+
+
+end;
+
+
+function TFrmInstalledMods.IsValidFileName(thisfile:string):Boolean;
+const
+  { for short 8.3 file names }
+  ShortForbiddenChars : set of Char = [';', '=', '+', '<', '>', '|',
+                                       '"', '[', ']', '\', '/', ''''];
+  { for long file names }
+  LongForbiddenChars  : set of Char = ['<', '>', '|', '"', '\', '/', ':', '*', '?'];
+
+
+var
+  Handle: THandle;
+  i:Integer;
+  stillvalid:Boolean;
+  thisname:string;
+begin
+
+  //check if file exists
+
+{$REGION 'Check if exists'}
+
+    if (FileExists( thisfile)) then begin
+
+        i:= FrmMain.msgdlg_1.MessageDlg('Set exists, overwrite it ?', mtWarning, [mbYes,mbNo], 1);
+
+        Exit(i=6); //i=6 yes to overwrite
+    end;
+
+{$ENDREGION}
+  //valid file name?
+
+{$REGION 'Check if valid file name'}
+
+
+    thisname := ExtractFileName(thisfile);
+
+    stillvalid := True;
+
+    for I := 1 to Length(thisname) do
+        stillvalid := stillvalid and not (thisname[I] in LongForbiddenChars);
+
+        if (stillvalid) then begin
+
+            for I := 1 to Length(thisname) do
+            stillvalid := stillvalid and not (thisname[I] in ShortForbiddenChars);
+
+        end;
+
+  if not (stillvalid) then Exit(False);
+
+
+
+{$ENDREGION}
+
+
+
+
+try
+
+    Handle := CreateFile(PChar(thisfile), GENERIC_READ or GENERIC_WRITE, 0, nil, CREATE_NEW, 0, 0);
+
+    if Handle <> INVALID_HANDLE_VALUE then begin
+        CloseHandle(Handle);
+        DeleteFile(thisfile);
+
+        Exit(True);
+
+
+    end;
+
+
+
+except on E: Exception do
+
+end;
+
+  Result := False;
+
+
+end;
+
+
+procedure TFrmInstalledMods.ReorderList(Key:Char);
+var
+  OriginalItem: string;
+  MovedItem: string;
+  DropIndex : integer;
+begin
+
+
+if (ListBox_Set.Items.Count=0) then Exit; //no items
+if (ListBox_Set.ItemIndex<0) then Exit; //no selected
+
+
+if (Key='+') then begin //up
+  if not (ListBox_Set.ItemIndex =  0   ) then  begin
+    OriginalItem:= ListBox_Set.Items[ ListBox_Set.ItemIndex];
+    MovedItem := ListBox_Set.Items[ ListBox_Set.ItemIndex-1];
+    ListBox_Set.Items[ ListBox_Set.ItemIndex] := MovedItem;
+    ListBox_Set.Items[ ListBox_Set.ItemIndex-1] := OriginalItem;
+    ListBox_Set.ItemIndex := ListBox_Set.ItemIndex -1;
+  end;
+End;
+
+
+if (Key='-') then begin //down
+
+  if not (ListBox_Set.ItemIndex=  ListBox_Set.Items.Count-1   ) then  begin
+
+    OriginalItem:= ListBox_Set.Items[ ListBox_Set.ItemIndex];
+    MovedItem := ListBox_Set.Items[ ListBox_Set.ItemIndex+1];
+
+    ListBox_Set.Items[ ListBox_Set.ItemIndex] := MovedItem;
+    ListBox_Set.Items[ ListBox_Set.ItemIndex+1] := OriginalItem;
+    ListBox_Set.ItemIndex := ListBox_Set.ItemIndex +1;
+
+  end;
+
+
+End;
+
+
+
+
+
+
+end;
+
+
+
+end.

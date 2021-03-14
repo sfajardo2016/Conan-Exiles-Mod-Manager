@@ -1,0 +1,39 @@
+unit About;
+
+interface
+
+uses WinApi.Windows, System.SysUtils, System.Classes, Vcl.Graphics,
+  Vcl.Forms, Vcl.Controls, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
+
+  BusinessSkinForm, bsSkinCtrls, bsSkinExCtrls;
+
+type
+  TAboutBox = class(TForm)
+    button_1: TbsSkinButton;
+    skinform_1: TbsBusinessSkinForm;
+    label_2: TbsSkinLabel;
+    label_1: TbsSkinLabel;
+    img_ProgramIcon: TImage;
+    linklabel_1: TbsSkinLinkLabel;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  AboutBox: TAboutBox;
+
+implementation
+
+{$R *.dfm}
+
+
+
+procedure TAboutBox.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+Action := caFree;
+end;
+
+end.

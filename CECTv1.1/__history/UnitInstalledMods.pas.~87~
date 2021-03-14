@@ -1,0 +1,351 @@
+unit UnitInstalledMods;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+
+
+
+
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, BusinessSkinForm, bsSkinShellCtrls,
+  Vcl.StdCtrls, Vcl.Mask, bsSkinBoxCtrls, bsSkinCtrls, cxGraphics,
+  cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxStyles,
+  cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
+  Data.DB, cxDBData, cxSpinEdit, cxGridLevel, cxGridCustomTableView,
+  cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
+  JvComponentBase, JvFormPlacement, Vcl.ImgList, JvValidators,
+  JvErrorIndicator, bsSkinExCtrls, Vcl.ExtCtrls, Vcl.OleCtrls, SHDocVw,
+  Vcl.Menus, bsSkinMenus;
+
+type
+  TFrmInstalledMods = class(TForm)
+    skinform_1: TbsBusinessSkinForm;
+    bsSkinPanel1: TbsSkinPanel;
+    button_updatemodlist: TbsSkinSpeedButton;
+    bsSkinStdLabel1: TbsSkinStdLabel;
+    bsSkinStdLabel2: TbsSkinStdLabel;
+    DirectoryEdit_Mods: TbsSkinDirectoryEdit;
+    FileEdit_modlist: TbsSkinFileEdit;
+    FormStorage_main: TJvFormStorage;
+    ImageList1: TImageList;
+    JvErrorIndicator1: TJvErrorIndicator;
+    JvValidators1: TJvValidators;
+    JvCustomValidator1: TJvCustomValidator;
+    JvCustomValidator2: TJvCustomValidator;
+    statusbar_1: TbsSkinStatusBar;
+    statuspanel_msg: TbsSkinStatusPanel;
+    gauge_1: TbsSkinGauge;
+    Panel_modsonthiscomputer: TbsSkinExPanel;
+    grid_mods: TcxGrid;
+    dbtableview_Grid1DBTableView1: TcxGridDBTableView;
+    dbcol__Grid1DBTableView1modid: TcxGridDBColumn;
+    dbcol__Grid1DBTableView1modname1: TcxGridDBColumn;
+    dbtableview_Grid1DBTableView1Column1: TcxGridDBColumn;
+    dbcol__Grid1DBTableView1modsize: TcxGridDBColumn;
+    dbcol__Grid1DBTableView1Column1: TcxGridDBColumn;
+    gridlevelGrid1Level2: TcxGridLevel;
+    bsSkinSplitter1: TbsSkinSplitter;
+    Panel_previewandsets: TbsSkinPanel;
+    Panel_webbrowser: TbsSkinExPanel;
+    WebBrowser1: TWebBrowser;
+    pop_mods: TbsSkinPopupMenu;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure JvCustomValidator1Validate(Sender: TObject;
+      ValueToValidate: Variant; var Valid: Boolean);
+    procedure JvCustomValidator2Validate(Sender: TObject;
+      ValueToValidate: Variant; var Valid: Boolean);
+    procedure button_updatemodlistClick(Sender: TObject);
+    procedure dbtableview_Grid1DBTableView1CellClick(
+      Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
+    procedure FormCreate(Sender: TObject);
+    procedure WebBrowser1DocumentComplete(ASender: TObject;
+      const pDisp: IDispatch; const URL: OleVariant);
+    procedure Panel_webbrowserChangeRollState(Sender: TObject);
+    procedure WebBrowser1BeforeNavigate2(ASender: TObject;
+      const pDisp: IDispatch; const URL, Flags, TargetFrameName, PostData,
+      Headers: OleVariant; var Cancel: WordBool);
+    procedure WebBrowser1NewProcess(ASender: TObject; lCauseFlag: Integer;
+      const pWB2: IDispatch; var Cancel: WordBool);
+    procedure WebBrowser1NewWindow2(ASender: TObject;
+      var ppDisp: IDispatch; var Cancel: WordBool);
+    procedure WebBrowser1NewWindow3(ASender: TObject;
+      var ppDisp: IDispatch; var Cancel: WordBool; dwFlags: Cardinal;
+      const bstrUrlContext, bstrUrl: WideString);
+  private
+    ThisParentForm: TForm;
+    LastUrlVisited: string;
+    CanLoadAPage: Boolean;
+    function IsValidModListTXTFile: Boolean;
+    procedure StatusMsg(msg: string);
+    function IsValidModFolder: Boolean;
+    procedure UpdateBarProgress(i: integer);
+    procedure ShowModWebPage;
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmInstalledMods: TFrmInstalledMods;
+
+implementation
+
+{$R *.dfm}
+
+uses Main;
+
+
+procedure TFrmInstalledMods.button_updatemodlistClick(Sender: TObject);
+var
+
+  ModFolder: string;
+  Msg: string;
+
+begin
+
+
+
+
+  StatusMsg('Ready');
+  JvErrorIndicator1.ClearErrors;
+
+  UpdateBarProgress(10);
+
+  if (JvValidators1.Validate) then begin
+
+    StatusMsg('Getting mod list');
+    UpdateBarProgress(90);
+
+
+    FrmMain.DM.UpdateModList( DirectoryEdit_Mods.Text   );
+
+
+    UpdateBarProgress(80);
+
+
+
+
+  end;
+
+
+  UpdateBarProgress(0);
+  StatusMsg('Ready');
+    FrmMain.msgdlg_1.MessageDlg('Done',mtInformation, [mbOk], 0);
+
+
+
+
+
+end;
+
+
+
+
+procedure TFrmInstalledMods.UpdateBarProgress(i:integer);
+begin
+
+if (i<=0) then begin
+
+  gauge_1.Value := 0;
+  gauge_1.Visible:= False;
+end else begin
+
+
+
+  gauge_1.Visible := True;
+  gauge_1.Value := i;
+
+end;
+
+Application.ProcessMessages;
+
+
+
+end;
+
+
+
+
+procedure TFrmInstalledMods.WebBrowser1BeforeNavigate2(ASender: TObject;
+  const pDisp: IDispatch; const URL, Flags, TargetFrameName, PostData,
+  Headers: OleVariant; var Cancel: WordBool);
+begin
+Cancel := not (CanLoadAPage);
+end;
+
+procedure TFrmInstalledMods.WebBrowser1DocumentComplete(ASender: TObject;
+  const pDisp: IDispatch; const URL: OleVariant);
+var
+  ZoomFac: OLEVariant;
+begin
+  ZoomFac := 80;
+  WebBrowser1.ExecWB(OLECMDID_OPTICAL_ZOOM, OLECMDEXECOPT_DONTPROMPTUSER, ZoomFac);
+  UpdateBarProgress(0);
+  StatusMsg('Ready');
+  CanLoadAPage := false;
+
+end;
+
+procedure TFrmInstalledMods.WebBrowser1NewProcess(ASender: TObject;
+  lCauseFlag: Integer; const pWB2: IDispatch; var Cancel: WordBool);
+begin
+Cancel := not (CanLoadAPage);
+end;
+
+procedure TFrmInstalledMods.WebBrowser1NewWindow2(ASender: TObject;
+  var ppDisp: IDispatch; var Cancel: WordBool);
+begin
+Cancel := not (CanLoadAPage);
+end;
+
+procedure TFrmInstalledMods.WebBrowser1NewWindow3(ASender: TObject;
+  var ppDisp: IDispatch; var Cancel: WordBool; dwFlags: Cardinal;
+  const bstrUrlContext, bstrUrl: WideString);
+begin
+Cancel := not (CanLoadAPage);
+end;
+
+procedure TFrmInstalledMods.dbtableview_Grid1DBTableView1CellClick(
+  Sender: TcxCustomGridTableView;
+  ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+  AShift: TShiftState; var AHandled: Boolean);
+begin
+ShowModWebPage();
+end;
+
+
+procedure TFrmInstalledMods.ShowModWebPage();
+var
+  thisurl: string;
+
+  pvaIn, pvaOut: OleVariant;
+
+
+begin
+
+
+  pvaIn := 10;
+  pvaOut := Null;
+
+
+  thisurl := 'http://steamcommunity.com/sharedfiles/filedetails/?id=' +  FrmMain.dm.query_mods.FieldByName('modid').AsString;
+
+  if (thisurl<> LastUrlVisited)  and not ( Panel_webbrowser.RollState) then begin
+
+
+        CanLoadAPage := True;
+        StatusMsg('Loading web page for mod ' + FrmMain.dm.query_mods.FieldByName('modid').AsString);
+        UpdateBarProgress(45);
+        WebBrowser1.Stop;
+        WebBrowser1.Navigate(thisurl);
+        LastUrlVisited := thisurl;
+  end;
+
+
+
+
+
+
+
+end;
+
+procedure TFrmInstalledMods.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+
+FrmMain.IsInstalledModWindowVisible := False;
+Action := caFree;
+end;
+
+procedure TFrmInstalledMods.FormCreate(Sender: TObject);
+begin
+LastUrlVisited := '';
+end;
+
+procedure TFrmInstalledMods.JvCustomValidator1Validate(Sender: TObject;
+  ValueToValidate: Variant; var Valid: Boolean);
+begin
+  Valid := IsValidModListTXTFile();
+end;
+
+
+
+procedure TFrmInstalledMods.JvCustomValidator2Validate(Sender: TObject;
+  ValueToValidate: Variant; var Valid: Boolean);
+begin
+  Valid := IsValidModFolder();
+
+
+end;
+
+procedure TFrmInstalledMods.Panel_webbrowserChangeRollState(
+  Sender: TObject);
+begin
+if not (Panel_webbrowser.RollState)  then ShowModWebPage();
+
+end;
+
+function TFrmInstalledMods.IsValidModListTXTFile() : Boolean;
+var
+  modlistfile: string;
+begin
+
+
+  modlistfile:= FileEdit_modlist.Text;
+  modlistfile := modlistfile.Trim();
+
+
+{$REGION 'Validate modlist.txt file'}
+
+    StatusMsg('verifying main folder');
+
+    if not (  FileExists( modlistfile )   )  then begin
+
+      Exit(False);
+    end;
+
+{$ENDREGION}
+
+
+
+
+  result := True;
+end;
+
+
+function TFrmInstalledMods.IsValidModFolder() : Boolean;
+var
+  modfolder: string;
+begin
+
+
+  modfolder:= DirectoryEdit_Mods.Text;
+  modfolder:= modfolder.Trim();
+
+
+{$REGION 'Validate MOD folder'}
+
+    StatusMsg('Verifying mod folder');
+
+    if not ( DirectoryExists ( modfolder )   )  then begin
+      Exit(False);
+    end;
+
+{$ENDREGION}
+
+
+  result := True;
+end;
+
+
+
+procedure TFrmInstalledMods.StatusMsg(msg:string);
+begin
+  statuspanel_msg.Caption := msg;
+end;
+
+
+
+end.
