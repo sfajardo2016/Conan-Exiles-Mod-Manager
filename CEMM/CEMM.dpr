@@ -1,53 +1,20 @@
 program cemm;
 
 uses
-	Vcl.Forms,
-	uCEFApplication,
+  Vcl.Forms,
   MainUnit in 'MainUnit.pas' {FrmMain},
-  DataModuleUnit in 'DataModuleUnit.pas' {DataModule1: TDataModule};
+  UISettingsUnit in 'UISettingsUnit.pas' {FrmUISettings},
+  DataModuleUnit in 'DataModuleUnit.pas' {DataModule1: TDataModule},
+  SteamSettingsUnit in 'SteamSettingsUnit.pas' {FrmSteamSettings},
+  AppSettingsUnit in 'AppSettingsUnit.pas' {FrmAppSettings},
+  ModsSettingsUnit in 'ModsSettingsUnit.pas' {FrmModsSettings};
 
 {$R *.res}
 
 begin
-	ReportMemoryLeaksOnShutdown := true;
-	CreateGlobalCEFApp;
-
-  if GlobalCEFApp.StartMainProcess then
-		begin
-
-			Application.Initialize;
-			Application.MainFormOnTaskbar := True;
-			Application.CreateForm(TFrmMain, FrmMain);
-			Application.Run;
-
-
-
-		end;
-
-	DestroyGlobalCEFApp;
+	ReportMemoryLeaksOnShutdown := True;
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFrmMain, FrmMain);
+  Application.Run;
 end.
-
-
-
-(*
-
-
-
-
-	CreateGlobalCEFApp;
-
-	if GlobalCEFApp.StartMainProcess then
-		begin
-			Application.Initialize;
-			{$IFDEF DELPHI11_UP}
-			Application.MainFormOnTaskbar := True;
-			{$ENDIF}
-			Application.CreateForm(TMiniBrowserFrm, MiniBrowserFrm);
-	Application.Run;
-		end;
-
-	DestroyGlobalCEFApp;
-
-
-*)
-

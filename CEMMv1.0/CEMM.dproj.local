@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2021/02/25 16:27:04.000.845,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit3.pas</Transaction>
+    <Transaction>2021/02/25 16:48:03.000.552,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit3.pas</Transaction>
+    <Transaction>2021/02/27 12:01:21.000.598,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit3.pas</Transaction>
+    <Transaction>2021/03/11 16:14:49.000.752,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit4.pas</Transaction>
+    <Transaction>2021/03/11 16:16:03.000.216,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\MainUnit.pas=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit4.pas</Transaction>
+    <Transaction>2021/03/11 16:16:03.000.216,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\MainUnit.dfm=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit4.dfm</Transaction>
+    <Transaction>2021/03/11 16:16:11.000.111,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\cemm.dproj=C:\Users\User\Documents\Embarcadero\Studio\Projects\Project3.dproj</Transaction>
+    <Transaction>2021/03/12 11:29:06.000.453,=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\DataModuleUnit.pas</Transaction>
+    <Transaction>2021/03/16 10:14:08.000.694,=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\Unit1.pas</Transaction>
+    <Transaction>2021/03/16 10:14:45.000.270,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\Unit1.dfm=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\Main1Unit.dfm</Transaction>
+    <Transaction>2021/03/16 10:14:45.000.270,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\Unit1.pas=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\Main1Unit.pas</Transaction>
+    <Transaction>2021/03/16 10:37:26.000.782,=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\Unit1.pas</Transaction>
+    <Transaction>2021/03/16 10:39:21.000.590,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\UISettingsUnit.pas=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\Unit1.pas</Transaction>
+    <Transaction>2021/03/16 10:39:21.000.590,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\UISettingsUnit.dfm=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\Unit1.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

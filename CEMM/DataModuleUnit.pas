@@ -3,32 +3,32 @@ unit DataModuleUnit;
 interface
 
 uses
-  System.SysUtils, System.Classes, FireDAC.UI.Intf, FireDAC.VCLUI.Wait,
-  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error,
-  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool,
-  FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.SQLite,
-  FireDAC.Stan.ExprFuncs, Data.DB, FireDAC.Comp.Client, FireDAC.Comp.UI,
-  FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
-  FireDAC.Comp.DataSet, FireDAC.Phys.SQLiteDef;
+	System.SysUtils, System.Classes, FireDAC.UI.Intf, FireDAC.VCLUI.Wait,
+	FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error,
+	FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool,
+	FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.SQLite,
+	FireDAC.Stan.ExprFuncs, Data.DB, FireDAC.Comp.Client, FireDAC.Comp.UI,
+	FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
+	FireDAC.Comp.DataSet, FireDAC.Phys.SQLiteDef;
 
 type
-  TDataModule1 = class(TDataModule)
-    fdgxwtcrsr1: TFDGUIxWaitCursor;
-    con_1: TFDConnection;
-    query_mods: TFDQuery;
-    ds_query_mods: TDataSource;
-    query_INI: TFDQuery;
-    Transaction_1: TFDTransaction;
-    query_modset: TFDQuery;
-    ds_query_modset: TDataSource;
-    Query_settings: TFDQuery;
-  private
+	TDataModule1 = class(TDataModule)
+		fdgxwtcrsr1: TFDGUIxWaitCursor;
+		con_1: TFDConnection;
+		query_mods: TFDQuery;
+		ds_query_mods: TDataSource;
+		query_INI: TFDQuery;
+		Transaction_1: TFDTransaction;
+		query_modset: TFDQuery;
+		ds_query_modset: TDataSource;
+		Query_settings: TFDQuery;
+	private
 
-    FileList: TStringList;
+		FileList: TStringList;
 
-    procedure DeleteMods;
-    procedure Log(m: string);
-    procedure ScanForAllMods(const Dir: string);
+		procedure DeleteMods;
+		procedure Log(m: string);
+		procedure ScanForAllMods(const Dir: string;ThisType:SmallInt);
 
 
 
@@ -36,7 +36,7 @@ type
 		{ Private declarations }
 	public
 		LastMessage: string;
-		function UpdateModList(thisfolder: string): string;
+		function UpdateModListFromPC(thisfolder: string;ThisType:SmallInt;  DeleteOld:Boolean): string;
 		function SetupData(s: string): Boolean;
 
 
@@ -291,9 +291,9 @@ end;
 
 
 
-  procedure TDataModule1.Log(m: string);
-  begin
-    FrmMain.Log(m);
+	procedure TDataModule1.Log(m: string);
+	begin
+		FrmMain.Log(m);
   end;
 
 
@@ -330,45 +330,44 @@ end;
 
   end;
 
-  function TDataModule1.UpdateModList(thisfolder: string): string;
-  var
-    r: string;
-  begin
+	function TDataModule1.UpdateModListFromPC(thisfolder: string;ThisType:SmallInt; DeleteOld:Boolean ): string;
+	var
+		r: string;
+	begin
 
 
-    // thisfolder should be validated by the sender
+		Log('Getting mods from: ' + thisfolder);
 
-    FrmMain.Varcoded.EnterProc('Updating mod list');
-		FrmMain.Varcoded.Log('Mod folder:' + thisfolder);
-		FrmMain.Varcoded.Log('Deleting old data from mods');
-		DeleteMods();
+		if ( DeleteOld) then begin
+			Log('Deleting old data from mods');
+			DeleteMods();
+
+		end;
 
 		FileList := TStringList.Create;
 
-		FrmMain.Varcoded.Log('Reading mod files from ' + thisfolder);
 
-		// Open table
-
-		ScanForAllMods(thisfolder);
+		ScanForAllMods(thisfolder,ThisType);
 
 
 		r := '';
 		LastMessage := '';
 
-		FrmMain.Varcoded.Log('Importing MODS data to db');
+		Log('Importing MODS data to db');
 
 		// add all mods
-		FrmMain.Varcoded.Log('Adding mods info');
-
-		FrmMain.Varcoded.ExitProc('Updating mod list');
+		Log('Adding mods info');
 
 		query_mods.Refresh;
 		query_mods.First;
 
+		FreeAndNil(		FileList );
+
+
 		result := r;
 	end;
 
-procedure TDataModule1.ScanForAllMods(const Dir: string);
+procedure TDataModule1.ScanForAllMods(const Dir: string;ThisType:SmallInt);
 var
   SR: TSearchRec;
 
@@ -397,6 +396,8 @@ begin
           if (FileName.ToUpper().EndsWith('.PAK')) then
           begin
 
+						Log('New mod to add:' +FullFileName);
+
             with (query_mods) do
             begin
 
@@ -404,29 +405,27 @@ begin
 
               ModSize := Int64(SR.FindData.nFileSizeHigh) shl Int64(32) +
                 Int64(SR.FindData.nFileSizeLow);
-              ModSize := Round(ModSize / 1000); // kb
-              // ModSize := Round(ModSize/1000); //mb
+							ModSize := Round(ModSize / 1000); // mb
 
-              Append;
+							Pos1 := Pos('\440900\', FullFileName);
+							PartString := FullFileName.Substring(Pos1);
+							PartString := PartString.Replace('440900', '').Replace('\', '')
+								.Replace(FileName, '');
 
-              Pos1 := Pos('\440900\', FullFileName);
 
-              PartString := FullFileName.Substring(Pos1);
+							if not (Locate('modid',PartString,[]))  then begin
+								Append;
+								FieldByName('modid').AsString := PartString;
 
-              PartString := PartString.Replace('440900', '').Replace('\', '')
-                .Replace(FileName, '');
+								FieldByName('modname').AsString := FileName.ToUpper.Replace('.PAK', '').Replace('_',' ').Replace('-',' ');
+								FieldByName('modsize').AsInteger := ModSize;
+								FieldByName('modtype').AsInteger := ThisType;
 
-              FieldByName('modid').AsString := PartString;
-
-              FieldByName('modname').AsString := FileName.ToUpper.Replace('.PAK', '').Replace('_',' ').Replace('-',' ');
-
-              FieldByName('modsize').AsInteger := ModSize;
-
-//              FieldByName('moddescription').AsString := 'N/A';
-
-              FieldByName('modfile').AsString := FullFileName;
-
-              Post;
+	//              FieldByName('moddescription').AsString := 'N/A';
+								FieldByName('modfile').AsString := FullFileName;
+								Log('New mod added:' +FullFileName);
+								Post;
+							end;
 
             end;
           end; // .pak file
@@ -434,7 +433,7 @@ begin
         end
         else if (SR.Name <> '.') and (SR.Name <> '..') then
         begin
-          ScanForAllMods(IncludeTrailingBackslash(Dir) + SR.Name);
+          ScanForAllMods(IncludeTrailingBackslash(Dir) + SR.Name,ThisType);
         end; // ignored
         // recursive call!
       until FindNext(SR) <> 0;

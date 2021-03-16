@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2021/02/08 14:42:57.000.883,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CESteamWebPages\MiniBrowser\uSimpleTextViewer.pas=</Transaction>
+    <Transaction>2021/02/08 15:06:55.000.819,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CESteamWebPages\MiniBrowser\uPreferences.pas=</Transaction>
+    <Transaction>2021/02/08 15:07:04.000.971,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CESteamWebPages\MiniBrowser\uFindFrm.pas=</Transaction>
+    <Transaction>2021/03/16 17:34:21.549,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CESteamWebPages\MiniBrowser\cemmbrowser.dproj=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CESteamWebPages\MiniBrowser\MiniBrowser.dproj</Transaction>
+    <Transaction>2021/03/16 17:34:33.051,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CESteamWebPages\MiniBrowser\MainUnit.pas=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CESteamWebPages\MiniBrowser\uMiniBrowser.pas</Transaction>
+    <Transaction>2021/03/16 17:34:33.051,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CESteamWebPages\MiniBrowser\MainUnit.dfm=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CESteamWebPages\MiniBrowser\uMiniBrowser.dfm</Transaction>
+  </Transactions>
+</BorlandProject>
