@@ -42,11 +42,18 @@ uses
 	bsMessages,
 	Vcl.StdCtrls, bsSkinBoxCtrls, Vcl.Mask, dxPDFCore, dxPDFBase, dxPDFText,
   dxPDFRecognizedObject, dxPDFDocument, dxBarBuiltInMenu, dxCustomPreview,
-  dxPDFDocumentViewer, dxPDFViewer, bsSkinShellCtrls;
+  dxPDFDocumentViewer, dxPDFViewer, bsSkinShellCtrls, JvValidators,
+  JvComponentBase, System.ImageList, Vcl.ImgList, JvErrorIndicator,
+  DzHTMLText;
+
 
 
 	CONST
 		MINIBROWSER_COOKIESFLUSHED   = WM_APP + $10B;
+
+type
+	smType = (smNormal, smWarning,smError);
+
 type
   TFrmMain = class(TForm)
     StatusBar_1: TbsSkinStatusBar;
@@ -85,14 +92,9 @@ type
     Button_CancelSettings: TbsSkinButton;
     Timer_BrowserSetUp: TTimer;
     Chromium1: TChromium;
-    StatusBar_Browser: TbsSkinStatusBar;
-    StatusPanel_Browser: TbsSkinStatusPanel;
-    Slider_BrowserZoom: TbsSkinSlider;
-    StatusPanel_Zoom: TbsSkinStatusPanel;
     PDFViewer1: TdxPDFViewer;
     Button_1: TButton;
     Label_11: TbsSkinStdLabel;
-    DirectoryEdit_ModList: TbsSkinDirectoryEdit;
     Label_12: TbsSkinStdLabel;
     Label_13: TbsSkinStdLabel;
     DirectoryEdit_Mods: TbsSkinDirectoryEdit;
@@ -100,11 +102,19 @@ type
     Label_15: TbsSkinStdLabel;
     FileEdit_CEEXEFile: TbsSkinFileEdit;
     Label_16: TbsSkinStdLabel;
-    Label_17: TbsSkinStdLabel;
-    Label_18: TbsSkinStdLabel;
-    DirectoryEdit_1: TbsSkinDirectoryEdit;
     Button_ValidateFolders: TbsSkinSpeedButton;
     TabSheet_Steam: TbsSkinTabSheet;
+    Validator_GameFolderAndFiles: TJvValidators;
+    CustomValidator_modlistfile: TJvCustomValidator;
+    FileEdit_modlisttxt: TbsSkinFileEdit;
+    ErrorIndicator_Main: TJvErrorIndicator;
+    ImageList_ErrorIndicator: TImageList;
+    HTMLText_GameFoldersAndFilesMsg: TDzHTMLText;
+    StatusBar_Browser: TbsSkinStatusBar;
+    StatusPanel_Browser: TbsSkinStatusPanel;
+    Slider_BrowserZoom: TbsSkinSlider;
+    StatusPanel_Zoom: TbsSkinStatusPanel;
+    Gauge_Main: TbsSkinGauge;
     procedure OfficeComboBox_LanguagesChange(Sender: TObject);
     procedure Timer_StartUpTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -139,6 +149,9 @@ type
       canGoForward: Boolean);
     procedure Slider_BrowserZoomChange(Sender: TObject);
     procedure Button_1Click(Sender: TObject);
+    procedure CustomValidator_modlistfileValidate(Sender: TObject;
+      ValueToValidate: Variant; var Valid: Boolean);
+    procedure Button_ValidateFoldersClick(Sender: TObject);
   private
 		dm: TDataModule1;
 		/// <remarks>
@@ -156,6 +169,8 @@ type
     procedure ShowSteamModPage;
     procedure SetupBrowser;
     procedure LoadDefaultWebPage(IsActive: Boolean);
+    procedure ValidateGameFilesAndFolders;
+    procedure ScreenMsg(ThisType: smType; ThisMsg: String);
 
 
     { Private declarations }
@@ -222,6 +237,39 @@ procedure TFrmMain.Button_SaveSettingsClick(Sender: TObject);
 begin
 SaveSettings();
 end;
+
+procedure TFrmMain.Button_ValidateFoldersClick(Sender: TObject);
+begin
+ValidateGameFilesAndFolders();
+end;
+
+
+
+procedure TFrmMain.ValidateGameFilesAndFolders();
+begin
+
+ScreenMsg(smType.smError, 'Verifying game files and folders...');
+ErrorIndicator_Main.ClearErrors;
+
+
+
+
+
+end;
+
+
+
+procedure TFrmMain.ScreenMsg(ThisType:smType;ThisMsg:String);
+begin
+
+case ThisType of
+	smNormal: HTMLText_GameFoldersAndFilesMsg.Text := '<fs:12>'+ThisMsg+'</fs>';
+	smWarning: HTMLText_GameFoldersAndFilesMsg.Text := '<fs:12><bc:clYellow>'+ThisMsg+'</fs></fc>';
+  smError: HTMLText_GameFoldersAndFilesMsg.Text := '<fs:12><fc:clRed><bc:clYellow>'+ThisMsg+'</fs></fc></bc>';
+end;
+
+end;
+
 
 procedure TFrmMain.Chromium1AfterCreated(Sender: TObject;
 	const browser: ICefBrowser);
@@ -387,6 +435,12 @@ begin
 
 end;
 
+procedure TFrmMain.CustomValidator_modlistfileValidate(Sender: TObject;
+  ValueToValidate: Variant; var Valid: Boolean);
+begin
+Valid := DirectoryExists(FileEdit_modlisttxt.Text  );
+end;
+
 procedure TFrmMain.DBTableView_1CellClick(Sender: TcxCustomGridTableView;
   ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
   AShift: TShiftState; var AHandled: Boolean);
@@ -495,7 +549,7 @@ end;
   begin
   
   	varcoded.Log(ThisMsg);
-  
+
 	end;
 
 

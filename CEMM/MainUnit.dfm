@@ -20,16 +20,16 @@ object FrmMain: TFrmMain
   TextHeight = 13
   object StatusBar_1: TbsSkinStatusBar
     Left = 0
-    Top = 607
+    Top = 633
     Width = 1450
-    Height = 60
+    Height = 34
     HintImageIndex = 0
     TabOrder = 0
     SkinData = SkinData_1
     SkinDataName = 'statusbar'
     DefaultFont.Charset = DEFAULT_CHARSET
     DefaultFont.Color = clWindowText
-    DefaultFont.Height = 13
+    DefaultFont.Height = -40
     DefaultFont.Name = 'Tahoma'
     DefaultFont.Style = []
     DefaultWidth = 0
@@ -40,7 +40,7 @@ object FrmMain: TFrmMain
     ImagePosition = bsipDefault
     TransparentMode = False
     CaptionImageIndex = -1
-    RealHeight = -1
+    RealHeight = 30
     AutoEnabledControls = True
     CheckedMode = False
     Checked = False
@@ -55,14 +55,49 @@ object FrmMain: TFrmMain
     Caption = 'StatusBar_1'
     Align = alBottom
     SizeGrip = False
-    ExplicitTop = 504
-    ExplicitWidth = 965
+    object HTMLText_GameFoldersAndFilesMsg: TDzHTMLText
+      Left = 0
+      Top = 0
+      Width = 673
+      Height = 34
+      Align = alLeft
+      Lines.Strings = (
+        '<fs:12>Ready</fs>')
+    end
+    object Gauge_Main: TbsSkinGauge
+      Left = 1216
+      Top = 0
+      Width = 234
+      Height = 34
+      HintImageIndex = 0
+      TabOrder = 0
+      Visible = False
+      SkinData = SkinData_1
+      SkinDataName = 'statusgauge'
+      DefaultFont.Charset = DEFAULT_CHARSET
+      DefaultFont.Color = clWindowText
+      DefaultFont.Height = 13
+      DefaultFont.Name = 'Tahoma'
+      DefaultFont.Style = []
+      DefaultWidth = 0
+      DefaultHeight = 0
+      UseSkinFont = True
+      UseSkinSize = True
+      ShowProgressText = False
+      ShowPercent = False
+      MinValue = 0
+      MaxValue = 100
+      Value = 50
+      Vertical = False
+      ProgressAnimationPause = 3000
+      Align = alRight
+    end
   end
   object PageControl_Main: TbsSkinPageControl
     Left = 560
     Top = 0
     Width = 890
-    Height = 607
+    Height = 633
     ActivePage = TabSheet_Config
     Align = alRight
     Font.Charset = DEFAULT_CHARSET
@@ -93,22 +128,22 @@ object FrmMain: TFrmMain
     SkinDataName = 'tab'
     object TabSheet_SteamModWebPage: TbsSkinTabSheet
       Caption = 'Steam Web Page'
-      ExplicitWidth = 507
-      ExplicitHeight = 484
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object CEFWindowParent1: TCEFWindowParent
         Left = 0
         Top = 0
         Width = 888
-        Height = 553
+        Height = 579
         Align = alClient
         TabStop = True
         TabOrder = 0
-        ExplicitWidth = 507
-        ExplicitHeight = 450
       end
       object StatusBar_Browser: TbsSkinStatusBar
         Left = 0
-        Top = 553
+        Top = 579
         Width = 888
         Height = 34
         HintImageIndex = 0
@@ -143,8 +178,6 @@ object FrmMain: TFrmMain
         Caption = 'StatusBar_Browser'
         Align = alBottom
         SizeGrip = False
-        ExplicitTop = 450
-        ExplicitWidth = 507
         object StatusPanel_Browser: TbsSkinStatusPanel
           Left = 0
           Top = 0
@@ -178,7 +211,6 @@ object FrmMain: TFrmMain
           AutoSize = False
           ImageIndex = -1
           NumGlyphs = 1
-          ExplicitWidth = 267
         end
         object Slider_BrowserZoom: TbsSkinSlider
           Left = 738
@@ -231,24 +263,23 @@ object FrmMain: TFrmMain
           AutoSize = False
           ImageIndex = -1
           NumGlyphs = 1
-          ExplicitLeft = 267
         end
       end
     end
     object TabSheet_ModSets: TbsSkinTabSheet
       Caption = 'TabSheet_ModSets'
-      ExplicitWidth = 507
-      ExplicitHeight = 484
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabSheet_SteamSetUp: TbsSkinTabSheet
       Caption = 'TabSheet_SteamSetUp'
-      ExplicitWidth = 507
-      ExplicitHeight = 484
       object PDFViewer1: TdxPDFViewer
         Left = 0
         Top = 0
         Width = 888
-        Height = 587
+        Height = 613
         Align = alClient
         OptionsBehavior.ShowHints = False
         OptionsFindPanel.DisplayMode = fpdmNever
@@ -322,19 +353,17 @@ object FrmMain: TFrmMain
           387A204D32302C32364838563132683476313068385632367A204D32362C3230
           682D34682D32682D36762D38762D3256366838763468345632307A220D0A092F
           3E0D0A3C2F7376673E0D0A}
-        ExplicitWidth = 507
-        ExplicitHeight = 484
       end
     end
     object TabSheet_Steam: TbsSkinTabSheet
       Caption = 'Steam CMD'
-      ExplicitLeft = 6
-      ExplicitTop = 14
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabSheet_Config: TbsSkinTabSheet
       Caption = 'Settings'
-      ExplicitWidth = 507
-      ExplicitHeight = 484
       object Label_1: TbsSkinStdLabel
         Left = 268
         Top = 16
@@ -650,7 +679,7 @@ object FrmMain: TFrmMain
         object Label_11: TbsSkinStdLabel
           Left = 3
           Top = 35
-          Width = 187
+          Width = 147
           Height = 13
           EllipsType = bsetNone
           UseSkinFont = True
@@ -662,7 +691,7 @@ object FrmMain: TFrmMain
           DefaultFont.Style = []
           SkinData = SkinData_1
           SkinDataName = 'stdlabel'
-          Caption = 'Conan Exiles MODLIST.TXT file location'
+          Caption = 'Conan Exiles MODLIST.TXT file'
         end
         object Label_12: TbsSkinStdLabel
           Left = 3
@@ -683,7 +712,7 @@ object FrmMain: TFrmMain
         end
         object Label_13: TbsSkinStdLabel
           Left = 3
-          Top = 95
+          Top = 112
           Width = 195
           Height = 13
           EllipsType = bsetNone
@@ -700,7 +729,7 @@ object FrmMain: TFrmMain
         end
         object Label_14: TbsSkinStdLabel
           Left = 3
-          Top = 114
+          Top = 131
           Width = 210
           Height = 13
           EllipsType = bsetNone
@@ -717,7 +746,7 @@ object FrmMain: TFrmMain
         end
         object Label_15: TbsSkinStdLabel
           Left = 3
-          Top = 215
+          Top = 186
           Width = 104
           Height = 13
           EllipsType = bsetNone
@@ -734,7 +763,7 @@ object FrmMain: TFrmMain
         end
         object Label_16: TbsSkinStdLabel
           Left = 3
-          Top = 234
+          Top = 205
           Width = 456
           Height = 26
           EllipsType = bsetNone
@@ -751,40 +780,6 @@ object FrmMain: TFrmMain
             '(i.e. steamapps\common\Conan Exiles\ConanSandbox\Binaries\Win64\' +
             'ConanSandbox.exe)'#13#10'(i.e. steamapps\common\Conan Exiles\ConanSand' +
             'box\Binaries\Win64\ConanSandbox_BE.exe)'
-        end
-        object Label_17: TbsSkinStdLabel
-          Left = 3
-          Top = 157
-          Width = 178
-          Height = 13
-          EllipsType = bsetNone
-          UseSkinFont = True
-          UseSkinColor = True
-          DefaultFont.Charset = DEFAULT_CHARSET
-          DefaultFont.Color = clWindowText
-          DefaultFont.Height = -11
-          DefaultFont.Name = 'Tahoma'
-          DefaultFont.Style = []
-          SkinData = SkinData_1
-          SkinDataName = 'stdlabel'
-          Caption = 'App Conan Exiles MOD folder (*.pak)'
-        end
-        object Label_18: TbsSkinStdLabel
-          Left = 3
-          Top = 176
-          Width = 96
-          Height = 13
-          EllipsType = bsetNone
-          UseSkinFont = True
-          UseSkinColor = True
-          DefaultFont.Charset = DEFAULT_CHARSET
-          DefaultFont.Color = clWindowText
-          DefaultFont.Height = -11
-          DefaultFont.Name = 'Tahoma'
-          DefaultFont.Style = []
-          SkinData = SkinData_1
-          SkinDataName = 'stdlabel'
-          Caption = '(i.e. .\cemms\mods)'
         end
         object Button_ValidateFolders: TbsSkinSpeedButton
           Left = 692
@@ -1113,18 +1108,19 @@ object FrmMain: TFrmMain
           NumGlyphs = 1
           Align = alRight
           Spacing = 1
+          OnClick = Button_ValidateFoldersClick
           ExplicitLeft = 671
           ExplicitTop = 1
           ExplicitHeight = 98
         end
-        object DirectoryEdit_ModList: TbsSkinDirectoryEdit
+        object DirectoryEdit_Mods: TbsSkinDirectoryEdit
           Left = 216
-          Top = 35
+          Top = 114
           Width = 401
           Height = 19
           Hint = 
-            'Folder where mod list files are stored (i.e. ..\steamapps\common' +
-            '\Conan Exiles\ConanSandbox\Mods)'
+            'Folder where the conan mods are installed (i.e. \steam\steamapps' +
+            '\workshop\content\440900\)'
           Text = ''
           DefaultColor = clWindow
           DefaultFont.Charset = DEFAULT_CHARSET
@@ -1160,14 +1156,11 @@ object FrmMain: TFrmMain
           DlgCtrlSkinData = SkinData_1
           DlgToolButtonImageIndex = 0
         end
-        object DirectoryEdit_Mods: TbsSkinDirectoryEdit
+        object FileEdit_CEEXEFile: TbsSkinFileEdit
           Left = 216
-          Top = 97
+          Top = 183
           Width = 401
           Height = 19
-          Hint = 
-            'Folder where the conan mods are installed (i.e. \steam\steamapps' +
-            '\workshop\content\440900\)'
           Text = ''
           DefaultColor = clWindow
           DefaultFont.Charset = DEFAULT_CHARSET
@@ -1195,57 +1188,16 @@ object FrmMain: TFrmMain
           RightImageIndex = -1
           RightImageHotIndex = -1
           RightImageDownIndex = -1
-          DlgTreeShowLines = True
-          DlgTreeButtonExpandImageIndex = 0
-          DlgTreeButtonNoExpandImageIndex = 1
-          DlgShowToolBar = False
-          DlgSkinData = SkinData_1
-          DlgCtrlSkinData = SkinData_1
-          DlgToolButtonImageIndex = 0
-        end
-        object FileEdit_CEEXEFile: TbsSkinFileEdit
-          Left = 216
-          Top = 212
-          Width = 401
-          Height = 19
-          Text = ''
-          DefaultColor = clWindow
-          DefaultFont.Charset = DEFAULT_CHARSET
-          DefaultFont.Color = clBlack
-          DefaultFont.Height = 13
-          DefaultFont.Name = 'Tahoma'
-          DefaultFont.Style = []
-          UseSkinFont = True
-          DefaultWidth = 0
-          DefaultHeight = 0
-          ButtonMode = True
-          SkinData = SkinData_1
-          SkinDataName = 'buttonedit'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = 13
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 3
-          ButtonImageIndex = -1
-          LeftImageIndex = -1
-          LeftImageHotIndex = -1
-          LeftImageDownIndex = -1
-          RightImageIndex = -1
-          RightImageHotIndex = -1
-          RightImageDownIndex = -1
           Filter = 'Conan Exiles EXE file|*.exe'
           DlgSkinData = SkinData_1
           DlgCtrlSkinData = SkinData_1
           LVHeaderSkinDataName = 'header'
         end
-        object DirectoryEdit_1: TbsSkinDirectoryEdit
+        object FileEdit_modlisttxt: TbsSkinFileEdit
           Left = 216
-          Top = 159
+          Top = 29
           Width = 401
           Height = 19
-          Hint = 'Folder where the conan mods are installed (i.e. \cemms\mods)'
           Text = ''
           DefaultColor = clWindow
           DefaultFont.Charset = DEFAULT_CHARSET
@@ -1273,18 +1225,15 @@ object FrmMain: TFrmMain
           RightImageIndex = -1
           RightImageHotIndex = -1
           RightImageDownIndex = -1
-          DlgTreeShowLines = True
-          DlgTreeButtonExpandImageIndex = 0
-          DlgTreeButtonNoExpandImageIndex = 1
-          DlgShowToolBar = False
+          Filter = 'Conan Exiles EXE file|*.exe'
           DlgSkinData = SkinData_1
           DlgCtrlSkinData = SkinData_1
-          DlgToolButtonImageIndex = 0
+          LVHeaderSkinDataName = 'header'
         end
       end
       object Panel_SettingsOKButton: TbsSkinPanel
         Left = 0
-        Top = 497
+        Top = 523
         Width = 888
         Height = 90
         HintImageIndex = 0
@@ -1318,8 +1267,6 @@ object FrmMain: TFrmMain
         Spacing = 2
         Caption = 'Panel_SettingsOKButton'
         Align = alBottom
-        ExplicitTop = 394
-        ExplicitWidth = 507
         object Button_SaveSettings: TbsSkinButton
           Left = 72
           Top = 16
@@ -1406,7 +1353,7 @@ object FrmMain: TFrmMain
     Left = 0
     Top = 0
     Width = 512
-    Height = 607
+    Height = 633
     HintImageIndex = 0
     TabOrder = 2
     SkinData = SkinData_1
@@ -1434,17 +1381,13 @@ object FrmMain: TFrmMain
     Sizeable = False
     Align = alClient
     Caption = 'Mods on this PC'
-    ExplicitLeft = -6
-    ExplicitWidth = 653
     object Grid_modsonthispc: TcxGrid
       Left = 1
       Top = 21
       Width = 510
-      Height = 585
+      Height = 611
       Align = alClient
       TabOrder = 0
-      ExplicitWidth = 404
-      ExplicitHeight = 482
       object DBTableView_1: TcxGridDBTableView
         DragMode = dmAutomatic
         Navigator.Buttons.CustomButtons = <>
@@ -1505,7 +1448,7 @@ object FrmMain: TFrmMain
     Left = 512
     Top = 0
     Width = 48
-    Height = 607
+    Height = 633
     HintImageIndex = 0
     TabOrder = 3
     SkinData = SkinData_1
@@ -6692,6 +6635,164 @@ object FrmMain: TFrmMain
     OnBeforeResourceLoad = Chromium1BeforeResourceLoad
     Left = 424
     Top = 360
+  end
+  object Validator_GameFolderAndFiles: TJvValidators
+    Left = 983
+    Top = 256
+    object CustomValidator_modlistfile: TJvCustomValidator
+      ControlToValidate = FileEdit_modlisttxt
+      ErrorMessage = 'Modlist.txt file can not be found.'
+      OnValidate = CustomValidator_modlistfileValidate
+    end
+  end
+  object ErrorIndicator_Main: TJvErrorIndicator
+    Images = ImageList_ErrorIndicator
+    ImageIndex = 0
+    Left = 935
+    Top = 256
+  end
+  object ImageList_ErrorIndicator: TImageList
+    Left = 879
+    Top = 256
+    Bitmap = {
+      494C010101000500040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      0000000000003600000028000000400000001000000001002000000000000010
+      0000000000000000000000000000000000000000000B00000017000000170000
+      0017000000170000001700000017000000170000001700000017000000170000
+      0017000000170000001700000017000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000898787D4AAABADF8ACABADF8ADAE
+      AFF8B4B3B5F8BCBBBBF8BEBEBFF8BFBFC0F8BDBDBEF7BABABBF7B6B5B7F7ADAE
+      B0F7ACABADF7AAAAACF7A19FA0EE010101190000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000007B7978B95EAABDFF26BCE3FF26B6
+      E1FF24B5E1FF22B4E1FF20ABD8FF2B6F88FF289CC5FF27ADDEFF28ACDDFF27AD
+      DEFF27ADE0FF359BC2FF8F8B8CD3010101080000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000F0F0F33A3ABACF814B7DCFF02C3
+      EFFF00BFEEFF00BBF0FF0086ADFF211512FF257D9BFF01ADEDFF02A8E9FF02A7
+      E8FF039FDFFF84A4B3FD201F1F48000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000006764639C6DB2C1FF00C5
+      EDFF00C3EEFF00BEEDFF00AEE0FF017B9FFF00A1D6FF00ACEBFF00A8E9FF00A5
+      E8FF3396C2FF7D7878B300000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000006060615AEABABED1DBB
+      DBFF00C9F0FF00C5F0FF0085A4FF160F0DFF207D95FF00B5F0FF00AFECFF069F
+      DAFF9FADB5F50B0B0B2900000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000000000000000000003534336EA6C7
+      CDFF0FDBF5FF0DDBF9FF09889FFF120B0BFF187184FF00C1F3FF00B8EFFF63AF
+      CBFF605E5D8D0000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000069D99
+      98D049CBD9FF17EDFFFF1FA6B0FF3C3332FF277B88FF08D5FAFF14B2DAFFABB0
+      B2E5050505130000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000001E1E
+      1E44B5C6C8FC0DE6F2FF29AFB6FF58504FFF317E87FF0EDAF7FF8CC2D1FF3332
+      3267000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000777474AA67C6CEFF30B2B5FF746565FF458A91FF2EC4DAFF9B9696CD0000
+      0006000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000009090921AEB0B0F521C2CBFF21B4B9FF17C1CBFF97B9C0FD1E1E1E410000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000005251518170B8BFFF00FFFFFF3BC6D2FF746E6EAB000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000101010D989392DF28C2CEFF95A7A9F20A0A0A24000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000002424244FB3B8B8FB4B4A4A7800000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000011515153E0101010C00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000424D3E000000000000003E000000
+      2800000040000000100000000100010000000000800000000000000000000000
+      000000000000000000000000FFFFFF0000010000000000000000000000000000
+      0000000000000000000100000000000080030000000000008003000000000000
+      C007000000000000C007000000000000E00F000000000000E00F000000000000
+      F01F000000000000F81F000000000000F83F000000000000FC7F000000000000
+      FC7F000000000000FFFF00000000000000000000000000000000000000000000
+      000000000000}
   end
   object SkinAdapter_1: TbsaSkinAdapter
     SkinData = SkinData_1
