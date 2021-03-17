@@ -10,14 +10,15 @@ uses
   Windows,
   {$ENDIF }
   uCEFApplication,
-  MainUnit in 'MainUnit.pas' {MiniBrowserFrm};
+  MainUnit in 'MainUnit.pas' {FrmMain};
 
 {$R *.res}
 
 {$SetPEFlags IMAGE_FILE_LARGE_ADDRESS_AWARE}
 
 begin
-  CreateGlobalCEFApp;
+	ReportMemoryLeaksOnShutdown := true;
+	CreateGlobalCEFApp;
 
   if GlobalCEFApp.StartMainProcess then
     begin
@@ -25,7 +26,7 @@ begin
       {$IFDEF DELPHI11_UP}
 			Application.MainFormOnTaskbar := True;
       {$ENDIF}
-      Application.CreateForm(TMiniBrowserFrm, MiniBrowserFrm);
+      Application.CreateForm(TFrmMain, FrmMain);
   Application.Run;
     end;
 

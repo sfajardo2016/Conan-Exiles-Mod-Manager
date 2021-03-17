@@ -1,9 +1,9 @@
-object MiniBrowserFrm: TMiniBrowserFrm
+object FrmMain: TFrmMain
   Left = 0
   Top = 0
-  Caption = 'MiniBrowser'
-  ClientHeight = 466
-  ClientWidth = 939
+  Caption = 'Conan Exiles Steam Mod Browser'
+  ClientHeight = 529
+  ClientWidth = 400
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,46 +21,32 @@ object MiniBrowserFrm: TMiniBrowserFrm
   object CEFWindowParent1: TCEFWindowParent
     Left = 0
     Top = 0
-    Width = 939
-    Height = 425
+    Width = 400
+    Height = 488
     Align = alClient
     TabStop = True
     TabOrder = 0
+    ExplicitWidth = 939
+    ExplicitHeight = 425
   end
   object DevTools: TCEFWindowParent
-    Left = 939
+    Left = 400
     Top = 0
     Width = 0
-    Height = 425
+    Height = 488
     Align = alRight
     TabOrder = 1
     Visible = False
-  end
-  object Button_1: TButton
-    Left = 144
-    Top = 18
-    Width = 75
-    Height = 25
-    Caption = 'Button_1'
-    TabOrder = 2
-    OnClick = Button_1Click
-  end
-  object Button_2: TButton
-    Left = 232
-    Top = 18
-    Width = 75
-    Height = 25
-    Caption = 'Button_1'
-    TabOrder = 3
-    OnClick = Button_2Click
+    ExplicitLeft = 939
+    ExplicitHeight = 425
   end
   object StatusBar_Browser: TbsSkinStatusBar
     Left = 0
-    Top = 425
-    Width = 939
+    Top = 488
+    Width = 400
     Height = 41
     HintImageIndex = 0
-    TabOrder = 4
+    TabOrder = 2
     SkinDataName = 'statusbar'
     DefaultFont.Charset = DEFAULT_CHARSET
     DefaultFont.Color = clWindowText
@@ -90,10 +76,12 @@ object MiniBrowserFrm: TMiniBrowserFrm
     Caption = 'StatusBar_Browser'
     Align = alBottom
     SizeGrip = False
+    ExplicitTop = 425
+    ExplicitWidth = 939
     object StatusPanel_Browser: TbsSkinStatusPanel
       Left = 0
       Top = 0
-      Width = 699
+      Width = 160
       Height = 41
       HintImageIndex = 0
       TabOrder = 0
@@ -122,9 +110,10 @@ object MiniBrowserFrm: TMiniBrowserFrm
       AutoSize = False
       ImageIndex = -1
       NumGlyphs = 1
+      ExplicitWidth = 699
     end
     object Slider_BrowserZoom: TbsSkinSlider
-      Left = 789
+      Left = 250
       Top = 0
       Width = 150
       Height = 41
@@ -141,7 +130,7 @@ object MiniBrowserFrm: TMiniBrowserFrm
       OnChange = Slider_BrowserZoomChange
     end
     object StatusPanel_Zoom: TbsSkinStatusPanel
-      Left = 699
+      Left = 160
       Top = 0
       Width = 90
       Height = 41
@@ -172,6 +161,7 @@ object MiniBrowserFrm: TMiniBrowserFrm
       AutoSize = False
       ImageIndex = -1
       NumGlyphs = 1
+      ExplicitLeft = 699
     end
   end
   object Chromium1: TChromium
@@ -193,7 +183,11 @@ object MiniBrowserFrm: TMiniBrowserFrm
     Enabled = False
     Interval = 300
     OnTimer = Timer1Timer
-    Left = 40
-    Top = 120
+    Left = 32
+    Top = 112
+  end
+  object AppInstance_1: TJvAppInstances
+    Left = 32
+    Top = 160
   end
 end

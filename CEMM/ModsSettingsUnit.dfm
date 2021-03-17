@@ -38,7 +38,7 @@ object FrmModsSettings: TFrmModsSettings
     Left = 0
     Top = 0
     Width = 715
-    Height = 97
+    Height = 145
     HintImageIndex = 0
     TabOrder = 0
     SkinData = FrmMain.SkinData_Main
@@ -66,7 +66,6 @@ object FrmModsSettings: TFrmModsSettings
     Sizeable = False
     Align = alTop
     Caption = 'Game folders and files'
-    ExplicitWidth = 717
     object Label_13: TbsSkinStdLabel
       Left = 3
       Top = 34
@@ -88,7 +87,7 @@ object FrmModsSettings: TFrmModsSettings
       Left = 563
       Top = 21
       Width = 151
-      Height = 75
+      Height = 123
       Hint = 'Validate your folders and update the MOD list'
       HintTitle = 'Update mods list'
       HintImageIndex = 0
@@ -432,7 +431,7 @@ object FrmModsSettings: TFrmModsSettings
       SkinData = FrmMain.SkinData_Main
       SkinDataName = 'stdlabel'
       AutoSize = False
-      Caption = 'D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM'
+      Caption = '(Please check the APP settings to get the correct folder)'
     end
     object Label_1: TbsSkinStdLabel
       Left = 3
@@ -467,7 +466,24 @@ object FrmModsSettings: TFrmModsSettings
       SkinData = FrmMain.SkinData_Main
       SkinDataName = 'stdlabel'
       AutoSize = False
-      Caption = 'D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM'
+      Caption = '(Please check the APP settings to get the correct folder)'
+    end
+    object Label_3: TbsSkinStdLabel
+      Left = 3
+      Top = 94
+      Width = 229
+      Height = 13
+      EllipsType = bsetNone
+      UseSkinFont = True
+      UseSkinColor = True
+      DefaultFont.Charset = DEFAULT_CHARSET
+      DefaultFont.Color = clWindowText
+      DefaultFont.Height = -11
+      DefaultFont.Name = 'Tahoma'
+      DefaultFont.Style = []
+      SkinData = FrmMain.SkinData_Main
+      SkinDataName = 'stdlabel'
+      Caption = 'Show Conan Exiles Browser when clicking a mod'
     end
   end
   object StatusBar_1: TbsSkinStatusBar
@@ -507,33 +523,31 @@ object FrmModsSettings: TFrmModsSettings
     Caption = 'StatusBar_1'
     Align = alBottom
     SizeGrip = False
-    ExplicitTop = 309
-    ExplicitWidth = 717
     object HTMLText_GameFoldersAndFilesMsg: TDzHTMLText
       Left = 0
       Top = 0
-      Width = 52
+      Width = 715
       Height = 30
       Align = alClient
       Lines.Strings = (
         '<fs:14>Ready</fs>')
       AutoWidth = True
+      ExplicitWidth = 31
     end
   end
   object grid_mods: TcxGrid
     Left = 0
-    Top = 97
+    Top = 145
     Width = 715
-    Height = 360
+    Height = 312
     Align = alClient
     TabOrder = 2
-    ExplicitLeft = 1
-    ExplicitTop = -46
-    ExplicitWidth = 439
-    ExplicitHeight = 533
+    ExplicitTop = 97
+    ExplicitHeight = 360
     object DBTableView_1: TcxGridDBTableView
       DragMode = dmAutomatic
       Navigator.Buttons.CustomButtons = <>
+      OnCellClick = DBTableView_1CellClick
       DataController.DataSource = DataModule1.ds_query_mods
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
@@ -564,17 +578,15 @@ object FrmModsSettings: TFrmModsSettings
       object GridDBColumn_4: TcxGridDBColumn
         Caption = 'Size (MB)'
         DataBinding.FieldName = 'modsize'
-        PropertiesClassName = 'TcxSpinEditProperties'
-        Properties.CanEdit = False
-        Properties.DisplayFormat = '###,###'
         Width = 100
       end
-      object GridDBColumn_6: TcxGridDBColumn
-        Caption = 'Type'
-        DataBinding.FieldName = 'modType'
+      object GridDBColumn_5: TcxGridDBColumn
+        Caption = 'Location'
+        DataBinding.FieldName = 'modLocation'
+        OnGetDisplayText = GridDBColumn_5GetDisplayText
         Width = 80
       end
-      object GridDBColumn_5: TcxGridDBColumn
+      object GridDBColumn_6: TcxGridDBColumn
         Caption = 'File'
         DataBinding.FieldName = 'modfile'
         Visible = False
@@ -584,6 +596,34 @@ object FrmModsSettings: TFrmModsSettings
     object GridLevel_1: TcxGridLevel
       GridView = DBTableView_1
     end
+  end
+  object CheckBox_WebBrowser: TbsSkinCheckBox
+    Left = 248
+    Top = 90
+    Width = 25
+    Height = 25
+    HintImageIndex = 0
+    TabOrder = 3
+    SkinData = FrmMain.SkinData_Main
+    SkinDataName = 'checkbox'
+    DefaultFont.Charset = DEFAULT_CHARSET
+    DefaultFont.Color = clWindowText
+    DefaultFont.Height = 13
+    DefaultFont.Name = 'Tahoma'
+    DefaultFont.Style = []
+    DefaultWidth = 0
+    DefaultHeight = 0
+    UseSkinFont = True
+    WordWrap = False
+    AllowGrayed = False
+    State = cbUnchecked
+    ImageIndex = 0
+    Flat = True
+    UseSkinFontColor = True
+    CanFocused = True
+    Radio = False
+    Checked = False
+    GroupIndex = 0
   end
   object BusinessSkinForm_Main: TbsBusinessSkinForm
     UseRibbon = False
@@ -781,5 +821,24 @@ object FrmModsSettings: TFrmModsSettings
       6F00640065000D000A005400460072006D004D006F0064007300530065007400
       740069006E00670073000100440045004600410055004C0054005F0043004800
       4100520053004500540001000100010001000D000A00}
+  end
+  object SkinAdapter_Main: TbsaSkinAdapter
+    SkinData = FrmMain.SkinData_Main
+    AdapterType = bsaUseNames
+    TabsBGTransparent = False
+    AutoAddNames = False
+    AutoAddClasses = False
+    VScrollSkinDataName = 'vscrollbar'
+    HScrollSkinDataName = 'hscrollbar'
+    Version = 'SkinAdapter Version 5.25'
+    ButtonSkinDataName = 'resizebutton'
+    SpeedButtonSkinDataName = 'resizetoolbutton'
+    ButtonUseSkinSize = False
+    SpeedButtonUseSkinSize = False
+    PanelSkinDataName = 'panel'
+    ToolBarSkinDataName = 'resizetoolpanel'
+    CoolBarSkinDataName = 'panel'
+    Left = 512
+    Top = 56
   end
 end

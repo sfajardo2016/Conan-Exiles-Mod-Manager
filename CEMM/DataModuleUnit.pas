@@ -419,7 +419,7 @@ begin
 
 								FieldByName('modname').AsString := FileName.ToUpper.Replace('.PAK', '').Replace('_',' ').Replace('-',' ');
 								FieldByName('modsize').AsInteger := ModSize;
-								FieldByName('modtype').AsInteger := ThisType;
+								FieldByName('modlocation').AsInteger := ThisType;
 
 	//              FieldByName('moddescription').AsString := 'N/A';
 								FieldByName('modfile').AsString := FullFileName;

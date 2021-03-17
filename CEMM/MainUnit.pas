@@ -11,7 +11,7 @@ uses
 
 
   bsribbon, varcodedxe8, bsMessages, siComp, System.ImageList, Vcl.ImgList,
-  JvComponentBase, JvErrorIndicator;
+  JvComponentBase, JvErrorIndicator, bsaadapter;
 
 
 
@@ -34,17 +34,19 @@ type
     RibbonPage_Main: TbsRibbonPage;
     RibbonGroup_MainOptions: TbsRibbonGroup;
     Button_ModCollection: TbsSkinSpeedButton;
-    RibbonGroup_Settings: TbsRibbonGroup;
-    Button_UISettings: TbsSkinSpeedButton;
-    Button_GameSettings: TbsSkinSpeedButton;
-    Button_SteamSettings: TbsSkinSpeedButton;
     Varcoded: TVarCodedxe8;
     msgdlg_Main: TbsSkinMessage;
     Lang_Main: TsiLang;
     ImageList_Validator: TImageList;
     ErrorIndicator_Main: TJvErrorIndicator;
     LangDispatcher_Main: TsiLangDispatcher;
+    RibbonPage_Settings: TbsRibbonPage;
+    RibbonGroup_Settings: TbsRibbonGroup;
+    Button_UISettings: TbsSkinSpeedButton;
+    Button_GameSettings: TbsSkinSpeedButton;
+    Button_SteamSettings: TbsSkinSpeedButton;
     Button_ModsSettings: TbsSkinSpeedButton;
+    SkinAdapter_Main: TbsaSkinAdapter;
     procedure Button_UISettingsClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button_SteamSettingsClick(Sender: TObject);
@@ -72,6 +74,8 @@ type
 		procedure UpdateLanguage(ThisIndex: SmallInt);
 		procedure ShowModSettings;
 
+
+
 		{ Private declarations }
 	public
 		{ Public declarations }
@@ -86,6 +90,10 @@ type
 
 
 		procedure UpdateModsFromPC(Folder1, Folder2: String);
+
+		function IsEmptyOrNull(const Value: Variant): Boolean;
+		function GetModIDFromQuery: String;
+
 				
 		
 	end;
@@ -98,6 +106,15 @@ implementation
 {$R *.dfm}
 
 uses ModsSettingsUnit,AppSettingsUnit,SteamSettingsUnit, UISettingsUnit;
+
+function TFrmMain.IsEmptyOrNull(const Value: Variant): Boolean;
+begin
+  Result := VarIsClear(Value) or VarIsEmpty(Value) or VarIsNull(Value) or (VarCompareValue(Value, Unassigned) = vrEqual);
+  if (not Result) and VarIsStr(Value) then
+    Result := Value = '';
+end;
+
+
 
 procedure TFrmMain.Button_GameSettingsClick(Sender: TObject);
 begin
@@ -216,6 +233,21 @@ end;
 
 
 
+end;
+
+function TFrmMain.GetModIDFromQuery(): String;
+var
+	ThisResult: String;
+begin
+ThisResult := dm.query_mods.FieldByName('modid').AsString.Trim;
+
+
+
+
+
+
+
+result := ThisResult;
 end;
 
 function TFrmMain.BeginSession(): Boolean;
@@ -353,6 +385,8 @@ var
 	ThisIndex: smallint;
 begin
 
+	Ribbon_Main.ActivePage := RibbonPage_Main;
+
 	ThisIndex := 1;
 	if (dm.GetSetting('UILanguage',ThisIndex)) then UpdateLanguage(ThisIndex);
 
@@ -435,7 +469,7 @@ begin
 	dm.UpdateModListFromPC(Folder1,1,true);
 	dm.UpdateModListFromPC(Folder2,2,false);
 	
-	
+
 
 end;
 	

@@ -12,26 +12,26 @@ uses
 	System.UITypes, Vcl.AppEvnts, Winapi.ActiveX, Winapi.ShlObj,
 	System.NetEncoding,
 
+	Cromis.IPC, //IPC Server
+
+
 	uCEFChromium, uCEFWindowParent, uCEFInterfaces, uCEFApplication, uCEFTypes,
 	uCEFConstants, uCEFWinControl, uCEFSentinel, uCEFChromiumCore, mswheel,
-  bsSkinCtrls;
+	bsSkinCtrls, JvAppInst;
 
-//const
-//	MINIBROWSER_COOKIESFLUSHED   = WM_APP + $10B;
 
 
 type
-	TMiniBrowserFrm = class(TForm)
+	TFrmMain = class(TForm)
 		CEFWindowParent1: TCEFWindowParent;
 		Chromium1: TChromium;
     DevTools: TCEFWindowParent;
     Timer1: TTimer;
-    Button_1: TButton;
-    Button_2: TButton;
     StatusBar_Browser: TbsSkinStatusBar;
     StatusPanel_Browser: TbsSkinStatusPanel;
     Slider_BrowserZoom: TbsSkinSlider;
     StatusPanel_Zoom: TbsSkinStatusPanel;
+    AppInstance_1: TJvAppInstances;
 
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -50,10 +50,15 @@ type
     procedure Chromium1LoadError(Sender: TObject; const browser: ICefBrowser; const frame: ICefFrame; errorCode: Integer; const errorText, failedUrl: ustring);
     procedure Chromium1BeforePluginLoad(Sender: TObject; const mimeType, pluginUrl: ustring; isMainFrame: Boolean; const topOriginUrl: ustring; const pluginInfo: ICefWebPluginInfo; var pluginPolicy: TCefPluginPolicy; var aResult: Boolean);
     procedure Timer1Timer(Sender: TObject);
-    procedure Button_1Click(Sender: TObject);
-    procedure Button_2Click(Sender: TObject);
     procedure Slider_BrowserZoomChange(Sender: TObject);
 
+	private
+			FIPCServer: TIPCServer;
+			FirstRun: Boolean;
+    procedure SetUpIPCServer;
+    procedure OnExecuteRequest(const Request, Response: IIPCData);
+    procedure TaskDone;
+    procedure ShowDefaultPage;
   protected
 
     FResponse   : TStringList;
@@ -79,7 +84,7 @@ type
   end;
 
 var
-  MiniBrowserFrm : TMiniBrowserFrm;
+  FrmMain : TFrmMain;
 
 procedure CreateGlobalCEFApp;
 
@@ -100,7 +105,7 @@ begin
   GlobalCEFApp.DisableFeatures := 'WinUseBrowserSpellChecker';
 end;
 
-procedure TMiniBrowserFrm.Chromium1AfterCreated(Sender: TObject; const browser: ICefBrowser);
+procedure TFrmMain.Chromium1AfterCreated(Sender: TObject; const browser: ICefBrowser);
 begin
   if Chromium1.IsSameBrowser(browser) then
     PostMessage(Handle, CEF_AFTERCREATED, 0, 0)
@@ -108,7 +113,7 @@ begin
     SendMessage(browser.Host.WindowHandle, WM_SETICON, 1, application.Icon.Handle); // Use the same icon in the popup window
 end;
 
-procedure TMiniBrowserFrm.Chromium1BeforeClose(Sender: TObject; const browser: ICefBrowser);
+procedure TFrmMain.Chromium1BeforeClose(Sender: TObject; const browser: ICefBrowser);
 begin
   // The main browser is being destroyed
   if (Chromium1.BrowserId = 0) then
@@ -121,7 +126,7 @@ end;
 
 
 
-procedure TMiniBrowserFrm.Chromium1BeforePluginLoad(Sender: TObject;
+procedure TFrmMain.Chromium1BeforePluginLoad(Sender: TObject;
   const mimeType, pluginUrl: ustring; isMainFrame: Boolean;
   const topOriginUrl: ustring; const pluginInfo: ICefWebPluginInfo;
   var pluginPolicy: TCefPluginPolicy; var aResult: Boolean);
@@ -137,7 +142,7 @@ begin
     aResult := False;
 end;
 
-procedure TMiniBrowserFrm.Chromium1BeforeResourceLoad(Sender: TObject;
+procedure TFrmMain.Chromium1BeforeResourceLoad(Sender: TObject;
   const browser: ICefBrowser; const frame: ICefFrame;
   const request: ICefRequest; const callback: ICefRequestCallback;
   out Result: TCefReturnValue);
@@ -148,7 +153,7 @@ begin
 
 end;
 
-procedure TMiniBrowserFrm.Chromium1Close(Sender: TObject; const browser: ICefBrowser; var aAction : TCefCloseBrowserAction);
+procedure TFrmMain.Chromium1Close(Sender: TObject; const browser: ICefBrowser; var aAction : TCefCloseBrowserAction);
 begin
   if (browser <> nil) and
      (Chromium1.BrowserId = browser.Identifier) and
@@ -161,7 +166,7 @@ end;
 
 
 
-procedure TMiniBrowserFrm.Chromium1LoadEnd(Sender: TObject;
+procedure TFrmMain.Chromium1LoadEnd(Sender: TObject;
   const browser: ICefBrowser; const frame: ICefFrame;
   httpStatusCode: Integer);
 var
@@ -181,7 +186,7 @@ begin
     end;
 end;
 
-procedure TMiniBrowserFrm.Chromium1LoadError(Sender: TObject;
+procedure TFrmMain.Chromium1LoadError(Sender: TObject;
   const browser: ICefBrowser; const frame: ICefFrame; errorCode: Integer;
   const errorText, failedUrl: ustring);
 var
@@ -200,13 +205,13 @@ begin
 
 end;
 
-procedure TMiniBrowserFrm.Chromium1LoadingProgressChange(Sender: TObject;
+procedure TFrmMain.Chromium1LoadingProgressChange(Sender: TObject;
   const browser: ICefBrowser; const progress: Double);
 begin
   StatusPanel_Browser.Caption := 'Loading... ' + FloatToStrF(progress * 100, ffFixed, 3, 0) + '%';
 end;
 
-procedure TMiniBrowserFrm.Chromium1LoadingStateChange(Sender: TObject;
+procedure TFrmMain.Chromium1LoadingStateChange(Sender: TObject;
   const browser: ICefBrowser; isLoading, canGoBack, canGoForward: Boolean);
 begin
   if not(Chromium1.IsSameBrowser(browser)) or FClosing then exit;
@@ -216,12 +221,20 @@ begin
 		end
 	 else
 		begin
-      StatusPanel_Browser.Caption := 'Done';
+			StatusPanel_Browser.Caption := 'Done';
+			caption := 'Conan Exiles Steam Mod Browser';
+			if (FirstRun) then Begin
+				FirstRun := False;
+        ShowDefaultPage;
+
+
+      End;
+
     end;
 end;
 
 
-procedure TMiniBrowserFrm.ShowStatusText(const aText : string);
+procedure TFrmMain.ShowStatusText(const aText : string);
 begin
   if not(FClosing) then StatusPanel_Browser.Caption := aText;
 end;
@@ -229,29 +242,34 @@ end;
 
 
 
-procedure TMiniBrowserFrm.Slider_BrowserZoomChange(Sender: TObject);
+procedure TFrmMain.Slider_BrowserZoomChange(Sender: TObject);
 begin
   Chromium1.ZoomLevel := Slider_BrowserZoom.Value*0.1;
 end;
 
-procedure TMiniBrowserFrm.Chromium1StatusMessage(Sender: TObject;
+procedure TFrmMain.Chromium1StatusMessage(Sender: TObject;
   const browser: ICefBrowser; const value: ustring);
 begin
   if Chromium1.IsSameBrowser(browser) then ShowStatusText(value);
 end;
 
-procedure TMiniBrowserFrm.Chromium1TitleChange(Sender: TObject;
+procedure TFrmMain.Chromium1TitleChange(Sender: TObject;
   const browser: ICefBrowser; const title: ustring);
 begin
   if not(Chromium1.IsSameBrowser(browser)) then exit;
 
+	//Show same caption
+	caption := 'Conan Exiles Steam Mod Browser';
+
+(*
 	if (title <> '') then
 		caption := title
 	 else
-		caption := 'Conan Exiles Mod Browser';
+		caption := 'Conan Exiles Steam Mod Browser';
+		*)
 end;
 
-procedure TMiniBrowserFrm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+procedure TFrmMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   CanClose := FCanClose;
 
@@ -263,43 +281,47 @@ begin
     end;
 end;
 
-procedure TMiniBrowserFrm.FormCreate(Sender: TObject);
+procedure TFrmMain.FormCreate(Sender: TObject);
 begin
-  FCanClose            := False;
-  FClosing             := False;
-  FResponse            := TStringList.Create;
-  FRequest             := TStringList.Create;
-  FNavigation          := TStringList.Create;
+	FCanClose            := False;
+	FClosing             := False;
+	FResponse            := TStringList.Create;
+	FRequest             := TStringList.Create;
+	FNavigation          := TStringList.Create;
 
-	Chromium1.MultiBrowserMode := True;
+	FirstRun             := True;
 
+	Chromium1.MultiBrowserMode := False;
+
+	SetUpIPCServer;
 
 
 end;
 
-procedure TMiniBrowserFrm.FormDestroy(Sender: TObject);
+procedure TFrmMain.FormDestroy(Sender: TObject);
 begin
+try
+	if ( FIPCServer.Listening ) then  FIPCServer.Stop;
+except
+
+end;
+
+	FreeAndNil(FIPCServer);
   FResponse.Free;
   FRequest.Free;
   FNavigation.Free;
 end;
 
-procedure TMiniBrowserFrm.FormShow(Sender: TObject);
+procedure TFrmMain.FormShow(Sender: TObject);
 begin
   ShowStatusText('Please wait...');
-
-  // WebRTC's IP leaking can lowered/avoided by setting these preferences
-  // To test this go to https://www.browserleaks.com/webrtc
-  Chromium1.WebRTCIPHandlingPolicy := hpDisableNonProxiedUDP;
-  Chromium1.WebRTCMultipleRoutes   := STATE_DISABLED;
-  Chromium1.WebRTCNonproxiedUDP    := STATE_DISABLED;
-
-  // GlobalCEFApp.GlobalContextInitialized has to be TRUE before creating any browser
-  // If it's not initialized yet, we use a simple timer to create the browser later.
+	Chromium1.WebRTCIPHandlingPolicy := hpDisableNonProxiedUDP;
+	Chromium1.WebRTCMultipleRoutes   := STATE_DISABLED;
+	Chromium1.WebRTCNonproxiedUDP    := STATE_DISABLED;
   if not(Chromium1.CreateBrowser(CEFWindowParent1, '')) then Timer1.Enabled := True;
 end;
 
-procedure TMiniBrowserFrm.Timer1Timer(Sender: TObject);
+procedure TFrmMain.Timer1Timer(Sender: TObject);
 begin
   Timer1.Enabled := False;
   if not(Chromium1.CreateBrowser(CEFWindowParent1, '')) and not(Chromium1.Initialized) then
@@ -307,23 +329,10 @@ begin
 end;
 
 
-procedure TMiniBrowserFrm.BrowserCreatedMsg(var aMessage : TMessage);
-begin
-  CEFWindowParent1.UpdateSize;
-
-end;
-
-procedure TMiniBrowserFrm.BrowserDestroyMsg(var aMessage : TMessage);
-begin
-  FreeAndNil(CEFWindowParent1);
-end;
-
-procedure TMiniBrowserFrm.Button_1Click(Sender: TObject);
+procedure TFrmMain.ShowDefaultPage();
 var
-
 TempString :String;
 begin
-
 	TempString := '<html xmlns="http://www.w3.org/1999/xhtml"><head>'+
 		'<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'+
 		'<title>Conan Exiles Web Browser</title></head>'+
@@ -339,33 +348,88 @@ begin
 				'</div>'+
 '</div>';
 
-
+//Chromium1.LoadURL('https://steamcommunity.com/sharedfiles/filedetails/?id=2384014945');
 
 	Chromium1.LoadString(TempString);
 
 
-//Chromium1.LoadURL('https://steamcommunity.com/sharedfiles/filedetails/?id=2384014945');
 
 end;
-
-procedure TMiniBrowserFrm.Button_2Click(Sender: TObject);
+procedure TFrmMain.BrowserCreatedMsg(var aMessage : TMessage);
 begin
-Chromium1.LoadURL('http://www.google.com');
+  CEFWindowParent1.UpdateSize;
+
 end;
 
-procedure TMiniBrowserFrm.WMMove(var aMessage : TWMMove);
+procedure TFrmMain.BrowserDestroyMsg(var aMessage : TMessage);
+begin
+  FreeAndNil(CEFWindowParent1);
+end;
+
+procedure TFrmMain.WMMove(var aMessage : TWMMove);
+begin
+	inherited;
+
+	if (Chromium1 <> nil) then Chromium1.NotifyMoveOrResizeStarted;
+end;
+
+procedure TFrmMain.WMMoving(var aMessage : TMessage);
 begin
 	inherited;
 
 	if (Chromium1 <> nil) then Chromium1.NotifyMoveOrResizeStarted;
 end;
 
-procedure TMiniBrowserFrm.WMMoving(var aMessage : TMessage);
-begin
-	inherited;
 
-	if (Chromium1 <> nil) then Chromium1.NotifyMoveOrResizeStarted;
+procedure TFrmMain.SetUpIPCServer();
+begin
+
+	FIPCServer := TIPCServer.Create;
+	FIPCServer.OnExecuteRequest := OnExecuteRequest;
+	{Todo 2: Get the server name from a config file}
+	FIPCServer.ServerName := 'CEMMIPCServer';
+	FIPCServer.Start;
+
+end;
+
+procedure TFrmMain.OnExecuteRequest(const Request, Response: IIPCData);
+Var
+	ThisURL: String;
+
+begin
+
+	ThisURL  := Request.Data.ReadString('URL');
+	Chromium1.LoadURL(ThisUrl);
+	//Run following the transaction type
+(*
+	WiiProgressBar_1.Enabled := true;
+	WiiProgressBar_1.Visible := true;
+	*)
+
+
+
+
+
+//				DoKeyBoard( SetKeyboard, Response);
+
+
+		TaskDone();
+
+
+
 end;
+
+procedure TFrmMain.TaskDone();
+begin
+(*
+	WiiProgressBar_1.Enabled := false;
+	WiiProgressBar_1.Visible := false;
+	HTMLText_Msg.Text := '<fs:26><bc:clYellow><fc:clGreen><c>  Operación terminada  </fs></fc></bc></c>';
+      *)
+end;
+
+
+
 
 
 end.
