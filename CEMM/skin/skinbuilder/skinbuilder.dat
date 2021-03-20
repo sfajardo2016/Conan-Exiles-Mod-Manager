@@ -1,0 +1,12 @@
+[Options]
+initpath=C:\Program Files (x86)\Embarcadero\Studio\16.0\vcl\interfase\Almediadev_Skins\cemmskinribbon\cemmskin\
+TestLayeredBorders=1
+TestBlurLayeredBorders=1
+
+[Recent]
+Count=4
+Skin0=CEMM Skin Light@C:\Program Files (x86)\Embarcadero\Studio\16.0\vcl\interfase\Almediadev_Skins\cemmskinribbon\cemmskin\skin.ini
+Skin1=CEMM Skin Light@C:\Program Files (x86)\Embarcadero\Studio\16.0\vcl\interfase\Almediadev_Skins\cemmskinribbon\cemmskin\skin2.ini
+Skin2=Win10ModernSlateGray@C:\Program Files (x86)\Embarcadero\Studio\16.0\vcl\interfase\Almediadev_Skins\cemmskinribbon\Win10ModernSlateGray\skin.ini
+Skin3=iMetal@C:\Program Files (x86)\Embarcadero\Studio\16.0\vcl\interfase\Almediadev_Skins\cemmskinribbon\iMetal\skin.ini
+

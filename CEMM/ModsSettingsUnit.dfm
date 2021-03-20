@@ -532,7 +532,7 @@ object FrmModsSettings: TFrmModsSettings
       Lines.Strings = (
         '<fs:14>Ready</fs>')
       AutoWidth = True
-      ExplicitWidth = 31
+      ExplicitWidth = 52
     end
   end
   object grid_mods: TcxGrid
@@ -542,8 +542,6 @@ object FrmModsSettings: TFrmModsSettings
     Height = 312
     Align = alClient
     TabOrder = 2
-    ExplicitTop = 97
-    ExplicitHeight = 360
     object DBTableView_1: TcxGridDBTableView
       DragMode = dmAutomatic
       Navigator.Buttons.CustomButtons = <>
@@ -557,6 +555,7 @@ object FrmModsSettings: TFrmModsSettings
       OptionsCustomize.ColumnMoving = False
       OptionsSelection.CellSelect = False
       OptionsView.GroupByBox = False
+      Styles.OnGetContentStyle = DBTableView_1StylesGetContentStyle
       object GridDBColumn_1: TcxGridDBColumn
         Caption = 'Mod ID'
         DataBinding.FieldName = 'modid'
@@ -620,6 +619,7 @@ object FrmModsSettings: TFrmModsSettings
     ImageIndex = 0
     Flat = True
     UseSkinFontColor = True
+    TabStop = True
     CanFocused = True
     Radio = False
     Checked = False

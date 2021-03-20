@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{E9BDDB1E-6CC4-4870-87AC-0F299052929D}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="..\CEMMBrowser\cemmbrowser.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="cemm.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="cemmbrowser">
+        <MSBuild Projects="..\CEMMBrowser\cemmbrowser.dproj"/>
+    </Target>
+    <Target Name="cemmbrowser:Clean">
+        <MSBuild Projects="..\CEMMBrowser\cemmbrowser.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="cemmbrowser:Make">
+        <MSBuild Projects="..\CEMMBrowser\cemmbrowser.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="cemm">
+        <MSBuild Projects="cemm.dproj"/>
+    </Target>
+    <Target Name="cemm:Clean">
+        <MSBuild Projects="cemm.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="cemm:Make">
+        <MSBuild Projects="cemm.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="cemmbrowser;cemm"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="cemmbrowser:Clean;cemm:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="cemmbrowser:Make;cemm:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

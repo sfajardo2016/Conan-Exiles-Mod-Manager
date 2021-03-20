@@ -14,11 +14,22 @@ uses
 
 	Cromis.IPC, //IPC Server
 
+	//uCEFApplicationCore,
+	uCEFProcessMessage,
+	uCEFDomVisitor,
 
 	uCEFChromium, uCEFWindowParent, uCEFInterfaces, uCEFApplication, uCEFTypes,
 	uCEFConstants, uCEFWinControl, uCEFSentinel, uCEFChromiumCore, mswheel,
-	bsSkinCtrls, JvAppInst;
+	bsSkinCtrls, JvAppInst, bsSkinData, BusinessSkinForm, JvAppStorage,
+  JvAppIniStorage, JvComponentBase, JvFormPlacement, JvHtmlParser;
 
+const
+	MINIBROWSER_VISITDOM_FULL   = WM_APP + $102;
+	DOMVISITOR_MSGNAME_FULL     = 'domvisitorfull';
+  RETRIEVEDOM_MSGNAME_FULL    = 'retrievedomfull';
+
+type
+	TDTVisitStatus = (dvsIdle, dvsGettingDocNodeID, dvsQueryingSelector, dvsSettingAttributeValue);
 
 
 type
@@ -32,6 +43,15 @@ type
     Slider_BrowserZoom: TbsSkinSlider;
     StatusPanel_Zoom: TbsSkinStatusPanel;
     AppInstance_1: TJvAppInstances;
+    CompressedSkinList_Main: TbsCompressedSkinList;
+    SkinData_Main: TbsSkinData;
+    BusinessSkinForm_Main: TbsBusinessSkinForm;
+    FormStorage_Main: TJvFormStorage;
+    AppIniFileStorage_Main: TJvAppIniFileStorage;
+    HTMLParser_1: TJvHTMLParser;
+
+		procedure VisitDOM2Msg(var aMessage : TMessage); message MINIBROWSER_VISITDOM_FULL;
+
 
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -51,14 +71,37 @@ type
     procedure Chromium1BeforePluginLoad(Sender: TObject; const mimeType, pluginUrl: ustring; isMainFrame: Boolean; const topOriginUrl: ustring; const pluginInfo: ICefWebPluginInfo; var pluginPolicy: TCefPluginPolicy; var aResult: Boolean);
     procedure Timer1Timer(Sender: TObject);
     procedure Slider_BrowserZoomChange(Sender: TObject);
+    procedure Chromium1BeforeContextMenu(Sender: TObject;
+      const browser: ICefBrowser; const frame: ICefFrame;
+      const params: ICefContextMenuParams; const model: ICefMenuModel);
+    procedure Chromium1BeforePopup(Sender: TObject;
+      const browser: ICefBrowser; const frame: ICefFrame; const targetUrl,
+      targetFrameName: ustring;
+      targetDisposition: TCefWindowOpenDisposition; userGesture: Boolean;
+      const popupFeatures: TCefPopupFeatures;
+      var windowInfo: TCefWindowInfo; var client: ICefClient;
+      var settings: TCefBrowserSettings;
+      var extra_info: ICefDictionaryValue; var noJavascriptAccess,
+      Result: Boolean);
+    procedure Chromium1ProcessMessageReceived(Sender: TObject;
+      const browser: ICefBrowser; const frame: ICefFrame;
+      sourceProcess: TCefProcessId; const message: ICefProcessMessage;
+      out Result: Boolean);
 
 	private
 			FIPCServer: TIPCServer;
 			FirstRun: Boolean;
-    procedure SetUpIPCServer;
-    procedure OnExecuteRequest(const Request, Response: IIPCData);
-    procedure TaskDone;
-    procedure ShowDefaultPage;
+			PageTitle:String;
+			PageLoaded : Boolean;
+			IslandMode: Boolean;
+			LastURL: String;
+			PageFullText: String;
+		procedure SetUpIPCServer;
+		procedure OnExecuteRequest(const Request, Response: IIPCData);
+		procedure TaskDone;
+		procedure ShowDefaultPage;
+    function GetModDescription(ThisFullText: String): String;
+
   protected
 
     FResponse   : TStringList;
@@ -92,12 +135,60 @@ implementation
 
 {$R *.dfm}
 
+procedure DOMVisitor_OnDocAvailableFullMarkup(const browser: ICefBrowser; const frame: ICefFrame; const document: ICefDomDocument);
+var
+  TempMessage : ICefProcessMessage;
+begin
+  // Sending back some custom results to the browser process
+  // Notice that the DOMVISITOR_MSGNAME_FULL message name needs to be recognized in
+  // Chromium1ProcessMessageReceived
+  try
+    TempMessage := TCefProcessMessageRef.New(DOMVISITOR_MSGNAME_FULL);
+    TempMessage.ArgumentList.SetString(0, document.Body.AsMarkup);
+
+    if (frame <> nil) and frame.IsValid then
+      frame.SendProcessMessage(PID_BROWSER, TempMessage);
+  finally
+    TempMessage := nil;
+  end;
+end;
+
+procedure GlobalCEFApp_OnProcessMessageReceived(const browser       : ICefBrowser;
+                                                const frame         : ICefFrame;
+                                                      sourceProcess : TCefProcessId;
+                                                const message       : ICefProcessMessage;
+                                                var   aHandled      : boolean);
+var
+  TempVisitor : TCefFastDomVisitor2;
+begin
+  aHandled := False;
+
+  if (browser <> nil) then
+    begin
+				if (message.name = RETRIEVEDOM_MSGNAME_FULL) then
+					begin
+						if (frame <> nil) and frame.IsValid then
+							begin
+								TempVisitor := TCefFastDomVisitor2.Create(browser, frame, DOMVisitor_OnDocAvailableFullMarkup);
+								frame.VisitDom(TempVisitor);
+							end;
+
+						aHandled := True;
+					end;
+
+    end;
+end;
+
 
 procedure CreateGlobalCEFApp;
 begin
 	GlobalCEFApp                     := TCefApplication.Create;
 //  GlobalCEFApp.LogFile             := 'debug.log';
-//	GlobalCEFApp.LogSeverity         := LOGSEVERITY_INFO;
+
+
+	GlobalCEFApp.OnProcessMessageReceived := GlobalCEFApp_OnProcessMessageReceived;
+
+	GlobalCEFApp.LogSeverity         := LOGSEVERITY_DISABLE;
 	GlobalCEFApp.cache               := 'cache';
 //	GlobalCEFApp.EnablePrintPreview  := True;
   // This is a workaround for the CEF4Delphi issue #324 :
@@ -126,6 +217,13 @@ end;
 
 
 
+procedure TFrmMain.Chromium1BeforeContextMenu(Sender: TObject;
+  const browser: ICefBrowser; const frame: ICefFrame;
+  const params: ICefContextMenuParams; const model: ICefMenuModel);
+begin
+model.clear; //disable context menu
+end;
+
 procedure TFrmMain.Chromium1BeforePluginLoad(Sender: TObject;
   const mimeType, pluginUrl: ustring; isMainFrame: Boolean;
   const topOriginUrl: ustring; const pluginInfo: ICefWebPluginInfo;
@@ -140,6 +238,17 @@ begin
     end
    else
     aResult := False;
+end;
+
+procedure TFrmMain.Chromium1BeforePopup(Sender: TObject;
+  const browser: ICefBrowser; const frame: ICefFrame; const targetUrl,
+  targetFrameName: ustring; targetDisposition: TCefWindowOpenDisposition;
+  userGesture: Boolean; const popupFeatures: TCefPopupFeatures;
+  var windowInfo: TCefWindowInfo; var client: ICefClient;
+  var settings: TCefBrowserSettings; var extra_info: ICefDictionaryValue;
+  var noJavascriptAccess, Result: Boolean);
+begin
+  Result := (targetDisposition in [WOD_NEW_FOREGROUND_TAB, WOD_NEW_BACKGROUND_TAB, WOD_NEW_POPUP, WOD_NEW_WINDOW]);
 end;
 
 procedure TFrmMain.Chromium1BeforeResourceLoad(Sender: TObject;
@@ -212,8 +321,10 @@ begin
 end;
 
 procedure TFrmMain.Chromium1LoadingStateChange(Sender: TObject;
-  const browser: ICefBrowser; isLoading, canGoBack, canGoForward: Boolean);
+	const browser: ICefBrowser; isLoading, canGoBack, canGoForward: Boolean);
 begin
+	PageLoaded := false;
+
   if not(Chromium1.IsSameBrowser(browser)) or FClosing then exit;
   if isLoading then
     begin
@@ -225,18 +336,47 @@ begin
 			caption := 'Conan Exiles Steam Mod Browser';
 			if (FirstRun) then Begin
 				FirstRun := False;
-        ShowDefaultPage;
+				ShowDefaultPage;
+			End else begin
+				PostMessage(Handle, MINIBROWSER_VISITDOM_FULL, 0, 0);
+	//			showmessage(PageFullText);
 
 
-      End;
 
-    end;
+      end;
+
+		end;
 end;
 
 
+procedure TFrmMain.Chromium1ProcessMessageReceived(Sender: TObject;
+  const browser: ICefBrowser; const frame: ICefFrame;
+  sourceProcess: TCefProcessId; const message: ICefProcessMessage;
+  out Result: Boolean);
+begin
+  Result := False;
+
+	if (message = nil) or (message.ArgumentList = nil) then begin
+		exit;
+	end;
+
+
+		if (message.Name = DOMVISITOR_MSGNAME_FULL) then
+			begin
+				PageFullText := message.ArgumentList.GetString(0);
+				PageLoaded := true;
+				Result := True;
+			end;
+
+
+
+
+
+end;
+
 procedure TFrmMain.ShowStatusText(const aText : string);
 begin
-  if not(FClosing) then StatusPanel_Browser.Caption := aText;
+//if not(FClosing) then StatusPanel_Browser.Caption := aText;
 end;
 
 
@@ -258,6 +398,9 @@ procedure TFrmMain.Chromium1TitleChange(Sender: TObject;
 begin
   if not(Chromium1.IsSameBrowser(browser)) then exit;
 
+	if (FirstRun) then PageTitle :=''   else PageTitle := title;
+
+
 	//Show same caption
 	caption := 'Conan Exiles Steam Mod Browser';
 
@@ -278,8 +421,17 @@ begin
       FClosing := True;
       Visible  := False;
 			Chromium1.CloseAllBrowsers;
+			Chromium1.ClearCache;
+			Chromium1.DeleteCookies();
+
+
     end;
+
+		//Clear chache
+
+
 end;
+
 
 procedure TFrmMain.FormCreate(Sender: TObject);
 begin
@@ -290,8 +442,10 @@ begin
 	FNavigation          := TStringList.Create;
 
 	FirstRun             := True;
+	LastURL              := '';
 
 	Chromium1.MultiBrowserMode := False;
+
 
 	SetUpIPCServer;
 
@@ -344,6 +498,8 @@ begin
 				'</div>'+
 				'<div class="contentText">'+
 						'<p>Waiting the Conan Exiles Mod Manager signal...</p>'+
+						'<p>For support visit .........</p>'+
+
 						'<p>&nbsp;</p>'+
 				'</div>'+
 '</div>';
@@ -386,11 +542,12 @@ begin
 
 	FIPCServer := TIPCServer.Create;
 	FIPCServer.OnExecuteRequest := OnExecuteRequest;
-	{Todo 2: Get the server name from a config file}
+	{DONE 2: Get the server name from a config file}
 	FIPCServer.ServerName := 'CEMMIPCServer';
 	FIPCServer.Start;
 
 end;
+
 
 procedure TFrmMain.OnExecuteRequest(const Request, Response: IIPCData);
 Var
@@ -399,25 +556,85 @@ Var
 begin
 
 	ThisURL  := Request.Data.ReadString('URL');
+
+	if (ThisURL=LastURL) then begin
+		Response.ID := datetimetostr(now);
+		Response.Data.WriteString('WindowsTitle','Same');  //Flag to ignore title
+		Exit;
+	end else LastURL := ThisURL;
+
+
+	PageLoaded := False;
+	PageFullText := '';
+
 	Chromium1.LoadURL(ThisUrl);
-	//Run following the transaction type
-(*
-	WiiProgressBar_1.Enabled := true;
-	WiiProgressBar_1.Visible := true;
-	*)
+
+
+	//Wait until reply ???
 
 
 
+	while not (PageLoaded ) do begin
 
 
-//				DoKeyBoard( SetKeyboard, Response);
+	end;
 
 
-		TaskDone();
+	//Get Description
+
+	Response.ID := datetimetostr(now);
+
+	Response.Data.WriteString('WindowsTitle',PageTitle );
+	Response.Data.WriteString('ModDescription', GetModDescription(PageFullText )); //Var PageFullText is filled onTextResultAvailable
+	TaskDone();
 
 
 
 end;
+
+
+//<div class="workshopItemDescription" id="highlightContent">
+
+
+function TFrmMain.GetModDescription(ThisFullText:String): String;
+var
+	ThisResult: String;
+	iPos:Integer;
+begin
+ThisResult := ThisFullText.Substring( pos('<div class="workshopItemDescription" id="highlightContent">',ThisFullText));
+//ThisResult := ThisResult.Replace('<div class="workshopItemDescription" id="highlightContent">','');
+//ThisResult := ThisResult.Substring(0, pos('</div>',ThisResult ));
+//ThisResult := ThisResult.Replace('</div>','');
+
+HTMLParser_1.AnalyseString( ThisFullText  );
+
+ThisResult := '';
+
+for iPos := 0 to 100 do  ThisResult := ThisResult +  HTMLParser_1.Parser[iPos];
+
+
+
+
+
+//ThisResult := ThisResult.Substring(0,800);
+
+
+
+
+
+
+
+
+  
+
+
+
+
+result := ThisResult;
+end;
+
+
+
 
 procedure TFrmMain.TaskDone();
 begin
@@ -425,10 +642,20 @@ begin
 	WiiProgressBar_1.Enabled := false;
 	WiiProgressBar_1.Visible := false;
 	HTMLText_Msg.Text := '<fs:26><bc:clYellow><fc:clGreen><c>  Operación terminada  </fs></fc></bc></c>';
-      *)
+			*)
+			StatusPanel_Browser.Caption := 'Done';
 end;
 
 
+
+procedure TFrmMain.VisitDOM2Msg(var aMessage : TMessage);
+var
+  TempMsg : ICefProcessMessage;
+begin
+  // Use the ArgumentList property if you need to pass some parameters.
+	TempMsg := TCefProcessMessageRef.New(RETRIEVEDOM_MSGNAME_FULL); // Same name than TCefCustomRenderProcessHandler.MessageName
+  Chromium1.SendProcessMessage(PID_RENDERER, TempMsg);
+end;
 
 
 

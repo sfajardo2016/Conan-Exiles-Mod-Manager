@@ -11,7 +11,7 @@ uses
 
 
   bsribbon, varcodedxe8, bsMessages, siComp, System.ImageList, Vcl.ImgList,
-  JvComponentBase, JvErrorIndicator, bsaadapter;
+  JvComponentBase, JvErrorIndicator, bsaadapter, cxStyles, cxClasses;
 
 
 
@@ -47,6 +47,8 @@ type
     Button_SteamSettings: TbsSkinSpeedButton;
     Button_ModsSettings: TbsSkinSpeedButton;
     SkinAdapter_Main: TbsaSkinAdapter;
+    StyleReposity_Main: TcxStyleRepository;
+    Style_Duplicated: TcxStyle;
     procedure Button_UISettingsClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button_SteamSettingsClick(Sender: TObject);
@@ -76,9 +78,13 @@ type
 
 
 
+
 		{ Private declarations }
 	public
 		{ Public declarations }
+
+		IslandMode: Boolean;
+
 		procedure ScreenMsg(ThisType: smType; ThisMsg: String;ThisLabel: TDzHTMLText); overload;
 		procedure ScreenMsg(ThisType: smType; ThisMsg: String); overload;
 		procedure ScreenMsg(ThisMsg: String); overload;
@@ -93,8 +99,9 @@ type
 
 		function IsEmptyOrNull(const Value: Variant): Boolean;
 		function GetModIDFromQuery: String;
+    function UpdateModName(NewName: String): Boolean;
 
-				
+
 		
 	end;
 
@@ -240,15 +247,18 @@ var
 	ThisResult: String;
 begin
 ThisResult := dm.query_mods.FieldByName('modid').AsString.Trim;
-
-
-
-
-
-
-
 result := ThisResult;
 end;
+
+function TFrmMain.UpdateModName(NewName:String): Boolean;
+
+begin
+
+dm.UpdateModName(NewName);
+result := true;
+end;
+
+
 
 function TFrmMain.BeginSession(): Boolean;
 var
@@ -262,6 +272,10 @@ ThisResult := false;
 /// </remarks>
 
 LastUrlVisited:= '';
+IslandMode:= False; //Default assume on-line
+
+{TODO -oZap -cMust have :Define island mode}
+
 varcoded.SetCreator('Zaphod (See "About" option for contact)');
 
 
@@ -434,7 +448,7 @@ function TFrmMain.SetUpLog(): Boolean;
   
   end;
   
-  procedure TFrmMain.ScreenMsg(ThisMsg: String);
+	procedure TFrmMain.ScreenMsg(ThisMsg: String);
   begin
   
   ScreenMsg(smNormal,ThisMsg,HTMLText_GameFoldersAndFilesMsg);

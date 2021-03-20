@@ -33,6 +33,7 @@ type
 
 
 
+
 		{ Private declarations }
 	public
 		LastMessage: string;
@@ -44,7 +45,9 @@ type
 		function GetSetting(ThisKey:string; out ThisValue:String):Boolean; overload;
 		function GetSetting(ThisKey:string; out ThisValue: Integer):Boolean; overload;
 		function GetSetting(ThisKey:string; out ThisValue: SmallInt):Boolean; overload;
-    function SetSetting(ThisKey, ThisValue: String): Boolean;
+		function SetSetting(ThisKey, ThisValue: String): Boolean;
+
+		procedure UpdateModName(NewName: String);
 
 
 		function AreSettingsValid: Boolean;
@@ -104,9 +107,6 @@ uses MainUnit;
   
 {$ENDREGION}
 
-
-
-
 {$REGION 'Set Settings Keys'}
 
   function TDataModule1.SetSetting(ThisKey:string; ThisValue:String):Boolean;
@@ -128,11 +128,6 @@ uses MainUnit;
 
 
 {$ENDREGION}
-
-
-
-
-
 
 
 
@@ -367,6 +362,17 @@ end;
 		result := r;
 	end;
 
+
+procedure TDataModule1.UpdateModName(NewName:String);
+begin
+with (query_mods) do begin
+	Edit;
+	FieldByName('modname').AsString:= NewName;
+	Post;
+end;
+
+
+end;
 procedure TDataModule1.ScanForAllMods(const Dir: string;ThisType:SmallInt);
 var
   SR: TSearchRec;
@@ -425,7 +431,24 @@ begin
 								FieldByName('modfile').AsString := FullFileName;
 								Log('New mod added:' +FullFileName);
 								Post;
-							end;
+							end else begin
+								//duplicated
+								if (ThisType<>FieldByName('modlocation').AsInteger) then begin
+									Edit;
+									FieldByName('modlocation').AsInteger := 3; //Both folders
+									Post;
+
+
+
+
+
+                end;
+
+
+
+
+
+              end;
 
             end;
           end; // .pak file

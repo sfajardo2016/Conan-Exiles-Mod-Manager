@@ -1,0 +1,18 @@
+[Options]
+initpath=C:\Program Files (x86)\Embarcadero\Studio\16.0\vcl\interfase\Almediadev_Skins\cemmskinribbon\cemmskin\
+TestLayeredBorders=1
+TestBlurLayeredBorders=1
+
+[Recent]
+Count=10
+Skin0=CEMM Skin Light@C:\Program Files (x86)\Embarcadero\Studio\16.0\vcl\interfase\Almediadev_Skins\cemmskinribbon\cemmskin\skin2.ini
+Skin1=Office2010_Blue_Aero@C:\Program Files (x86)\Embarcadero\Studio\16.0\vcl\interfase\Almediadev_Skins\cemmskinribbon\2010Blue_Aero\skin.ini
+Skin2=iMetal@C:\Program Files (x86)\Embarcadero\Studio\16.0\vcl\interfase\Almediadev_Skins\cemmskinribbon\iMetal\skin.ini
+Skin3=Win10ModernSlateGray@C:\Program Files (x86)\Embarcadero\Studio\16.0\vcl\interfase\Almediadev_Skins\cemmskinribbon\cemmskin\ori\skin.ini
+Skin4=CEMM Skin Light@C:\Program Files (x86)\Embarcadero\Studio\16.0\vcl\interfase\Almediadev_Skins\cemmskinribbon\cemmskin\skin.ini
+Skin5=PlayerSkin@C:\Program Files (x86)\Embarcadero\Studio\16.0\vcl\interfase\DynamicSkinForm 14.01\Demos\demos\player\skins\default\skin.ini
+Skin6=PlayerSkin@C:\Program Files (x86)\Embarcadero\Studio\16.0\vcl\interfase\DynamicSkinForm 14.01\Demos\demos\player\skins\skin1\SKIN.INI
+Skin7=Win10ModernDark@C:\Program Files (x86)\Embarcadero\Studio\16.0\vcl\interfase\Almediadev_Skins\cemmskinribbon\Win10ModernDark\skin.ini
+Skin8=Win10ModernSlateGray@C:\Program Files (x86)\Embarcadero\Studio\16.0\vcl\interfase\Almediadev_Skins\cemmskinribbon\Win10ModernSlateGray\skin.ini
+Skin9=iMetal@C:\Program Files (x86)\Embarcadero\Studio\16.0\vcl\interfase\Almediadev_Skins\cemmskinribbon\iMetal\skin2.ini
+

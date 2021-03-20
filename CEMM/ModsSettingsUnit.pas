@@ -50,6 +50,9 @@ type
     procedure DBTableView_1CellClick(Sender: TcxCustomGridTableView;
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
+    procedure DBTableView_1StylesGetContentStyle(
+      Sender: TcxCustomGridTableView; ARecord: TcxCustomGridRecord;
+      AItem: TcxCustomGridTableItem; var AStyle: TcxStyle);
 
 	private
     procedure GetMods;
@@ -90,10 +93,36 @@ end;
 
 
 
+procedure TFrmModsSettings.DBTableView_1StylesGetContentStyle(
+  Sender: TcxCustomGridTableView; ARecord: TcxCustomGridRecord;
+  AItem: TcxCustomGridTableItem; var AStyle: TcxStyle);
+	var
+		ThisValue:Integer;
+begin
+
+	ThisValue := 0;
+	FrmMain.Log( ARecord.Values[4] );
+
+	try
+		if NOT (FrmMain.IsEmptyOrNull (ARecord.Values[4] ))  then ThisValue := ARecord.Values[4];
+	except
+		on E: Exception do
+
+	end;
+
+	AStyle := nil;
+	if (ThisValue = 3 ) then AStyle := FrmMain.Style_Duplicated;
+
+
+
+
+//Style_Duplicated
+end;
+
 procedure TFrmModsSettings.ShowBrowser();
 var
-  thisurl: string;
-  thismodid:string;
+	thisurl: string;
+	thismodid:string;
 begin
 
 	thismodid:= FrmMain.GetModIDFromQuery();
@@ -123,6 +152,8 @@ begin
 end;
 
 
+
+
 procedure TFrmModsSettings.SendURLToBrowser(ThisURL:String);
 
 var
@@ -132,6 +163,8 @@ var
 	Error: Boolean;
 	hnd: THandle;
 	TaskDone: Boolean;
+	WindowTitle: String;
+	ModDescription: String;
 
 begin
 
@@ -140,18 +173,38 @@ begin
     IPCClient.ComputerName := FrmMain.Varcoded.ComputerName;
     IPCClient.ServerName := 'CEMMIPCServer';
     IPCClient.ConnectClient(cDefaultTimeout);
-    try
+		try
       if IPCClient.IsConnected then
 			begin
 
 				Request := AcquireIPCData;
 				Request.ID := DateTimeToStr(Now);
-
 				Request.Data.WriteString('URL',ThisURL);
+				Request.Data.WriteString('Theme',FrmMain.SkinData_Main.SkinIndex.ToString() );
 				Result := IPCClient.ExecuteConnectedRequest(Request);
 
         if IPCClient.AnswerValid then
-        begin
+				begin
+					//Get description ??
+
+					if NOT ( FrmMain.IslandMode ) then begin
+						WindowTitle := Result.Data.ReadString('WindowsTitle');
+
+
+						if NOT (WindowTitle.ToUpper.Equals('SAME')) then begin
+							 FrmMain.UpdateModName(WindowTitle.Replace('Steam Workshop::',''));
+							 ModDescription := Result.Data.ReadString('ModDescription');
+
+							 showmessage(ModDescription);
+						end;
+
+
+					end;
+
+
+
+
+
         end
       end;
 
@@ -229,6 +282,7 @@ begin
 		0: AText := 'N/A';
 		1: AText := 'Game folder';
 		2: AText := 'App folder';
+		3: AText := 'Both folders(!)';
 
 
 	end;
@@ -236,4 +290,5 @@ begin
 end;
 
 end.
+
 
