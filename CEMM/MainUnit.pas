@@ -75,6 +75,7 @@ type
 		procedure ShowAppSettings;
 		procedure UpdateLanguage(ThisIndex: SmallInt);
 		procedure ShowModSettings;
+    procedure SetupBrowser;
 
 
 
@@ -84,6 +85,9 @@ type
 		{ Public declarations }
 
 		IslandMode: Boolean;
+		IsBrowserEnabled: Boolean;
+		BrowserFileName:String;
+
 
 		procedure ScreenMsg(ThisType: smType; ThisMsg: String;ThisLabel: TDzHTMLText); overload;
 		procedure ScreenMsg(ThisType: smType; ThisMsg: String); overload;
@@ -139,7 +143,8 @@ var
 	ThisValue:String;
 begin	
 
-	FrmModsSettings:= TFrmModsSettings.Create(FrmMain);
+//	FrmModsSettings:= TFrmModsSettings.Create(FrmMain);
+FrmModsSettings:= TFrmModsSettings.Create(FrmMain);
 
 	ThisValue := '';
 	dm.GetSetting('cemodfolder',ThisValue);
@@ -273,6 +278,8 @@ ThisResult := false;
 
 LastUrlVisited:= '';
 IslandMode:= False; //Default assume on-line
+IsBrowserEnabled := false;
+BrowserFileName := '';
 
 {TODO -oZap -cMust have :Define island mode}
 
@@ -312,9 +319,6 @@ end;
 	end;
 
 
-
-
-
 	if not (dm.AreSettingsValid) then begin
 		Log(leWarning,'Settings ar not valid, prompting the user to check the settings');
 		msgdlg_Main.MessageDlg('Hi, app settings are not valid'+#13+
@@ -333,7 +337,7 @@ end;
 
 
 	SetupUI();
- //	SetupBrowser();
+	SetupBrowser();
 
 
 
@@ -343,6 +347,19 @@ Log('App is ready');
 ScreenMsg('Ready');
 	
 result := ThisResult;
+end;
+
+procedure TFrmMain.SetupBrowser();
+var
+	ThisBrowserFile: String;
+begin
+	ThisBrowserFile := ExtractFilePath(ParamStr(0));
+	BrowserFileName := ThisBrowserFile + 'browser\cemmbrowser.exe';
+	IsBrowserEnabled := FileExists (BrowserFileName);
+	Log('Browser file:' +BrowserFileName);
+
+	if IsBrowserEnabled then Log('was found') else Log('Was NOT found');
+
 end;
 
 procedure TFrmMain.ShowUISettings();

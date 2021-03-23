@@ -3,8 +3,8 @@ object FrmMain: TFrmMain
   Top = 0
   BorderIcons = []
   Caption = 'Conan Exiles Steam Mod Browser'
-  ClientHeight = 529
-  ClientWidth = 400
+  ClientHeight = 585
+  ClientWidth = 485
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,25 +23,27 @@ object FrmMain: TFrmMain
   object CEFWindowParent1: TCEFWindowParent
     Left = 0
     Top = 0
-    Width = 400
-    Height = 488
+    Width = 485
+    Height = 544
     Align = alClient
     TabStop = True
     TabOrder = 0
+    ExplicitWidth = 457
   end
   object DevTools: TCEFWindowParent
-    Left = 400
+    Left = 485
     Top = 0
     Width = 0
-    Height = 488
+    Height = 544
     Align = alRight
     TabOrder = 1
     Visible = False
+    ExplicitLeft = 777
   end
   object StatusBar_Browser: TbsSkinStatusBar
     Left = 0
-    Top = 488
-    Width = 400
+    Top = 544
+    Width = 485
     Height = 41
     HintImageIndex = 0
     TabOrder = 2
@@ -75,10 +77,11 @@ object FrmMain: TFrmMain
     Caption = 'StatusBar_Browser'
     Align = alBottom
     SizeGrip = True
+    ExplicitWidth = 777
     object StatusPanel_Browser: TbsSkinStatusPanel
       Left = 0
       Top = 0
-      Width = 143
+      Width = 228
       Height = 41
       HintImageIndex = 0
       TabOrder = 0
@@ -108,9 +111,10 @@ object FrmMain: TFrmMain
       AutoSize = False
       ImageIndex = -1
       NumGlyphs = 1
+      ExplicitWidth = 520
     end
     object Slider_BrowserZoom: TbsSkinSlider
-      Left = 209
+      Left = 294
       Top = 0
       Width = 150
       Height = 41
@@ -128,7 +132,7 @@ object FrmMain: TFrmMain
       OnChange = Slider_BrowserZoomChange
     end
     object StatusPanel_Zoom: TbsSkinStatusPanel
-      Left = 143
+      Left = 228
       Top = 0
       Width = 66
       Height = 41
@@ -160,6 +164,7 @@ object FrmMain: TFrmMain
       AutoSize = False
       ImageIndex = -1
       NumGlyphs = 1
+      ExplicitLeft = 520
     end
   end
   object Chromium1: TChromium
@@ -175,6 +180,7 @@ object FrmMain: TFrmMain
     OnAfterCreated = Chromium1AfterCreated
     OnBeforeClose = Chromium1BeforeClose
     OnClose = Chromium1Close
+    OnBeforeBrowse = Chromium1BeforeBrowse
     OnBeforeResourceLoad = Chromium1BeforeResourceLoad
     OnBeforePluginLoad = Chromium1BeforePluginLoad
     Left = 40
@@ -4667,7 +4673,7 @@ object FrmMain: TFrmMain
     QuickButtonsShowHint = False
     QuickButtonsShowDivider = True
     ClientInActiveEffect = False
-    ClientInActiveEffectType = bsieSemiTransparent
+    ClientInActiveEffectType = bsieBlur
     DisableSystemMenu = False
     AlwaysResize = False
     PositionInMonitor = bspDesktopCenter

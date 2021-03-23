@@ -17,7 +17,7 @@ uses
 
   Data.DB, cxDBData, cxLookAndFeels, cxLookAndFeelPainters, cxStyles,
   siLngLnk, DzHTMLText, cxCustomData, cxFilter, cxData, dxDateRanges,
-  AdvOfficeButtons;
+  AdvOfficeButtons, Vcl.ExtCtrls, AdvMemo, AdvmWS;
 
 type
   TFrmModsSettings = class(TForm)
@@ -44,6 +44,7 @@ type
     SkinAdapter_Main: TbsaSkinAdapter;
     Label_3: TbsSkinStdLabel;
     CheckBox_WebBrowser: TbsSkinCheckBox;
+    Splitter_1: TbsSkinSplitter;
     procedure Button_ValidateFoldersClick(Sender: TObject);
     procedure GridDBColumn_5GetDisplayText(Sender: TcxCustomGridTableItem;
       ARecord: TcxCustomGridRecord; var AText: string);
@@ -87,7 +88,7 @@ procedure TFrmModsSettings.DBTableView_1CellClick(
 	ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
 	AShift: TShiftState; var AHandled: Boolean);
 begin
-if (CheckBox_WebBrowser.Checked)  then ShowBrowser();
+if (CheckBox_WebBrowser.Checked)  and (FrmMain.IsBrowserEnabled) then ShowBrowser();
 end;
 
 
@@ -101,8 +102,6 @@ procedure TFrmModsSettings.DBTableView_1StylesGetContentStyle(
 begin
 
 	ThisValue := 0;
-	FrmMain.Log( ARecord.Values[4] );
-
 	try
 		if NOT (FrmMain.IsEmptyOrNull (ARecord.Values[4] ))  then ThisValue := ARecord.Values[4];
 	except
@@ -115,8 +114,6 @@ begin
 
 
 
-
-//Style_Duplicated
 end;
 
 procedure TFrmModsSettings.ShowBrowser();
@@ -132,12 +129,15 @@ begin
 	thisurl := 'http://steamcommunity.com/sharedfiles/filedetails/?id=' + thismodid;
 
 
-	ShellExecute(Handle, 'open','D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMMBrowser\Deploy\cemmbrowser.exe', 'CEMM', nil, SW_SHOWNORMAL) ;
+
+	ShellExecute(Handle, 'open',PWideChar(FrmMain.BrowserFileName),
+							'CEMM',  PWideChar(ExtractFilePath(FrmMain.BrowserFileName)) , SW_SHOWNORMAL) ;
 
 	 //Wait ??
 	if not (FoundBrowser(3)) then begin
-		FrmMain.msgdlg_Main.MessageDlg('Can not found the Conan Exiles Web Browser.'+#13+#13+
-												'Try again, re-install this app or verify that you download it.', mtWarning, [mbOk], 0);
+		FrmMain.msgdlg_Main.MessageDlg('Can not found the Conan Exiles Web Browser.'+#13+
+												'Try again, re-install this app or verify that you download it.'+#13+#13+
+												'['+FrmMain.BrowserFileName+']', mtWarning, [mbOk], 0);
 
 		Exit;
 	end;
@@ -179,11 +179,16 @@ begin
 
 				Request := AcquireIPCData;
 				Request.ID := DateTimeToStr(Now);
+
 				Request.Data.WriteString('URL',ThisURL);
 				Request.Data.WriteString('Theme',FrmMain.SkinData_Main.SkinIndex.ToString() );
+
+
 				Result := IPCClient.ExecuteConnectedRequest(Request);
 
-        if IPCClient.AnswerValid then
+				WindowTitle := '';
+
+				if IPCClient.AnswerValid then
 				begin
 					//Get description ??
 
@@ -194,17 +199,10 @@ begin
 						if NOT (WindowTitle.ToUpper.Equals('SAME')) then begin
 							 FrmMain.UpdateModName(WindowTitle.Replace('Steam Workshop::',''));
 							 ModDescription := Result.Data.ReadString('ModDescription');
-
-							 showmessage(ModDescription);
 						end;
 
 
 					end;
-
-
-
-
-
         end
       end;
 

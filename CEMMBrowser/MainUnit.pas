@@ -87,6 +87,10 @@ type
       const browser: ICefBrowser; const frame: ICefFrame;
       sourceProcess: TCefProcessId; const message: ICefProcessMessage;
       out Result: Boolean);
+    procedure Chromium1BeforeBrowse(Sender: TObject;
+      const browser: ICefBrowser; const frame: ICefFrame;
+      const request: ICefRequest; user_gesture, isRedirect: Boolean;
+      out Result: Boolean);
 
 	private
 			FIPCServer: TIPCServer;
@@ -96,6 +100,8 @@ type
 			IslandMode: Boolean;
 			LastURL: String;
 			PageFullText: String;
+			ThisModDescription: String;
+			CanLoadANewPage: Boolean;
 		procedure SetUpIPCServer;
 		procedure OnExecuteRequest(const Request, Response: IIPCData);
 		procedure TaskDone;
@@ -150,7 +156,7 @@ begin
       frame.SendProcessMessage(PID_BROWSER, TempMessage);
   finally
     TempMessage := nil;
-  end;
+	end;
 end;
 
 procedure GlobalCEFApp_OnProcessMessageReceived(const browser       : ICefBrowser;
@@ -204,6 +210,19 @@ begin
     SendMessage(browser.Host.WindowHandle, WM_SETICON, 1, application.Icon.Handle); // Use the same icon in the popup window
 end;
 
+procedure TFrmMain.Chromium1BeforeBrowse(Sender: TObject;
+  const browser: ICefBrowser; const frame: ICefFrame;
+  const request: ICefRequest; user_gesture, isRedirect: Boolean;
+  out Result: Boolean);
+begin
+
+Result := Not (CanLoadANewPage);
+
+
+//if   then Result := true else Result := false;
+
+end;
+
 procedure TFrmMain.Chromium1BeforeClose(Sender: TObject; const browser: ICefBrowser);
 begin
   // The main browser is being destroyed
@@ -248,7 +267,10 @@ procedure TFrmMain.Chromium1BeforePopup(Sender: TObject;
   var settings: TCefBrowserSettings; var extra_info: ICefDictionaryValue;
   var noJavascriptAccess, Result: Boolean);
 begin
-  Result := (targetDisposition in [WOD_NEW_FOREGROUND_TAB, WOD_NEW_BACKGROUND_TAB, WOD_NEW_POPUP, WOD_NEW_WINDOW]);
+//Disable popups and new windows
+
+
+	Result := (targetDisposition in [WOD_NEW_FOREGROUND_TAB, WOD_NEW_BACKGROUND_TAB, WOD_NEW_POPUP, WOD_NEW_WINDOW]);
 end;
 
 procedure TFrmMain.Chromium1BeforeResourceLoad(Sender: TObject;
@@ -317,7 +339,9 @@ end;
 procedure TFrmMain.Chromium1LoadingProgressChange(Sender: TObject;
   const browser: ICefBrowser; const progress: Double);
 begin
-  StatusPanel_Browser.Caption := 'Loading... ' + FloatToStrF(progress * 100, ffFixed, 3, 0) + '%';
+	StatusPanel_Browser.Caption := 'Loading... ' + FloatToStrF(progress * 100, ffFixed, 3, 0) + '%';
+	if (progress*100) = 100  then StatusPanel_Browser.Caption := 'Done';
+
 end;
 
 procedure TFrmMain.Chromium1LoadingStateChange(Sender: TObject;
@@ -334,15 +358,13 @@ begin
 		begin
 			StatusPanel_Browser.Caption := 'Done';
 			caption := 'Conan Exiles Steam Mod Browser';
+			CanLoadANewPage := false;
 			if (FirstRun) then Begin
 				FirstRun := False;
 				ShowDefaultPage;
+
 			End else begin
 				PostMessage(Handle, MINIBROWSER_VISITDOM_FULL, 0, 0);
-	//			showmessage(PageFullText);
-
-
-
       end;
 
 		end;
@@ -444,6 +466,9 @@ begin
 	FirstRun             := True;
 	LastURL              := '';
 
+	CanLoadANewPage := False;
+
+
 	Chromium1.MultiBrowserMode := False;
 
 
@@ -486,6 +511,7 @@ end;
 procedure TFrmMain.ShowDefaultPage();
 var
 TempString :String;
+TempStatus: Boolean;
 begin
 	TempString := '<html xmlns="http://www.w3.org/1999/xhtml"><head>'+
 		'<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'+
@@ -506,6 +532,7 @@ begin
 
 //Chromium1.LoadURL('https://steamcommunity.com/sharedfiles/filedetails/?id=2384014945');
 
+	CanLoadANewPage:=True;
 	Chromium1.LoadString(TempString);
 
 
@@ -552,7 +579,7 @@ begin
 procedure TFrmMain.OnExecuteRequest(const Request, Response: IIPCData);
 Var
 	ThisURL: String;
-
+	MyText: TStringlist;
 begin
 
 	ThisURL  := Request.Data.ReadString('URL');
@@ -567,6 +594,7 @@ begin
 	PageLoaded := False;
 	PageFullText := '';
 
+	CanLoadANewPage:=True;
 	Chromium1.LoadURL(ThisUrl);
 
 
@@ -581,8 +609,20 @@ begin
 
 
 	//Get Description
+(*
+	MyText:= TStringlist.create;
+	try
+		MyText.Text := PageFullText;
+		MyText.SaveToFile('.\page.html');
+	finally
+		MyText.Free
+	end; {try}
+
+*)
 
 	Response.ID := datetimetostr(now);
+
+
 
 	Response.Data.WriteString('WindowsTitle',PageTitle );
 	Response.Data.WriteString('ModDescription', GetModDescription(PageFullText )); //Var PageFullText is filled onTextResultAvailable
@@ -599,34 +639,29 @@ end;
 function TFrmMain.GetModDescription(ThisFullText:String): String;
 var
 	ThisResult: String;
-	iPos:Integer;
-begin
-ThisResult := ThisFullText.Substring( pos('<div class="workshopItemDescription" id="highlightContent">',ThisFullText));
-//ThisResult := ThisResult.Replace('<div class="workshopItemDescription" id="highlightContent">','');
-//ThisResult := ThisResult.Substring(0, pos('</div>',ThisResult ));
-//ThisResult := ThisResult.Replace('</div>','');
+	iPosOpenDiv:Integer;
+	iPosCloseDiv:Integer;
+	iPosLastClosedDiv: Integer;
+	DivTagIsClosed: Boolean;
+	TempString1: String;
+	TempString2: String;
+	FinalString: String;
+	iTags:Integer;
+	iHowManyOpened, iHowManyClosed: Integer;
 
-HTMLParser_1.AnalyseString( ThisFullText  );
+	frame: ICefFrame;
+	code: string;
 
-ThisResult := '';
-
-for iPos := 0 to 100 do  ThisResult := ThisResult +  HTMLParser_1.Parser[iPos];
-
-
-
-
-
-//ThisResult := ThisResult.Substring(0,800);
+Begin
 
 
+ThisModDescription := 'N/A';
 
+ThisModDescription := ThisFullText.Substring( pos('<div class="workshopItemDescription" id="highlightContent">',ThisFullText)-1);
 
+//Count open and close
 
-
-
-
-  
-
+ThisModDescription := ThisModDescription.Replace('<div class="workshopItemDescription" id="highlightContent">','').Trim();
 
 
 
@@ -654,7 +689,7 @@ var
 begin
   // Use the ArgumentList property if you need to pass some parameters.
 	TempMsg := TCefProcessMessageRef.New(RETRIEVEDOM_MSGNAME_FULL); // Same name than TCefCustomRenderProcessHandler.MessageName
-  Chromium1.SendProcessMessage(PID_RENDERER, TempMsg);
+	Chromium1.SendProcessMessage(PID_RENDERER, TempMsg);
 end;
 
 

@@ -1,1 +1,1 @@
-{"net":{"http_server_properties":{"servers":[],"version":5},"network_qualities":{}}}
+{"net":{"http_server_properties":{"servers":[{"isolation":[],"network_stats":{"srtt":33175},"server":"https://www.google-analytics.com"},{"isolation":[],"network_stats":{"srtt":29426},"server":"https://www.youtube.com"}],"version":5},"network_qualities":{}}}

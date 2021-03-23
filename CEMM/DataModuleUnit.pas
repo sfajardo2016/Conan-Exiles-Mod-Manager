@@ -438,10 +438,6 @@ begin
 									FieldByName('modlocation').AsInteger := 3; //Both folders
 									Post;
 
-
-
-
-
                 end;
 
 

@@ -4,15 +4,14 @@ object FrmModsSettings: TFrmModsSettings
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Mods Settings'
-  ClientHeight = 487
-  ClientWidth = 715
+  ClientHeight = 594
+  ClientWidth = 823
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  FormStyle = fsStayOnTop
   OldCreateOrder = False
   Position = poOwnerFormCenter
   Scaled = False
@@ -34,10 +33,19 @@ object FrmModsSettings: TFrmModsSettings
     SkinData = FrmMain.SkinData_Main
     SkinDataName = 'stdlabel'
   end
+  object Splitter_1: TbsSkinSplitter
+    Left = 457
+    Top = 145
+    Width = 16
+    Height = 419
+    Transparent = False
+    DefaultSize = 10
+    SkinDataName = 'vsplitter'
+  end
   object Panel_GameFolders: TbsSkinExPanel
     Left = 0
     Top = 0
-    Width = 715
+    Width = 823
     Height = 145
     HintImageIndex = 0
     TabOrder = 0
@@ -84,7 +92,7 @@ object FrmModsSettings: TFrmModsSettings
       Caption = 'Conan Exiles MOD folder (*.pak)'
     end
     object Button_ValidateFolders: TbsSkinSpeedButton
-      Left = 563
+      Left = 671
       Top = 21
       Width = 151
       Height = 123
@@ -411,7 +419,6 @@ object FrmModsSettings: TFrmModsSettings
       Align = alRight
       Spacing = 1
       OnClick = Button_ValidateFoldersClick
-      ExplicitLeft = 671
       ExplicitTop = 1
       ExplicitHeight = 98
     end
@@ -488,8 +495,8 @@ object FrmModsSettings: TFrmModsSettings
   end
   object StatusBar_1: TbsSkinStatusBar
     Left = 0
-    Top = 457
-    Width = 715
+    Top = 564
+    Width = 823
     Height = 30
     HintImageIndex = 0
     TabOrder = 1
@@ -526,7 +533,7 @@ object FrmModsSettings: TFrmModsSettings
     object HTMLText_GameFoldersAndFilesMsg: TDzHTMLText
       Left = 0
       Top = 0
-      Width = 715
+      Width = 823
       Height = 30
       Align = alClient
       Lines.Strings = (
@@ -538,9 +545,9 @@ object FrmModsSettings: TFrmModsSettings
   object grid_mods: TcxGrid
     Left = 0
     Top = 145
-    Width = 715
-    Height = 312
-    Align = alClient
+    Width = 457
+    Height = 419
+    Align = alLeft
     TabOrder = 2
     object DBTableView_1: TcxGridDBTableView
       DragMode = dmAutomatic
@@ -633,7 +640,7 @@ object FrmModsSettings: TFrmModsSettings
     QuickButtonsShowHint = False
     QuickButtonsShowDivider = True
     ClientInActiveEffect = False
-    ClientInActiveEffectType = bsieBlur
+    ClientInActiveEffectType = bsieSemiTransparent
     DisableSystemMenu = False
     AlwaysResize = False
     PositionInMonitor = bspDesktopCenter
@@ -677,7 +684,6 @@ object FrmModsSettings: TFrmModsSettings
     UseDefaultSysMenu = True
     SkinData = FrmMain.SkinData_Main
     MinimizeApplication = False
-    MenusSkinData = FrmMain.SkinData_Main
     MinHeight = 0
     MinWidth = 0
     MaxHeight = 0
@@ -698,7 +704,6 @@ object FrmModsSettings: TFrmModsSettings
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     NumOfLanguages = 4
-    LangDispatcher = FrmMain.LangDispatcher_Main
     LangDelim = 1
     LangNames.Strings = (
       'English'

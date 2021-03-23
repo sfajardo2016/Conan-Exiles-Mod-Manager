@@ -5336,6 +5336,16 @@ object FrmMain: TFrmMain
     Left = 236
     Top = 148
   end
+  object StyleReposity_Main: TcxStyleRepository
+    Left = 448
+    Top = 240
+    PixelsPerInch = 96
+    object Style_Duplicated: TcxStyle
+      AssignedValues = [svColor, svTextColor]
+      Color = clSilver
+      TextColor = clYellow
+    end
+  end
   object SkinAdapter_Main: TbsaSkinAdapter
     SkinData = SkinData_Main
     AdapterType = bsaUseNames
@@ -5354,15 +5364,5 @@ object FrmMain: TFrmMain
     CoolBarSkinDataName = 'panel'
     Left = 8
     Top = 144
-  end
-  object StyleReposity_Main: TcxStyleRepository
-    Left = 448
-    Top = 240
-    PixelsPerInch = 96
-    object Style_Duplicated: TcxStyle
-      AssignedValues = [svColor, svTextColor]
-      Color = clSilver
-      TextColor = clYellow
-    end
   end
 end
