@@ -7,11 +7,12 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, AdvSmoothSplashScreen,
 	BusinessSkinForm, bsSkinData, bsSkinHint, bsSkinCtrls, DzHTMLText,
 
-		DataModuleUnit,
+	DataModuleUnit,
 
 
-  bsribbon, varcodedxe8, bsMessages, siComp, System.ImageList, Vcl.ImgList,
-  JvComponentBase, JvErrorIndicator, bsaadapter, cxStyles, cxClasses;
+  bsribbon,  bsMessages, siComp, System.ImageList, Vcl.ImgList,
+  JvComponentBase, JvErrorIndicator, bsaadapter, cxStyles, cxClasses,
+  varcodedxe81;
 
 
 
@@ -34,7 +35,6 @@ type
     RibbonPage_Main: TbsRibbonPage;
     RibbonGroup_MainOptions: TbsRibbonGroup;
     Button_ModCollection: TbsSkinSpeedButton;
-    Varcoded: TVarCodedxe8;
     msgdlg_Main: TbsSkinMessage;
     Lang_Main: TsiLang;
     ImageList_Validator: TImageList;
@@ -49,6 +49,7 @@ type
     SkinAdapter_Main: TbsaSkinAdapter;
     StyleReposity_Main: TcxStyleRepository;
     Style_Duplicated: TcxStyle;
+    Varcoded: TVarCodedxe81;
     procedure Button_UISettingsClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button_SteamSettingsClick(Sender: TObject);
@@ -80,6 +81,7 @@ type
 
 
 
+
 		{ Private declarations }
 	public
 		{ Public declarations }
@@ -94,16 +96,14 @@ type
 		procedure ScreenMsg(ThisMsg: String); overload;
 
 
-		procedure Log(ThisMsg: String); overload;
-		procedure Log(ThisEvent: TLogEventID; ThisMsg: String); overload;
-
 
 
 		procedure UpdateModsFromPC(Folder1, Folder2: String);
 
 		function IsEmptyOrNull(const Value: Variant): Boolean;
 		function GetModIDFromQuery: String;
-    function UpdateModName(NewName: String): Boolean;
+		function UpdateModName(NewName: String): Boolean;
+		function GetModLastUpdateDate(ThisModID: String): TDate;
 
 
 		
@@ -156,10 +156,8 @@ FrmModsSettings:= TFrmModsSettings.Create(FrmMain);
 
 	ScreenMsg(smNormal,'Ready',FrmModsSettings.HTMLText_GameFoldersAndFilesMsg);
 	ScreenMsg('Showing dialog.');
-		
-
 	FrmModsSettings.ShowModal;
-			
+	ScreenMsg('Ready.');
 		
 
 
@@ -255,6 +253,20 @@ ThisResult := dm.query_mods.FieldByName('modid').AsString.Trim;
 result := ThisResult;
 end;
 
+//FrmMain.GetModLastUpdateDate();
+
+function TFrmMain.GetModLastUpdateDate(ThisModID:String): TDate;
+var
+  ThisResult: TDate;
+begin
+ThisResult := dm.GetModLastUpdateDate(ThisModID);
+
+result := ThisResult;
+end;
+
+
+
+
 function TFrmMain.UpdateModName(NewName:String): Boolean;
 
 begin
@@ -289,7 +301,7 @@ varcoded.SetCreator('Zaphod (See "About" option for contact)');
 
 if NOT ( varcoded.IsValidInstallation() ) then
 begin
-		varcoded.winlog(leWarning,'Invalid installation, please re-install');
+		varcoded.winlogw('Invalid installation, please re-install');
 		msgdlg_Main.MessageDlg('Hi, sorry to bother you but, this app installation is corrupted.'+#13+#13+
 												'Run it again or re-install this app to fix it.', mtWarning, [mbOk], 0);
 		exit ( false );
@@ -299,7 +311,7 @@ end;
 
 if NOT ( SetUpLog() ) then
 begin
-		varcoded.winlog(leWarning,'Can not setup the LOG file:' + varcoded.MainLogFile );
+		varcoded.winlogw('Can not setup the LOG file:' + varcoded.MainLogFile );
 		msgdlg_Main.MessageDlg('Hi, sorry to bother you but, I can not setup the LOG'+#13+
 												'Please check if you have full access to this app folder.'+#13+#13+
 												'Run it again or re-install this app to fix it.', mtWarning, [mbOk], 0);
@@ -311,7 +323,7 @@ end;
 	db := ExtractFilePath(Application.ExeName) + 'cemm.sfp';
 
 	if not (dm.SetupData ( db )) then begin
-		Log(leWarning,'Can not setup the DB:' + db + #13+#13+' '+ dm.LastMessage);
+		varcoded.LogW('Can not setup the DB:' + db + #13+#13+' '+ dm.LastMessage);
 		msgdlg_Main.MessageDlg('Hi, sorry to bother you but, I can not setup the main database'+#13+
 												'Please check if you have full access to this app folder.'+#13+#13+
 												'Run it again or re-install this app to fix it.', mtWarning, [mbOk], 0);
@@ -320,7 +332,7 @@ end;
 
 
 	if not (dm.AreSettingsValid) then begin
-		Log(leWarning,'Settings ar not valid, prompting the user to check the settings');
+		varcoded.LogW('Settings ar not valid, prompting the user to check the settings');
 		msgdlg_Main.MessageDlg('Hi, app settings are not valid'+#13+
 												'( game folder, mod folder, etc).'+#13+#13+
 												'Please review the configuration settings.', mtWarning, [mbOk], 0);
@@ -342,7 +354,7 @@ end;
 
 
 ThisResult := true;
-Log('App is ready');
+varcoded.Log('App is ready');
 
 ScreenMsg('Ready');
 	
@@ -356,9 +368,9 @@ begin
 	ThisBrowserFile := ExtractFilePath(ParamStr(0));
 	BrowserFileName := ThisBrowserFile + 'browser\cemmbrowser.exe';
 	IsBrowserEnabled := FileExists (BrowserFileName);
-	Log('Browser file:' +BrowserFileName);
+	varcoded.Log('Browser file:' +BrowserFileName);
 
-	if IsBrowserEnabled then Log('was found') else Log('Was NOT found');
+	if IsBrowserEnabled then varcoded.Log('was found') else varcoded.Log('Was NOT found');
 
 end;
 
@@ -433,20 +445,6 @@ end;
 
 
 {$REGION 'Log'}
-
-
-	procedure TFrmMain.Log(ThisEvent: TLogEventID; ThisMsg: String);
-	begin
-	varcoded.Log(ThisEvent,ThisMSg);
-	end;
-
-	procedure TFrmMain.Log(ThisMsg: String);
-	begin
-
-		varcoded.Log(ThisMsg);
-
-	end;
-
 
 
 function TFrmMain.SetUpLog(): Boolean;

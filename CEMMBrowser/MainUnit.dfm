@@ -28,7 +28,6 @@ object FrmMain: TFrmMain
     Align = alClient
     TabStop = True
     TabOrder = 0
-    ExplicitWidth = 457
   end
   object DevTools: TCEFWindowParent
     Left = 485
@@ -38,7 +37,6 @@ object FrmMain: TFrmMain
     Align = alRight
     TabOrder = 1
     Visible = False
-    ExplicitLeft = 777
   end
   object StatusBar_Browser: TbsSkinStatusBar
     Left = 0
@@ -77,7 +75,6 @@ object FrmMain: TFrmMain
     Caption = 'StatusBar_Browser'
     Align = alBottom
     SizeGrip = True
-    ExplicitWidth = 777
     object StatusPanel_Browser: TbsSkinStatusPanel
       Left = 0
       Top = 0
@@ -111,7 +108,6 @@ object FrmMain: TFrmMain
       AutoSize = False
       ImageIndex = -1
       NumGlyphs = 1
-      ExplicitWidth = 520
     end
     object Slider_BrowserZoom: TbsSkinSlider
       Left = 294
@@ -164,7 +160,6 @@ object FrmMain: TFrmMain
       AutoSize = False
       ImageIndex = -1
       NumGlyphs = 1
-      ExplicitLeft = 520
     end
   end
   object Chromium1: TChromium

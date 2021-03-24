@@ -5003,12 +5003,6 @@ object FrmMain: TFrmMain
     Left = 72
     Top = 104
   end
-  object Varcoded: TVarCodedxe8
-    IsValidUser = False
-    LoginName = 'SFAJARDO'
-    Left = 120
-    Top = 104
-  end
   object msgdlg_Main: TbsSkinMessage
     ShowAgainFlag = False
     ShowAgainFlagValue = False
@@ -5364,5 +5358,13 @@ object FrmMain: TFrmMain
     CoolBarSkinDataName = 'panel'
     Left = 8
     Top = 144
+  end
+  object Varcoded: TVarCodedxe81
+    IsValidUser = False
+    LoginName = 'SFAJARDO'
+    UseOriginalCreator = True
+    FriendlyAppName = 'varcoded'
+    Left = 536
+    Top = 160
   end
 end

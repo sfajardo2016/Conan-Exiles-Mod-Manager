@@ -59,7 +59,7 @@ type
     procedure GetMods;
     procedure ShowBrowser;
     function FoundBrowser(TimeOut: Integer): Boolean;
-    procedure SendURLToBrowser(ThisURL: String);
+    procedure SendURLToBrowser(ThisURL:String;NeedsUpdate:Boolean);
 
     { Private declarations }
 	public
@@ -120,9 +120,14 @@ procedure TFrmModsSettings.ShowBrowser();
 var
 	thisurl: string;
 	thismodid:string;
+	LastModUpdate: TDate;
+	TodayDate: TDate;
+	NeedsUpdate: Boolean;
 begin
 
 	thismodid:= FrmMain.GetModIDFromQuery();
+	TodayDate := now;
+	NeedsUpdate:= false;
 
 	if (thismodid.IsEmpty)  then Exit;
 
@@ -142,8 +147,11 @@ begin
 		Exit;
 	end;
 
+	LastModUpdate := FrmMain.GetModLastUpdateDate('');
 
-	SendURLToBrowser(thisurl);
+	if (LastModUpdate<>TodayDate ) then  NeedsUpdate := true;
+
+	SendURLToBrowser(thisurl,NeedsUpdate);
 
 
 
@@ -154,7 +162,7 @@ end;
 
 
 
-procedure TFrmModsSettings.SendURLToBrowser(ThisURL:String);
+procedure TFrmModsSettings.SendURLToBrowser(ThisURL:String;NeedsUpdate:Boolean);
 
 var
 	Result: IIPCData;
@@ -167,6 +175,9 @@ var
 	ModDescription: String;
 
 begin
+
+
+
 
 	IPCClient := TIPCClient.Create;
   try
@@ -182,6 +193,10 @@ begin
 
 				Request.Data.WriteString('URL',ThisURL);
 				Request.Data.WriteString('Theme',FrmMain.SkinData_Main.SkinIndex.ToString() );
+				Request.Data.WriteBoolean('UpdateCache',NeedsUpdate );
+				if (NeedsUpdate) then FrmMain.Varcoded.Log('needs update') else FrmMain.Varcoded.Log('does NOT needs update');
+
+
 
 
 				Result := IPCClient.ExecuteConnectedRequest(Request);
@@ -253,9 +268,9 @@ end;
 
 procedure TFrmModsSettings.GetMods();
 begin
-FrmMain.varcoded.EnterProc('Getting mods');
+FrmMain.varcoded.LogBeginTask('Main','Getting mods');
 FrmMain.UpdateModsFromPC ( Label_CEModFolder.Caption,Label_AppModFolder.Caption );
-FrmMain.varcoded.ExitProc('Getting mods');
+FrmMain.varcoded.LogEndTask('Main','Getting mods');
 
 end;
 
@@ -267,7 +282,6 @@ procedure TFrmModsSettings.GridDBColumn_5GetDisplayText(
 begin
 
 	ThisValue := 0;
-	FrmMain.Log( ARecord.Values[4] );
 
 	try
 		if NOT (FrmMain.IsEmptyOrNull (ARecord.Values[4] ))  then ThisValue := ARecord.Values[4];

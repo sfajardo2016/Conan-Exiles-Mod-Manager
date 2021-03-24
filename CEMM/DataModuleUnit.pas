@@ -34,6 +34,7 @@ type
 
 
 
+
 		{ Private declarations }
 	public
 		LastMessage: string;
@@ -48,10 +49,10 @@ type
 		function SetSetting(ThisKey, ThisValue: String): Boolean;
 
 		procedure UpdateModName(NewName: String);
+    function GetModLastUpdateDate(ThisID: String): TDate;
 
 
 		function AreSettingsValid: Boolean;
-
 		function CreateDefaultFolders: Boolean;
     { Public declarations }
   end;
@@ -288,7 +289,7 @@ end;
 
 	procedure TDataModule1.Log(m: string);
 	begin
-		FrmMain.Log(m);
+		FrmMain.Varcoded.Log(m);
   end;
 
 
@@ -308,7 +309,8 @@ end;
         Prepare;
         Transaction.StartTransaction;
         ExecSQL;
-        Transaction.Commit;
+				Transaction.Commit;
+				Log('All mods delete from the table');
       except
         on E: Exception do
         begin
@@ -330,29 +332,18 @@ end;
 		r: string;
 	begin
 
-
-		Log('Getting mods from: ' + thisfolder);
-
 		if ( DeleteOld) then begin
 			Log('Deleting old data from mods');
 			DeleteMods();
-
 		end;
 
 		FileList := TStringList.Create;
-
+		Log('Getting mods from: ' + thisfolder);
 
 		ScanForAllMods(thisfolder,ThisType);
-
-
 		r := '';
 		LastMessage := '';
-
-		Log('Importing MODS data to db');
-
 		// add all mods
-		Log('Adding mods info');
-
 		query_mods.Refresh;
 		query_mods.First;
 
@@ -371,8 +362,24 @@ with (query_mods) do begin
 	Post;
 end;
 
-
 end;
+
+
+function TDataModule1.GetModLastUpdateDate(ThisID:String): TDate;
+var
+  ThisResult: TDate;
+begin
+
+with (query_mods) do begin
+	ThisResult := FieldByName('modlastupdatedate').AsDateTime;
+end;
+
+//if ( ThisResult=0 )  then  ThisResult := now-5; //5 days old so can be updated
+
+
+result := ThisResult;
+end;
+
 procedure TDataModule1.ScanForAllMods(const Dir: string;ThisType:SmallInt);
 var
   SR: TSearchRec;
@@ -401,9 +408,6 @@ begin
 
           if (FileName.ToUpper().EndsWith('.PAK')) then
           begin
-
-						Log('New mod to add:' +FullFileName);
-
             with (query_mods) do
             begin
 
@@ -437,13 +441,8 @@ begin
 									Edit;
 									FieldByName('modlocation').AsInteger := 3; //Both folders
 									Post;
-
+									Log('Mod ' + ExtractFileName(FullFileName)  +' is duplicated !');
                 end;
-
-
-
-
-
               end;
 
             end;

@@ -1,0 +1,215 @@
+2021-03-24 12:49:02:645  [INFO      ] -----------------------------------------------------------------------------------
+2021-03-24 12:49:02:645  [INFO      ] Starting cemm.exe ver CompanyName=Varcoded
+2021-03-24 12:49:02:645  [INFO      ] From D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\Win32\Debug\cemm.exe
+2021-03-24 12:49:02:645  [INFO      ] On miércoles, marzo, 24 2021 12:49:02 p. m.
+2021-03-24 12:49:02:645  [INFO      ] Created by:Zaphod (See "About" option for contact)
+2021-03-24 12:49:02:645  [INFO      ] Windows username: SFAJARDO
+2021-03-24 12:49:02:669  [INFO      ] Running on computer: DESARROLLO02
+2021-03-24 12:49:02:669  [INFO      ] -----------------------------------------------------------------------------------
+2021-03-24 12:49:02:710  [INFO      ] Browser file:D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\Win32\Debug\browser\cemmbrowser.exe
+2021-03-24 12:49:02:710  [INFO      ] was found
+2021-03-24 12:49:02:710  [INFO      ] App is ready
+2021-03-24 12:49:06:830  [BEGINTASK ] Getting mods
+2021-03-24 12:49:06:830  [INFO      ] Deleting old data from mods
+2021-03-24 12:49:06:851  [INFO      ] All mods delete from the table
+2021-03-24 12:49:06:855  [INFO      ] Getting mods from: C:\Users\User\Downloads\mymods\Steam
+2021-03-24 12:49:06:855  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1396310739\StacksizePlus.pak
+2021-03-24 12:49:06:868  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1579057391\ClayBuildings.pak
+2021-03-24 12:49:06:883  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1639336393\QoL.pak
+2021-03-24 12:49:06:897  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1666355337\LBPR_Fish_Shell_Trap_Fix.pak
+2021-03-24 12:49:06:912  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1759544356\SandstormEx.pak
+2021-03-24 12:49:06:925  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1765361591\SandstormFix.pak
+2021-03-24 12:49:06:937  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1795327310\EEWAExtraFeatLightsabers.pak
+2021-03-24 12:49:06:950  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1799016310\StormEx.pak
+2021-03-24 12:49:06:966  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1823412793\ModControlPanel.pak
+2021-03-24 12:49:06:978  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1853186105\MCPWidgets.pak
+2021-03-24 12:49:06:993  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1883666702\NoKeyLevelReq.pak
+2021-03-24 12:49:07:006  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1930095771\Buttermilk_Body.pak
+2021-03-24 12:49:07:019  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1984268493\Fast_Elevator.pak
+2021-03-24 12:49:07:032  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2097107339\AttackSystemOverhaul.pak
+2021-03-24 12:49:07:044  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2097790925\TestingRaceMod.pak
+2021-03-24 12:49:07:057  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2128436572\RAFantasy.pak
+2021-03-24 12:49:07:071  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2169663966\CharEditLite.pak
+2021-03-24 12:49:07:084  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2251934046\EldariumInExiledLands.pak
+2021-03-24 12:49:07:096  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2261494087\SH_BuildingKit.pak
+2021-03-24 12:49:07:109  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2275543723\Improved_Quality_of_Life.pak
+2021-03-24 12:49:07:122  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2275573619\BarbarianSurgeon.pak
+2021-03-24 12:49:07:146  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2305969565\AmunetServerTransfer.pak
+2021-03-24 12:49:07:163  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2377569193\anothermod.pak
+2021-03-24 12:49:07:175  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2384014945\supermodname.pak
+2021-03-24 12:49:07:188  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2419910241\BeyondTheatrics.pak
+2021-03-24 12:49:07:201  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\877108545\UnlockableContainers.pak
+2021-03-24 12:49:07:214  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\897947497\WoPPlus.pak
+2021-03-24 12:49:07:245  [INFO      ] Getting mods from: C:\Users\User\Downloads
+2021-03-24 12:49:07:258  [INFO      ] Mod StacksizePlus.pak is duplicated !
+2021-03-24 12:49:07:278  [INFO      ] Mod ClayBuildings.pak is duplicated !
+2021-03-24 12:49:07:296  [INFO      ] Mod QoL.pak is duplicated !
+2021-03-24 12:49:07:309  [INFO      ] Mod LBPR_Fish_Shell_Trap_Fix.pak is duplicated !
+2021-03-24 12:49:07:321  [INFO      ] Mod SandstormEx.pak is duplicated !
+2021-03-24 12:49:07:334  [INFO      ] Mod SandstormFix.pak is duplicated !
+2021-03-24 12:49:07:346  [INFO      ] Mod EEWAExtraFeatLightsabers.pak is duplicated !
+2021-03-24 12:49:07:359  [INFO      ] Mod StormEx.pak is duplicated !
+2021-03-24 12:49:07:371  [INFO      ] Mod ModControlPanel.pak is duplicated !
+2021-03-24 12:49:07:384  [INFO      ] Mod MCPWidgets.pak is duplicated !
+2021-03-24 12:49:07:400  [INFO      ] Mod NoKeyLevelReq.pak is duplicated !
+2021-03-24 12:49:07:413  [INFO      ] Mod Buttermilk_Body.pak is duplicated !
+2021-03-24 12:49:07:432  [INFO      ] Mod Fast_Elevator.pak is duplicated !
+2021-03-24 12:49:07:432  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\440900\2\2.pak
+2021-03-24 12:49:07:445  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\440900\2050780234\BarbaricBarber.pak
+2021-03-24 12:49:07:471  [INFO      ] Mod AttackSystemOverhaul.pak is duplicated !
+2021-03-24 12:49:07:493  [INFO      ] Mod TestingRaceMod.pak is duplicated !
+2021-03-24 12:49:07:512  [INFO      ] Mod RAFantasy.pak is duplicated !
+2021-03-24 12:49:07:525  [INFO      ] Mod CharEditLite.pak is duplicated !
+2021-03-24 12:49:07:538  [INFO      ] Mod EldariumInExiledLands.pak is duplicated !
+2021-03-24 12:49:07:551  [INFO      ] Mod SH_BuildingKit.pak is duplicated !
+2021-03-24 12:49:07:563  [INFO      ] Mod Improved_Quality_of_Life.pak is duplicated !
+2021-03-24 12:49:07:576  [INFO      ] Mod BarbarianSurgeon.pak is duplicated !
+2021-03-24 12:49:07:588  [INFO      ] Mod AmunetServerTransfer.pak is duplicated !
+2021-03-24 12:49:07:601  [INFO      ] Mod anothermod.pak is duplicated !
+2021-03-24 12:49:07:601  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\440900\2380591524\Shinoboru_productions.pak
+2021-03-24 12:49:07:627  [INFO      ] Mod supermodname.pak is duplicated !
+2021-03-24 12:49:07:640  [INFO      ] Mod BeyondTheatrics.pak is duplicated !
+2021-03-24 12:49:07:640  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\440900\3\3.pak
+2021-03-24 12:49:07:665  [INFO      ] Mod UnlockableContainers.pak is duplicated !
+2021-03-24 12:49:07:678  [INFO      ] Mod WoPPlus.pak is duplicated !
+2021-03-24 12:49:07:678  [INFO      ] Mod StacksizePlus.pak is duplicated !
+2021-03-24 12:49:07:679  [INFO      ] Mod ClayBuildings.pak is duplicated !
+2021-03-24 12:49:07:679  [INFO      ] Mod QoL.pak is duplicated !
+2021-03-24 12:49:07:679  [INFO      ] Mod LBPR_Fish_Shell_Trap_Fix.pak is duplicated !
+2021-03-24 12:49:07:680  [INFO      ] Mod SandstormEx.pak is duplicated !
+2021-03-24 12:49:07:680  [INFO      ] Mod SandstormFix.pak is duplicated !
+2021-03-24 12:49:07:680  [INFO      ] Mod EEWAExtraFeatLightsabers.pak is duplicated !
+2021-03-24 12:49:07:680  [INFO      ] Mod StormEx.pak is duplicated !
+2021-03-24 12:49:07:681  [INFO      ] Mod ModControlPanel.pak is duplicated !
+2021-03-24 12:49:07:681  [INFO      ] Mod MCPWidgets.pak is duplicated !
+2021-03-24 12:49:07:681  [INFO      ] Mod NoKeyLevelReq.pak is duplicated !
+2021-03-24 12:49:07:681  [INFO      ] Mod Buttermilk_Body.pak is duplicated !
+2021-03-24 12:49:07:681  [INFO      ] Mod Fast_Elevator.pak is duplicated !
+2021-03-24 12:49:07:682  [INFO      ] Mod AttackSystemOverhaul.pak is duplicated !
+2021-03-24 12:49:07:682  [INFO      ] Mod TestingRaceMod.pak is duplicated !
+2021-03-24 12:49:07:682  [INFO      ] Mod RAFantasy.pak is duplicated !
+2021-03-24 12:49:07:682  [INFO      ] Mod CharEditLite.pak is duplicated !
+2021-03-24 12:49:07:682  [INFO      ] Mod EldariumInExiledLands.pak is duplicated !
+2021-03-24 12:49:07:683  [INFO      ] Mod SH_BuildingKit.pak is duplicated !
+2021-03-24 12:49:07:683  [INFO      ] Mod Improved_Quality_of_Life.pak is duplicated !
+2021-03-24 12:49:07:683  [INFO      ] Mod BarbarianSurgeon.pak is duplicated !
+2021-03-24 12:49:07:683  [INFO      ] Mod AmunetServerTransfer.pak is duplicated !
+2021-03-24 12:49:07:684  [INFO      ] Mod anothermod.pak is duplicated !
+2021-03-24 12:49:07:684  [INFO      ] Mod supermodname.pak is duplicated !
+2021-03-24 12:49:07:684  [INFO      ] Mod BeyondTheatrics.pak is duplicated !
+2021-03-24 12:49:07:684  [INFO      ] Mod UnlockableContainers.pak is duplicated !
+2021-03-24 12:49:07:684  [INFO      ] Mod WoPPlus.pak is duplicated !
+2021-03-24 12:49:07:701  [ENDTASK   ] Elapsed Time:00:00:00.871 Getting mods
+2021-03-24 12:51:28:738  [INFO      ] -----------------------------------------------------------------------------------
+2021-03-24 12:51:28:738  [INFO      ] Starting cemm.exe ver CompanyName=Varcoded
+2021-03-24 12:51:28:738  [INFO      ] From D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\Win32\Debug\cemm.exe
+2021-03-24 12:51:28:738  [INFO      ] On miércoles, marzo, 24 2021 12:51:28 p. m.
+2021-03-24 12:51:28:738  [INFO      ] Created by:Zaphod (See "About" option for contact)
+2021-03-24 12:51:28:767  [INFO      ] Windows username: SFAJARDO
+2021-03-24 12:51:28:767  [INFO      ] Running on computer: DESARROLLO02
+2021-03-24 12:51:28:767  [INFO      ] -----------------------------------------------------------------------------------
+2021-03-24 12:51:28:806  [INFO      ] Browser file:D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\Win32\Debug\browser\cemmbrowser.exe
+2021-03-24 12:51:28:806  [INFO      ] was found
+2021-03-24 12:51:28:806  [INFO      ] App is ready
+2021-03-24 12:51:44:214  [BEGINTASK ] Getting mods
+2021-03-24 12:51:44:214  [INFO      ] Deleting old data from mods
+2021-03-24 12:51:44:234  [INFO      ] All mods delete from the table
+2021-03-24 12:51:44:237  [INFO      ] Getting mods from: C:\Users\User\Downloads\mymods\Steam
+2021-03-24 12:51:44:237  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1396310739\StacksizePlus.pak
+2021-03-24 12:51:44:250  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1579057391\ClayBuildings.pak
+2021-03-24 12:51:44:263  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1639336393\QoL.pak
+2021-03-24 12:51:44:276  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1666355337\LBPR_Fish_Shell_Trap_Fix.pak
+2021-03-24 12:51:44:288  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1759544356\SandstormEx.pak
+2021-03-24 12:51:44:301  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1765361591\SandstormFix.pak
+2021-03-24 12:51:44:315  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1795327310\EEWAExtraFeatLightsabers.pak
+2021-03-24 12:51:44:327  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1799016310\StormEx.pak
+2021-03-24 12:51:44:340  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1823412793\ModControlPanel.pak
+2021-03-24 12:51:44:352  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1853186105\MCPWidgets.pak
+2021-03-24 12:51:44:373  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1883666702\NoKeyLevelReq.pak
+2021-03-24 12:51:44:391  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1930095771\Buttermilk_Body.pak
+2021-03-24 12:51:44:406  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\1984268493\Fast_Elevator.pak
+2021-03-24 12:51:44:419  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2097107339\AttackSystemOverhaul.pak
+2021-03-24 12:51:44:431  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2097790925\TestingRaceMod.pak
+2021-03-24 12:51:44:443  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2128436572\RAFantasy.pak
+2021-03-24 12:51:44:456  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2169663966\CharEditLite.pak
+2021-03-24 12:51:44:469  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2251934046\EldariumInExiledLands.pak
+2021-03-24 12:51:44:481  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2261494087\SH_BuildingKit.pak
+2021-03-24 12:51:44:493  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2275543723\Improved_Quality_of_Life.pak
+2021-03-24 12:51:44:506  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2275573619\BarbarianSurgeon.pak
+2021-03-24 12:51:44:518  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2305969565\AmunetServerTransfer.pak
+2021-03-24 12:51:44:531  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2377569193\anothermod.pak
+2021-03-24 12:51:44:544  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2384014945\supermodname.pak
+2021-03-24 12:51:44:556  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\2419910241\BeyondTheatrics.pak
+2021-03-24 12:51:44:568  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\877108545\UnlockableContainers.pak
+2021-03-24 12:51:44:581  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\Steam\440900\897947497\WoPPlus.pak
+2021-03-24 12:51:44:621  [INFO      ] Getting mods from: C:\Users\User\Downloads
+2021-03-24 12:51:44:634  [INFO      ] Mod StacksizePlus.pak is duplicated !
+2021-03-24 12:51:44:647  [INFO      ] Mod ClayBuildings.pak is duplicated !
+2021-03-24 12:51:44:661  [INFO      ] Mod QoL.pak is duplicated !
+2021-03-24 12:51:44:674  [INFO      ] Mod LBPR_Fish_Shell_Trap_Fix.pak is duplicated !
+2021-03-24 12:51:44:688  [INFO      ] Mod SandstormEx.pak is duplicated !
+2021-03-24 12:51:44:700  [INFO      ] Mod SandstormFix.pak is duplicated !
+2021-03-24 12:51:44:713  [INFO      ] Mod EEWAExtraFeatLightsabers.pak is duplicated !
+2021-03-24 12:51:44:725  [INFO      ] Mod StormEx.pak is duplicated !
+2021-03-24 12:51:44:740  [INFO      ] Mod ModControlPanel.pak is duplicated !
+2021-03-24 12:51:44:752  [INFO      ] Mod MCPWidgets.pak is duplicated !
+2021-03-24 12:51:44:764  [INFO      ] Mod NoKeyLevelReq.pak is duplicated !
+2021-03-24 12:51:44:777  [INFO      ] Mod Buttermilk_Body.pak is duplicated !
+2021-03-24 12:51:44:790  [INFO      ] Mod Fast_Elevator.pak is duplicated !
+2021-03-24 12:51:44:790  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\440900\2\2.pak
+2021-03-24 12:51:44:803  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\440900\2050780234\BarbaricBarber.pak
+2021-03-24 12:51:44:827  [INFO      ] Mod AttackSystemOverhaul.pak is duplicated !
+2021-03-24 12:51:44:841  [INFO      ] Mod TestingRaceMod.pak is duplicated !
+2021-03-24 12:51:44:853  [INFO      ] Mod RAFantasy.pak is duplicated !
+2021-03-24 12:51:44:865  [INFO      ] Mod CharEditLite.pak is duplicated !
+2021-03-24 12:51:44:878  [INFO      ] Mod EldariumInExiledLands.pak is duplicated !
+2021-03-24 12:51:44:890  [INFO      ] Mod SH_BuildingKit.pak is duplicated !
+2021-03-24 12:51:44:903  [INFO      ] Mod Improved_Quality_of_Life.pak is duplicated !
+2021-03-24 12:51:44:916  [INFO      ] Mod BarbarianSurgeon.pak is duplicated !
+2021-03-24 12:51:44:928  [INFO      ] Mod AmunetServerTransfer.pak is duplicated !
+2021-03-24 12:51:44:941  [INFO      ] Mod anothermod.pak is duplicated !
+2021-03-24 12:51:44:941  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\440900\2380591524\Shinoboru_productions.pak
+2021-03-24 12:51:44:967  [INFO      ] Mod supermodname.pak is duplicated !
+2021-03-24 12:51:44:979  [INFO      ] Mod BeyondTheatrics.pak is duplicated !
+2021-03-24 12:51:44:980  [INFO      ] New mod added:C:\Users\User\Downloads\mymods\440900\3\3.pak
+2021-03-24 12:51:45:004  [INFO      ] Mod UnlockableContainers.pak is duplicated !
+2021-03-24 12:51:45:016  [INFO      ] Mod WoPPlus.pak is duplicated !
+2021-03-24 12:51:45:017  [INFO      ] Mod StacksizePlus.pak is duplicated !
+2021-03-24 12:51:45:017  [INFO      ] Mod ClayBuildings.pak is duplicated !
+2021-03-24 12:51:45:017  [INFO      ] Mod QoL.pak is duplicated !
+2021-03-24 12:51:45:018  [INFO      ] Mod LBPR_Fish_Shell_Trap_Fix.pak is duplicated !
+2021-03-24 12:51:45:018  [INFO      ] Mod SandstormEx.pak is duplicated !
+2021-03-24 12:51:45:018  [INFO      ] Mod SandstormFix.pak is duplicated !
+2021-03-24 12:51:45:019  [INFO      ] Mod EEWAExtraFeatLightsabers.pak is duplicated !
+2021-03-24 12:51:45:019  [INFO      ] Mod StormEx.pak is duplicated !
+2021-03-24 12:51:45:019  [INFO      ] Mod ModControlPanel.pak is duplicated !
+2021-03-24 12:51:45:020  [INFO      ] Mod MCPWidgets.pak is duplicated !
+2021-03-24 12:51:45:020  [INFO      ] Mod NoKeyLevelReq.pak is duplicated !
+2021-03-24 12:51:45:020  [INFO      ] Mod Buttermilk_Body.pak is duplicated !
+2021-03-24 12:51:45:020  [INFO      ] Mod Fast_Elevator.pak is duplicated !
+2021-03-24 12:51:45:021  [INFO      ] Mod AttackSystemOverhaul.pak is duplicated !
+2021-03-24 12:51:45:021  [INFO      ] Mod TestingRaceMod.pak is duplicated !
+2021-03-24 12:51:45:021  [INFO      ] Mod RAFantasy.pak is duplicated !
+2021-03-24 12:51:45:021  [INFO      ] Mod CharEditLite.pak is duplicated !
+2021-03-24 12:51:45:022  [INFO      ] Mod EldariumInExiledLands.pak is duplicated !
+2021-03-24 12:51:45:022  [INFO      ] Mod SH_BuildingKit.pak is duplicated !
+2021-03-24 12:51:45:022  [INFO      ] Mod Improved_Quality_of_Life.pak is duplicated !
+2021-03-24 12:51:45:022  [INFO      ] Mod BarbarianSurgeon.pak is duplicated !
+2021-03-24 12:51:45:023  [INFO      ] Mod AmunetServerTransfer.pak is duplicated !
+2021-03-24 12:51:45:023  [INFO      ] Mod anothermod.pak is duplicated !
+2021-03-24 12:51:45:023  [INFO      ] Mod supermodname.pak is duplicated !
+2021-03-24 12:51:45:023  [INFO      ] Mod BeyondTheatrics.pak is duplicated !
+2021-03-24 12:51:45:024  [INFO      ] Mod UnlockableContainers.pak is duplicated !
+2021-03-24 12:51:45:024  [INFO      ] Mod WoPPlus.pak is duplicated !
+2021-03-24 12:51:45:051  [ENDTASK   ] Elapsed Time:00:00:00.837 Getting mods
+2021-03-24 12:52:32:755  [INFO      ] -----------------------------------------------------------------------------------
+2021-03-24 12:52:32:755  [INFO      ] Starting cemm.exe ver CompanyName=Varcoded
+2021-03-24 12:52:32:755  [INFO      ] From D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\Win32\Debug\cemm.exe
+2021-03-24 12:52:32:755  [INFO      ] On miércoles, marzo, 24 2021 12:52:32 p. m.
+2021-03-24 12:52:32:755  [INFO      ] Created by:Zaphod (See "About" option for contact)
+2021-03-24 12:52:32:755  [INFO      ] Windows username: SFAJARDO
+2021-03-24 12:52:32:755  [INFO      ] Running on computer: DESARROLLO02
+2021-03-24 12:52:32:755  [INFO      ] -----------------------------------------------------------------------------------
+2021-03-24 12:52:32:815  [INFO      ] Browser file:D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\Win32\Debug\browser\cemmbrowser.exe
+2021-03-24 12:52:32:815  [INFO      ] was found
+2021-03-24 12:52:32:815  [INFO      ] App is ready

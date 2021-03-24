@@ -70,7 +70,7 @@ type
     procedure Chromium1LoadError(Sender: TObject; const browser: ICefBrowser; const frame: ICefFrame; errorCode: Integer; const errorText, failedUrl: ustring);
     procedure Chromium1BeforePluginLoad(Sender: TObject; const mimeType, pluginUrl: ustring; isMainFrame: Boolean; const topOriginUrl: ustring; const pluginInfo: ICefWebPluginInfo; var pluginPolicy: TCefPluginPolicy; var aResult: Boolean);
     procedure Timer1Timer(Sender: TObject);
-    procedure Slider_BrowserZoomChange(Sender: TObject);
+		procedure Slider_BrowserZoomChange(Sender: TObject);
     procedure Chromium1BeforeContextMenu(Sender: TObject;
       const browser: ICefBrowser; const frame: ICefFrame;
       const params: ICefContextMenuParams; const model: ICefMenuModel);
@@ -102,6 +102,7 @@ type
 			PageFullText: String;
 			ThisModDescription: String;
 			CanLoadANewPage: Boolean;
+			UpdateCache: Boolean;
 		procedure SetUpIPCServer;
 		procedure OnExecuteRequest(const Request, Response: IIPCData);
 		procedure TaskDone;
@@ -579,10 +580,15 @@ begin
 procedure TFrmMain.OnExecuteRequest(const Request, Response: IIPCData);
 Var
 	ThisURL: String;
+	ThisModID: String;
 	MyText: TStringlist;
+
 begin
 
-	ThisURL  := Request.Data.ReadString('URL');
+	UpdateCache:= Request.Data.ReadBoolean('UpdateCache');
+	ThisURL    := Request.Data.ReadString('URL');
+	ThisModID  := ThisURL.Substring( pos('=',ThisURL));
+
 
 	if (ThisURL=LastURL) then begin
 		Response.ID := datetimetostr(now);
@@ -595,6 +601,8 @@ begin
 	PageFullText := '';
 
 	CanLoadANewPage:=True;
+
+
 	Chromium1.LoadURL(ThisUrl);
 
 
@@ -606,6 +614,17 @@ begin
 
 
 	end;
+
+
+
+	if (UpdateCache) then begin
+
+		Chromium1.PrintToPDF('.\cache\pdf\'+ThisModID+'.sfp',PageTitle,ThisURL );
+
+
+
+
+  end;
 
 
 	//Get Description
