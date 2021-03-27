@@ -36,7 +36,6 @@ object FrmMain: TFrmMain
     Align = alClient
     TabStop = True
     TabOrder = 0
-    ExplicitWidth = 497
   end
   object DevTools: TCEFWindowParent
     Left = 606
@@ -46,7 +45,6 @@ object FrmMain: TFrmMain
     Align = alRight
     TabOrder = 1
     Visible = False
-    ExplicitLeft = 485
   end
   object StatusBar_Browser: TbsSkinStatusBar
     Left = 0
@@ -85,7 +83,6 @@ object FrmMain: TFrmMain
     Caption = 'StatusBar_Browser'
     Align = alBottom
     SizeGrip = True
-    ExplicitWidth = 485
     object StatusPanel_Browser: TbsSkinStatusPanel
       Left = 0
       Top = 0
@@ -119,7 +116,6 @@ object FrmMain: TFrmMain
       AutoSize = False
       ImageIndex = -1
       NumGlyphs = 1
-      ExplicitWidth = 228
     end
     object Slider_BrowserZoom: TbsSkinSlider
       Left = 723
@@ -172,7 +168,6 @@ object FrmMain: TFrmMain
       AutoSize = False
       ImageIndex = -1
       NumGlyphs = 1
-      ExplicitLeft = 228
     end
   end
   object memo: TMemo
@@ -184,9 +179,6 @@ object FrmMain: TFrmMain
     Lines.Strings = (
       'memo')
     TabOrder = 3
-    ExplicitLeft = 544
-    ExplicitTop = 32
-    ExplicitHeight = 49
   end
   object Chromium1: TChromium
     OnProcessMessageReceived = Chromium1ProcessMessageReceived

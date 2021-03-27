@@ -62,7 +62,7 @@ type
     procedure GetMods;
     procedure ShowBrowser;
     function FoundBrowser(TimeOut: Integer): Boolean;
-    procedure SendURLToBrowser(ThisURL:String;NeedsUpdate:Boolean);
+    procedure SendURLToBrowser(thismodid:String;NeedsUpdate:Boolean);
 
     { Private declarations }
 	public
@@ -137,6 +137,8 @@ begin
 
 	thisurl := 'https://steamcommunity.com/sharedfiles/filedetails/?l=spanish&id=' + thismodid;
 	thisurl := 'https://steamcommunity.com/sharedfiles/filedetails/?id=' + thismodid;
+
+
 	if  (LastURL.Equals(thisurl)) and WebBrowserVisible then exit;
 
 
@@ -166,7 +168,7 @@ begin
 	end;
 
 
-	SendURLToBrowser(thisurl,NeedsUpdate);
+	SendURLToBrowser(thismodid,NeedsUpdate);
 
 
 
@@ -177,7 +179,7 @@ end;
 
 
 
-procedure TFrmModsSettings.SendURLToBrowser(ThisURL:String;NeedsUpdate:Boolean);
+procedure TFrmModsSettings.SendURLToBrowser(ThisModid:String;NeedsUpdate:Boolean);
 
 var
 	Result: IIPCData;
@@ -206,7 +208,7 @@ begin
 				Request := AcquireIPCData;
 				Request.ID := DateTimeToStr(Now);
 
-				Request.Data.WriteString('URL',ThisURL);
+				Request.Data.WriteString('MODID',ThisModid);
 				Request.Data.WriteString('Theme',FrmMain.SkinData_Main.SkinIndex.ToString() );
 				Request.Data.WriteBoolean('UpdateCache',NeedsUpdate );
 //				if (NeedsUpdate) then FrmMain.Varcoded.Log('needs update') else FrmMain.Varcoded.Log('does NOT needs update');

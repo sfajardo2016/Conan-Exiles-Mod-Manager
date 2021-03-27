@@ -612,8 +612,11 @@ Var
 begin
 
 	UpdateCache:= Request.Data.ReadBoolean('UpdateCache');
-	ThisURL    := Request.Data.ReadString('URL');
-	ThisModID  := ThisURL.Substring( pos('=',ThisURL));
+	ThisModID  := Request.Data.ReadString('MODID');
+	ThisURL    := 'https://steamcommunity.com/sharedfiles/filedetails/?id='+ ThisModID;
+
+
+ //	ThisModID  := ThisURL.Substring( pos('=',ThisURL));
 
 
 	if (ThisURL=LastURL) then begin
