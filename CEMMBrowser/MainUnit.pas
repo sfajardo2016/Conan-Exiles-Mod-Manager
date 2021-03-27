@@ -18,10 +18,15 @@ uses
 	uCEFProcessMessage,
 	uCEFDomVisitor,
 
+
+	//Snapshot
+	uCEFBufferPanel,
+
 	uCEFChromium, uCEFWindowParent, uCEFInterfaces, uCEFApplication, uCEFTypes,
 	uCEFConstants, uCEFWinControl, uCEFSentinel, uCEFChromiumCore, mswheel,
 	bsSkinCtrls, JvAppInst, bsSkinData, BusinessSkinForm, JvAppStorage,
-  JvAppIniStorage, JvComponentBase, JvFormPlacement, JvHtmlParser;
+  JvAppIniStorage, JvComponentBase, JvFormPlacement, JvHtmlParser,
+  varcodedxe81, JvCreateProcess;
 
 const
 	MINIBROWSER_VISITDOM_FULL   = WM_APP + $102;
@@ -49,6 +54,9 @@ type
     FormStorage_Main: TJvFormStorage;
     AppIniFileStorage_Main: TJvAppIniFileStorage;
     HTMLParser_1: TJvHTMLParser;
+    Varcoded: TVarCodedxe81;
+    memo: TMemo;
+    spl1: TSplitter;
 
 		procedure VisitDOM2Msg(var aMessage : TMessage); message MINIBROWSER_VISITDOM_FULL;
 
@@ -70,7 +78,6 @@ type
     procedure Chromium1LoadError(Sender: TObject; const browser: ICefBrowser; const frame: ICefFrame; errorCode: Integer; const errorText, failedUrl: ustring);
     procedure Chromium1BeforePluginLoad(Sender: TObject; const mimeType, pluginUrl: ustring; isMainFrame: Boolean; const topOriginUrl: ustring; const pluginInfo: ICefWebPluginInfo; var pluginPolicy: TCefPluginPolicy; var aResult: Boolean);
     procedure Timer1Timer(Sender: TObject);
-		procedure Slider_BrowserZoomChange(Sender: TObject);
     procedure Chromium1BeforeContextMenu(Sender: TObject;
       const browser: ICefBrowser; const frame: ICefFrame;
       const params: ICefContextMenuParams; const model: ICefMenuModel);
@@ -91,6 +98,7 @@ type
       const browser: ICefBrowser; const frame: ICefFrame;
       const request: ICefRequest; user_gesture, isRedirect: Boolean;
       out Result: Boolean);
+    procedure Slider_BrowserZoomChanged(Sender: TObject);
 
 	private
 			FIPCServer: TIPCServer;
@@ -103,11 +111,13 @@ type
 			ThisModDescription: String;
 			CanLoadANewPage: Boolean;
 			UpdateCache: Boolean;
+			ThisModID:String;
 		procedure SetUpIPCServer;
 		procedure OnExecuteRequest(const Request, Response: IIPCData);
 		procedure TaskDone;
 		procedure ShowDefaultPage;
     function GetModDescription(ThisFullText: String): String;
+    procedure CreateCache(ThisModID,ThisURL: String);
 
   protected
 
@@ -151,7 +161,7 @@ begin
   // Chromium1ProcessMessageReceived
   try
     TempMessage := TCefProcessMessageRef.New(DOMVISITOR_MSGNAME_FULL);
-    TempMessage.ArgumentList.SetString(0, document.Body.AsMarkup);
+    TempMessage.ArgumentList.SetString(0, document.Head.AsMarkup+  document.Body.AsMarkup);
 
     if (frame <> nil) and frame.IsValid then
       frame.SendProcessMessage(PID_BROWSER, TempMessage);
@@ -197,6 +207,7 @@ begin
 
 	GlobalCEFApp.LogSeverity         := LOGSEVERITY_DISABLE;
 	GlobalCEFApp.cache               := 'cache';
+	GlobalCEFApp.EnableHighDPISupport:= true;
 //	GlobalCEFApp.EnablePrintPreview  := True;
   // This is a workaround for the CEF4Delphi issue #324 :
   // https://github.com/salvadordf/CEF4Delphi/issues/324
@@ -214,10 +225,27 @@ end;
 procedure TFrmMain.Chromium1BeforeBrowse(Sender: TObject;
   const browser: ICefBrowser; const frame: ICefFrame;
   const request: ICefRequest; user_gesture, isRedirect: Boolean;
-  out Result: Boolean);
+	out Result: Boolean);
+	var
+		ThisURL: String;
 begin
 
-Result := Not (CanLoadANewPage);
+
+
+
+/// <remarks>
+///   Check permited links
+/// </remarks>
+
+ThisURL := request.Url;
+memo.lines.add(ThisURL );
+if ((ThisURL.ToUpper.Contains('FILEDETAILS/CHANGELOG')) or
+//(ThisURL.ToUpper.Contains('FILEDETAILS/DISCUSSIONS')) or  //NO DISCUTTIONS and it needs to load more pages
+	 (ThisURL.ToUpper.Contains('FILEDETAILS/?ID=')) or
+	 (ThisURL.ToUpper.Contains('FILEDETAILS/COMMENTS'))) and
+	 (ThisURL.ToUpper.Contains(ThisModID)) then Result := false ELSE Result := Not (CanLoadANewPage); //let
+
+
 
 
 //if   then Result := true else Result := false;
@@ -366,7 +394,9 @@ begin
 
 			End else begin
 				PostMessage(Handle, MINIBROWSER_VISITDOM_FULL, 0, 0);
-      end;
+			end;
+			Chromium1.ZoomLevel := Slider_BrowserZoom.Value*0.1;
+
 
 		end;
 end;
@@ -405,9 +435,13 @@ end;
 
 
 
-procedure TFrmMain.Slider_BrowserZoomChange(Sender: TObject);
+procedure TFrmMain.Slider_BrowserZoomChanged(Sender: TObject);
+var
+	ThisZoom:Double;
 begin
-  Chromium1.ZoomLevel := Slider_BrowserZoom.Value*0.1;
+	ThisZoom := Slider_BrowserZoom.Value*0.1;
+	Chromium1.ZoomLevel := ThisZoom;
+	StatusPanel_Zoom.Caption := 'Zoom ' + ThisZoom.ToString();
 end;
 
 procedure TFrmMain.Chromium1StatusMessage(Sender: TObject;
@@ -422,17 +456,10 @@ begin
   if not(Chromium1.IsSameBrowser(browser)) then exit;
 
 	if (FirstRun) then PageTitle :=''   else PageTitle := title;
-
-
 	//Show same caption
 	caption := 'Conan Exiles Steam Mod Browser';
 
-(*
-	if (title <> '') then
-		caption := title
-	 else
-		caption := 'Conan Exiles Steam Mod Browser';
-		*)
+
 end;
 
 procedure TFrmMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -474,6 +501,7 @@ begin
 
 
 	SetUpIPCServer;
+	varcoded.SetUpLog();
 
 
 end;
@@ -531,8 +559,6 @@ begin
 				'</div>'+
 '</div>';
 
-//Chromium1.LoadURL('https://steamcommunity.com/sharedfiles/filedetails/?id=2384014945');
-
 	CanLoadANewPage:=True;
 	Chromium1.LoadString(TempString);
 
@@ -570,7 +596,6 @@ begin
 
 	FIPCServer := TIPCServer.Create;
 	FIPCServer.OnExecuteRequest := OnExecuteRequest;
-	{DONE 2: Get the server name from a config file}
 	FIPCServer.ServerName := 'CEMMIPCServer';
 	FIPCServer.Start;
 
@@ -580,9 +605,10 @@ begin
 procedure TFrmMain.OnExecuteRequest(const Request, Response: IIPCData);
 Var
 	ThisURL: String;
-	ThisModID: String;
 	MyText: TStringlist;
-
+	i:Integer;
+	FinalPageText: String;
+  BlankLines:Boolean;
 begin
 
 	UpdateCache:= Request.Data.ReadBoolean('UpdateCache');
@@ -600,9 +626,8 @@ begin
 	PageLoaded := False;
 	PageFullText := '';
 
+
 	CanLoadANewPage:=True;
-
-
 	Chromium1.LoadURL(ThisUrl);
 
 
@@ -616,35 +641,80 @@ begin
 	end;
 
 
-
 	if (UpdateCache) then begin
-
-		Chromium1.PrintToPDF('.\cache\pdf\'+ThisModID+'.sfp',PageTitle,ThisURL );
-
-
-
-
+		CreateCache(ThisModID, ThisURL);
   end;
 
 
 	//Get Description
-(*
+
 	MyText:= TStringlist.create;
 	try
 		MyText.Text := PageFullText;
+		//remove the warning
+    FinalPageText := '';
+
+		for I := 0 to MyText.Count-1 do begin
+			if (MyText[I].Contains('if ( bShowWarning )')) then begin
+				MyText[I] := MyText[I].Replace('if ( bShowWarning )','if ( !bShowWarning )' );
+			end;
+
+			if (MyText[I].Contains('<div class="responsive_page_template_content" style="display: none;">')) then begin
+				MyText[I] := MyText[I].Replace('<div class="responsive_page_template_content" style="display: none;">','<div class="responsive_page_template_content">' );
+			end;
+
+			FinalPageText:= FinalPageText + MyText[I];
+
+			if (MyText[I].Contains('<!-- responsive_page_content -->')) then begin
+				BlankLines := True;
+				break;
+			end;
+
+
+			if (MyText[I].Contains('<!-- responsive_page_frame -->')) then begin
+				BlankLines := False;
+//				MyText[I] := MyText[I].Replace('<div class="responsive_page_template_content" style="display: none;">','<div class="responsive_page_template_content">' );
+			end;
+
+			if (BlankLines) then MyText[I] := '';
+
+
+
+
+
+
+
+
+			//
+
+    end;
+
+
+
+		MyText.Text := FinalPageText;
+		MyText.Add('</div></div></div></div></div></div></div></div></div></div>');
+
 		MyText.SaveToFile('.\page.html');
+//		CanLoadANewPage:=True;
+//		Chromium1.LoadString(MyText.Text );
+
 	finally
 		MyText.Free
 	end; {try}
 
-*)
+
+
+
+
+
+
 
 	Response.ID := datetimetostr(now);
 
 
 
 	Response.Data.WriteString('WindowsTitle',PageTitle );
-	Response.Data.WriteString('ModDescription', GetModDescription(PageFullText )); //Var PageFullText is filled onTextResultAvailable
+ //	Response.Data.WriteString('ModDescription', GetModDescription(PageFullText )); //Var PageFullText is filled onTextResultAvailable
 	TaskDone();
 
 
@@ -654,6 +724,17 @@ end;
 
 //<div class="workshopItemDescription" id="highlightContent">
 
+
+procedure TFrmMain.CreateCache(ThisModID,ThisURL:String);
+var
+	ParaAndOptions: String;
+begin
+
+
+exit;
+
+
+end;
 
 function TFrmMain.GetModDescription(ThisFullText:String): String;
 var
@@ -692,12 +773,7 @@ end;
 
 procedure TFrmMain.TaskDone();
 begin
-(*
-	WiiProgressBar_1.Enabled := false;
-	WiiProgressBar_1.Visible := false;
-	HTMLText_Msg.Text := '<fs:26><bc:clYellow><fc:clGreen><c>  Operación terminada  </fs></fc></bc></c>';
-			*)
-			StatusPanel_Browser.Caption := 'Done';
+		StatusPanel_Browser.Caption := 'Done';
 end;
 
 

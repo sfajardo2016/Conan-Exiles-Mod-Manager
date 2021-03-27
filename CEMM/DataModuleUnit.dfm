@@ -12,15 +12,17 @@ object DataModule1: TDataModule1
     Params.Strings = (
       'LockingMode=Normal'
       
-        'Database=D:\dev\varcoded\TestsXE6\ConanSP Tools\CECTv1.1\Win32\D' +
-        'ebug\cect.sfp'
+        'Database=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CE' +
+        'MM\Win32\Debug\cemm.sfp'
       'DriverID=SQLite')
     LoginPrompt = False
+    UpdateTransaction = Transaction_1
     Left = 32
     Top = 8
   end
   object query_mods: TFDQuery
     Connection = con_1
+    Transaction = Transaction_1
     SQL.Strings = (
       'select * from mods'
       'order by modname')

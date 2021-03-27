@@ -15,6 +15,7 @@ object FrmModsSettings: TFrmModsSettings
   OldCreateOrder = False
   Position = poOwnerFormCenter
   Scaled = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Label_2: TbsSkinStdLabel

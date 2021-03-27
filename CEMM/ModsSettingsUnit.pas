@@ -54,8 +54,11 @@ type
     procedure DBTableView_1StylesGetContentStyle(
       Sender: TcxCustomGridTableView; ARecord: TcxCustomGridRecord;
       AItem: TcxCustomGridTableItem; var AStyle: TcxStyle);
+    procedure FormCreate(Sender: TObject);
 
 	private
+		LastURL: String;
+		WebBrowserVisible: Boolean;
     procedure GetMods;
     procedure ShowBrowser;
     function FoundBrowser(TimeOut: Integer): Boolean;
@@ -109,7 +112,7 @@ begin
 
 	end;
 
-	AStyle := nil;
+	AStyle := FrmMain.Style_Normal;
 	if (ThisValue = 3 ) then AStyle := FrmMain.Style_Duplicated;
 
 
@@ -123,15 +126,19 @@ var
 	LastModUpdate: TDate;
 	TodayDate: TDate;
 	NeedsUpdate: Boolean;
+	ThisParameters: String;
 begin
 
 	thismodid:= FrmMain.GetModIDFromQuery();
-	TodayDate := now;
+	TodayDate := Date;
 	NeedsUpdate:= false;
 
 	if (thismodid.IsEmpty)  then Exit;
 
-	thisurl := 'http://steamcommunity.com/sharedfiles/filedetails/?id=' + thismodid;
+	thisurl := 'https://steamcommunity.com/sharedfiles/filedetails/?l=spanish&id=' + thismodid;
+	thisurl := 'https://steamcommunity.com/sharedfiles/filedetails/?id=' + thismodid;
+	if  (LastURL.Equals(thisurl)) and WebBrowserVisible then exit;
+
 
 
 
@@ -146,10 +153,18 @@ begin
 
 		Exit;
 	end;
+	WebBrowserVisible := true;
 
 	LastModUpdate := FrmMain.GetModLastUpdateDate('');
 
-	if (LastModUpdate<>TodayDate ) then  NeedsUpdate := true;
+
+//	FrmMain.varcoded.Log('Comparing:' +datetostr(LastModUpdate) + ' vs ' + datetostr(TodayDate) );
+
+	if (LastModUpdate<>TodayDate ) then  begin
+			NeedsUpdate := true;
+
+	end;
+
 
 	SendURLToBrowser(thisurl,NeedsUpdate);
 
@@ -194,10 +209,7 @@ begin
 				Request.Data.WriteString('URL',ThisURL);
 				Request.Data.WriteString('Theme',FrmMain.SkinData_Main.SkinIndex.ToString() );
 				Request.Data.WriteBoolean('UpdateCache',NeedsUpdate );
-				if (NeedsUpdate) then FrmMain.Varcoded.Log('needs update') else FrmMain.Varcoded.Log('does NOT needs update');
-
-
-
+//				if (NeedsUpdate) then FrmMain.Varcoded.Log('needs update') else FrmMain.Varcoded.Log('does NOT needs update');
 
 				Result := IPCClient.ExecuteConnectedRequest(Request);
 
@@ -213,8 +225,12 @@ begin
 
 						if NOT (WindowTitle.ToUpper.Equals('SAME')) then begin
 							 FrmMain.UpdateModName(WindowTitle.Replace('Steam Workshop::',''));
-							 ModDescription := Result.Data.ReadString('ModDescription');
+						 //	 ModDescription := Result.Data.ReadString('ModDescription');
+						 //	 if (NeedsUpdate) then FrmMain.UpdateModLastUpdateDate('');
+
 						end;
+
+
 
 
 					end;
@@ -230,6 +246,12 @@ begin
 
 
 
+end;
+
+procedure TFrmModsSettings.FormCreate(Sender: TObject);
+begin
+LastURL:= '';
+WebBrowserVisible := false;
 end;
 
 function TFrmModsSettings.FoundBrowser(TimeOut: Integer):Boolean;

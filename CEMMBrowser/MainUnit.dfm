@@ -4,7 +4,7 @@ object FrmMain: TFrmMain
   BorderIcons = []
   Caption = 'Conan Exiles Steam Mod Browser'
   ClientHeight = 585
-  ClientWidth = 485
+  ClientWidth = 914
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,28 +20,38 @@ object FrmMain: TFrmMain
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object spl1: TSplitter
+    Left = 590
+    Top = 0
+    Width = 16
+    Height = 544
+    Align = alRight
+    ExplicitLeft = 497
+  end
   object CEFWindowParent1: TCEFWindowParent
     Left = 0
     Top = 0
-    Width = 485
+    Width = 590
     Height = 544
     Align = alClient
     TabStop = True
     TabOrder = 0
+    ExplicitWidth = 497
   end
   object DevTools: TCEFWindowParent
-    Left = 485
+    Left = 606
     Top = 0
     Width = 0
     Height = 544
     Align = alRight
     TabOrder = 1
     Visible = False
+    ExplicitLeft = 485
   end
   object StatusBar_Browser: TbsSkinStatusBar
     Left = 0
     Top = 544
-    Width = 485
+    Width = 914
     Height = 41
     HintImageIndex = 0
     TabOrder = 2
@@ -75,10 +85,11 @@ object FrmMain: TFrmMain
     Caption = 'StatusBar_Browser'
     Align = alBottom
     SizeGrip = True
+    ExplicitWidth = 485
     object StatusPanel_Browser: TbsSkinStatusPanel
       Left = 0
       Top = 0
-      Width = 228
+      Width = 657
       Height = 41
       HintImageIndex = 0
       TabOrder = 0
@@ -108,9 +119,10 @@ object FrmMain: TFrmMain
       AutoSize = False
       ImageIndex = -1
       NumGlyphs = 1
+      ExplicitWidth = 228
     end
     object Slider_BrowserZoom: TbsSkinSlider
-      Left = 294
+      Left = 723
       Top = 0
       Width = 150
       Height = 41
@@ -125,10 +137,10 @@ object FrmMain: TFrmMain
       MaxValue = 40
       Transparent = False
       UseSkinThumb = True
-      OnChange = Slider_BrowserZoomChange
+      OnChanged = Slider_BrowserZoomChanged
     end
     object StatusPanel_Zoom: TbsSkinStatusPanel
-      Left = 228
+      Left = 657
       Top = 0
       Width = 66
       Height = 41
@@ -160,7 +172,21 @@ object FrmMain: TFrmMain
       AutoSize = False
       ImageIndex = -1
       NumGlyphs = 1
+      ExplicitLeft = 228
     end
+  end
+  object memo: TMemo
+    Left = 606
+    Top = 0
+    Width = 308
+    Height = 544
+    Align = alRight
+    Lines.Strings = (
+      'memo')
+    TabOrder = 3
+    ExplicitLeft = 544
+    ExplicitTop = 32
+    ExplicitHeight = 49
   end
   object Chromium1: TChromium
     OnProcessMessageReceived = Chromium1ProcessMessageReceived
@@ -4750,5 +4776,13 @@ object FrmMain: TFrmMain
   object HTMLParser_1: TJvHTMLParser
     Left = 192
     Top = 272
+  end
+  object Varcoded: TVarCodedxe81
+    IsValidUser = False
+    LoginName = 'SFAJARDO'
+    UseOriginalCreator = True
+    FriendlyAppName = 'varcoded'
+    Left = 240
+    Top = 296
   end
 end

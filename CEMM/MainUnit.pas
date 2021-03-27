@@ -50,6 +50,7 @@ type
     StyleReposity_Main: TcxStyleRepository;
     Style_Duplicated: TcxStyle;
     Varcoded: TVarCodedxe81;
+    Style_Normal: TcxStyle;
     procedure Button_UISettingsClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button_SteamSettingsClick(Sender: TObject);
@@ -82,6 +83,7 @@ type
 
 
 
+
 		{ Private declarations }
 	public
 		{ Public declarations }
@@ -103,10 +105,10 @@ type
 		function IsEmptyOrNull(const Value: Variant): Boolean;
 		function GetModIDFromQuery: String;
 		function UpdateModName(NewName: String): Boolean;
-		function GetModLastUpdateDate(ThisModID: String): TDate;
+		function GetModLastUpdateDate(ThisModID: String): TDateTime;
+    function UpdateModLastUpdateDate(ThisModID: String): Boolean;
 
 
-		
 	end;
 
 var
@@ -255,7 +257,7 @@ end;
 
 //FrmMain.GetModLastUpdateDate();
 
-function TFrmMain.GetModLastUpdateDate(ThisModID:String): TDate;
+function TFrmMain.GetModLastUpdateDate(ThisModID:String): TDateTime;
 var
   ThisResult: TDate;
 begin
@@ -263,6 +265,15 @@ ThisResult := dm.GetModLastUpdateDate(ThisModID);
 
 result := ThisResult;
 end;
+
+
+function TFrmMain.UpdateModLastUpdateDate(ThisModID:String): Boolean;
+
+begin
+result := dm.UpdateModLastUpdateDate(ThisModID);
+end;
+
+
 
 
 

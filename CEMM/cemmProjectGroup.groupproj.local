@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2021/03/19 17:39:42.000.856,C:\Users\User\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\cemmProjectGroup.groupproj</Transaction>
+    <Transaction>2021/03/19 17:39:42.000.856,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\cemmProjectGroup.groupproj=C:\Users\User\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj</Transaction>
   </Transactions>
 	<Default.Personality>
-		<Projects ActiveProject="D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\cemm.dproj"/>
+		<Projects ActiveProject="D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMMBrowser\cemmbrowser.dproj"/>
 	</Default.Personality>
 </BorlandProject>

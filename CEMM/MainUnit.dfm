@@ -5339,6 +5339,18 @@ object FrmMain: TFrmMain
       Color = clSilver
       TextColor = clYellow
     end
+    object Style_Normal: TcxStyle
+      AssignedValues = [svColor]
+      Color = clSilver
+    end
+  end
+  object Varcoded: TVarCodedxe81
+    IsValidUser = False
+    LoginName = 'SFAJARDO'
+    UseOriginalCreator = True
+    FriendlyAppName = 'varcoded'
+    Left = 536
+    Top = 160
   end
   object SkinAdapter_Main: TbsaSkinAdapter
     SkinData = SkinData_Main
@@ -5358,13 +5370,5 @@ object FrmMain: TFrmMain
     CoolBarSkinDataName = 'panel'
     Left = 8
     Top = 144
-  end
-  object Varcoded: TVarCodedxe81
-    IsValidUser = False
-    LoginName = 'SFAJARDO'
-    UseOriginalCreator = True
-    FriendlyAppName = 'varcoded'
-    Left = 536
-    Top = 160
   end
 end

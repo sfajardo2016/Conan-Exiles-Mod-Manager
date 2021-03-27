@@ -35,6 +35,7 @@ type
 
 
 
+
 		{ Private declarations }
 	public
 		LastMessage: string;
@@ -49,12 +50,13 @@ type
 		function SetSetting(ThisKey, ThisValue: String): Boolean;
 
 		procedure UpdateModName(NewName: String);
-    function GetModLastUpdateDate(ThisID: String): TDate;
+		function GetModLastUpdateDate(ThisID: String): TDateTime;
+		function UpdateModLastUpdateDate(ThisID: String): Boolean;
 
 
 		function AreSettingsValid: Boolean;
 		function CreateDefaultFolders: Boolean;
-    { Public declarations }
+		{ Public declarations }
   end;
 
 var
@@ -365,20 +367,35 @@ end;
 end;
 
 
-function TDataModule1.GetModLastUpdateDate(ThisID:String): TDate;
+function TDataModule1.GetModLastUpdateDate(ThisID:String): TDateTime;
 var
-  ThisResult: TDate;
+	ThisResult: TDate;
 begin
 
 with (query_mods) do begin
 	ThisResult := FieldByName('modlastupdatedate').AsDateTime;
 end;
-
-//if ( ThisResult=0 )  then  ThisResult := now-5; //5 days old so can be updated
-
-
 result := ThisResult;
 end;
+
+function TDataModule1.UpdateModLastUpdateDate(ThisID:String): Boolean;
+
+var
+	DayToday:TDateTime;
+begin
+
+	DayToday := Now();
+with (query_mods) do begin
+	Edit;
+	FieldByName('moddescription').AsString := 'Description goes here';
+ 	FieldByName('modlastupdatedate').AsString :=  DateTimeToSTR(DayToday);
+	Post;
+
+end;
+result := True;
+end;
+
+
 
 procedure TDataModule1.ScanForAllMods(const Dir: string;ThisType:SmallInt);
 var
@@ -433,6 +450,8 @@ begin
 
 	//              FieldByName('moddescription').AsString := 'N/A';
 								FieldByName('modfile').AsString := FullFileName;
+								FieldByName('modlastupdatedate').AsDateTime := StrToDateTime('03/12/1972');
+
 								Log('New mod added:' +FullFileName);
 								Post;
 							end else begin
