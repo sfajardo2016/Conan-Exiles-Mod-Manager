@@ -54,8 +54,6 @@ object FrmAppSettings: TFrmAppSettings
     Spacing = 2
     Caption = 'Panel_SettingsOKButton'
     Align = alBottom
-    ExplicitTop = 249
-    ExplicitWidth = 255
     object Button_SaveSettings: TbsSkinButton
       Left = 1
       Top = 1
@@ -128,7 +126,6 @@ object FrmAppSettings: TFrmAppSettings
       Spacing = 1
       Align = alRight
       ModalResult = 2
-      ExplicitLeft = 159
     end
   end
   object Panel_GameFolders: TbsSkinExPanel
@@ -163,7 +160,6 @@ object FrmAppSettings: TFrmAppSettings
     Sizeable = False
     Align = alTop
     Caption = 'Game folders and files'
-    ExplicitWidth = 779
     object Label_11: TbsSkinStdLabel
       Left = 3
       Top = 35
@@ -756,9 +752,6 @@ object FrmAppSettings: TFrmAppSettings
     Caption = 'StatusBar_1'
     Align = alBottom
     SizeGrip = False
-    ExplicitLeft = -140
-    ExplicitTop = 430
-    ExplicitWidth = 919
     object HTMLText_GameFoldersAndFilesMsg: TDzHTMLText
       Left = 0
       Top = 0
@@ -839,7 +832,6 @@ object FrmAppSettings: TFrmAppSettings
     Top = 24
   end
   object JvValidators1: TJvValidators
-    ErrorIndicator = FrmMain.ErrorIndicator_Main
     Left = 471
     Top = 56
     object CustomValidator_MODLISTFile: TJvCustomValidator
@@ -864,7 +856,6 @@ object FrmAppSettings: TFrmAppSettings
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     NumOfLanguages = 4
-    LangDispatcher = FrmMain.LangDispatcher_Main
     LangDelim = 1
     LangNames.Strings = (
       'English'

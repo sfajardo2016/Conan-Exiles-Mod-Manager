@@ -22,6 +22,8 @@ type
 		query_modset: TFDQuery;
 		ds_query_modset: TDataSource;
 		Query_settings: TFDQuery;
+    Query_test: TFDQuery;
+    ds_query_test: TDataSource;
 	private
 
 		FileList: TStringList;
@@ -268,8 +270,9 @@ begin
       try
         Connected := True;
         query_mods.Open();
-        query_modset.Open();
-        Query_settings.Open();
+//        query_modset.Open();
+				Query_settings.Open();
+
         res := True;
       except
         on E: Exception do
@@ -382,16 +385,20 @@ function TDataModule1.UpdateModLastUpdateDate(ThisID:String): Boolean;
 
 var
 	DayToday:TDateTime;
+	JustDate: TDateTime;
 begin
 
 	DayToday := Now();
+	JustDate := date;
 with (query_mods) do begin
 	Edit;
 	FieldByName('moddescription').AsString := 'Description goes here';
- 	FieldByName('modlastupdatedate').AsString :=  DateTimeToSTR(DayToday);
+	FieldByName('modlastupdatedate').AsString :=  DateTimeToSTR(DayToday);
 	Post;
 
 end;
+
+
 result := True;
 end;
 

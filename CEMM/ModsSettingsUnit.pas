@@ -17,7 +17,8 @@ uses
 
   Data.DB, cxDBData, cxLookAndFeels, cxLookAndFeelPainters, cxStyles,
   siLngLnk, DzHTMLText, cxCustomData, cxFilter, cxData, dxDateRanges,
-  AdvOfficeButtons, Vcl.ExtCtrls, AdvMemo, AdvmWS;
+  AdvOfficeButtons, Vcl.ExtCtrls, AdvMemo, AdvmWS, cxCalendar, HTMLUn2,
+  HtmlView;
 
 type
   TFrmModsSettings = class(TForm)
@@ -45,6 +46,8 @@ type
     Label_3: TbsSkinStdLabel;
     CheckBox_WebBrowser: TbsSkinCheckBox;
     Splitter_1: TbsSkinSplitter;
+    GridDBColumn_7: TcxGridDBColumn;
+		HtmlViewer_1: THtmlViewer;
     procedure Button_ValidateFoldersClick(Sender: TObject);
     procedure GridDBColumn_5GetDisplayText(Sender: TcxCustomGridTableItem;
       ARecord: TcxCustomGridRecord; var AText: string);
@@ -227,8 +230,12 @@ begin
 
 						if NOT (WindowTitle.ToUpper.Equals('SAME')) then begin
 							 FrmMain.UpdateModName(WindowTitle.Replace('Steam Workshop::',''));
-						 //	 ModDescription := Result.Data.ReadString('ModDescription');
+							 ModDescription := Result.Data.ReadString('ModDescription');
+							 HtmlViewer_1.LoadFromString(ModDescription);
+
+							 //ShowMessage(ModDescription);
 						 //	 if (NeedsUpdate) then FrmMain.UpdateModLastUpdateDate('');
+						 {TODO -oZap -cFeature : UpdateCache and let explore pages offline}
 
 						end;
 

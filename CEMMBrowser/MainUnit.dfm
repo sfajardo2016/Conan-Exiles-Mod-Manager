@@ -3,14 +3,15 @@ object FrmMain: TFrmMain
   Top = 0
   BorderIcons = []
   Caption = 'Conan Exiles Steam Mod Browser'
-  ClientHeight = 585
-  ClientWidth = 914
+  ClientHeight = 546
+  ClientWidth = 803
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
   Scaled = False
@@ -20,36 +21,28 @@ object FrmMain: TFrmMain
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object spl1: TSplitter
-    Left = 590
-    Top = 0
-    Width = 16
-    Height = 544
-    Align = alRight
-    ExplicitLeft = 497
-  end
   object CEFWindowParent1: TCEFWindowParent
     Left = 0
     Top = 0
-    Width = 590
-    Height = 544
+    Width = 618
+    Height = 505
     Align = alClient
     TabStop = True
     TabOrder = 0
   end
   object DevTools: TCEFWindowParent
-    Left = 606
+    Left = 618
     Top = 0
     Width = 0
-    Height = 544
+    Height = 505
     Align = alRight
     TabOrder = 1
     Visible = False
   end
   object StatusBar_Browser: TbsSkinStatusBar
     Left = 0
-    Top = 544
-    Width = 914
+    Top = 505
+    Width = 803
     Height = 41
     HintImageIndex = 0
     TabOrder = 2
@@ -86,7 +79,7 @@ object FrmMain: TFrmMain
     object StatusPanel_Browser: TbsSkinStatusPanel
       Left = 0
       Top = 0
-      Width = 657
+      Width = 546
       Height = 41
       HintImageIndex = 0
       TabOrder = 0
@@ -118,7 +111,7 @@ object FrmMain: TFrmMain
       NumGlyphs = 1
     end
     object Slider_BrowserZoom: TbsSkinSlider
-      Left = 723
+      Left = 612
       Top = 0
       Width = 150
       Height = 41
@@ -136,7 +129,7 @@ object FrmMain: TFrmMain
       OnChanged = Slider_BrowserZoomChanged
     end
     object StatusPanel_Zoom: TbsSkinStatusPanel
-      Left = 657
+      Left = 546
       Top = 0
       Width = 66
       Height = 41
@@ -171,10 +164,10 @@ object FrmMain: TFrmMain
     end
   end
   object memo: TMemo
-    Left = 606
+    Left = 618
     Top = 0
-    Width = 308
-    Height = 544
+    Width = 185
+    Height = 505
     Align = alRight
     Lines.Strings = (
       'memo')
@@ -188,6 +181,7 @@ object FrmMain: TFrmMain
     OnBeforeContextMenu = Chromium1BeforeContextMenu
     OnTitleChange = Chromium1TitleChange
     OnStatusMessage = Chromium1StatusMessage
+    OnConsoleMessage = Chromium1ConsoleMessage
     OnLoadingProgressChange = Chromium1LoadingProgressChange
     OnBeforePopup = Chromium1BeforePopup
     OnAfterCreated = Chromium1AfterCreated
@@ -4656,8 +4650,8 @@ object FrmMain: TFrmMain
           A77A93FE41BDE654AF53BD3A0873EA20CC7A64D04E82B4F0E4D0E24CB7C9C33F
           ABD38FE9480677F667EC5CC8E3827E4FFECAA7FEFF5ED47B2A}
       end>
-    Left = 104
-    Top = 32
+    Left = 168
+    Top = 16
   end
   object SkinData_Main: TbsSkinData
     DlgTreeViewDrawSkin = True
@@ -4675,8 +4669,8 @@ object FrmMain: TFrmMain
     SkinIndex = 0
     ChangeSystemColors = False
     SystemColorHooks = [bsschHighLight]
-    Left = 72
-    Top = 32
+    Left = 104
+    Top = 16
   end
   object BusinessSkinForm_Main: TbsBusinessSkinForm
     UseRibbon = False
@@ -4731,8 +4725,8 @@ object FrmMain: TFrmMain
     SkinData = SkinData_Main
     MinimizeApplication = False
     MenusSkinData = SkinData_Main
-    MinHeight = 0
-    MinWidth = 0
+    MinHeight = 200
+    MinWidth = 200
     MaxHeight = 0
     MaxWidth = 0
     MinClientHeight = 0
@@ -4751,8 +4745,8 @@ object FrmMain: TFrmMain
     StoredProps.Strings = (
       'Slider_BrowserZoom.Value')
     StoredValues = <>
-    Left = 240
-    Top = 184
+    Left = 176
+    Top = 152
   end
   object AppIniFileStorage_Main: TJvAppIniFileStorage
     StorageOptions.BooleanStringTrueValues = 'TRUE, YES, Y'
@@ -4764,10 +4758,6 @@ object FrmMain: TFrmMain
     SubStorages = <>
     Left = 168
     Top = 224
-  end
-  object HTMLParser_1: TJvHTMLParser
-    Left = 192
-    Top = 272
   end
   object Varcoded: TVarCodedxe81
     IsValidUser = False

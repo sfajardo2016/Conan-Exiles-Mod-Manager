@@ -2,10 +2,9 @@ object FrmModsSettings: TFrmModsSettings
   Left = 0
   Top = 0
   BorderIcons = []
-  BorderStyle = bsDialog
   Caption = 'Mods Settings'
-  ClientHeight = 594
-  ClientWidth = 823
+  ClientHeight = 584
+  ClientWidth = 813
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -38,15 +37,16 @@ object FrmModsSettings: TFrmModsSettings
     Left = 457
     Top = 145
     Width = 16
-    Height = 419
+    Height = 409
     Transparent = False
     DefaultSize = 10
     SkinDataName = 'vsplitter'
+    ExplicitHeight = 419
   end
   object Panel_GameFolders: TbsSkinExPanel
     Left = 0
     Top = 0
-    Width = 823
+    Width = 813
     Height = 145
     HintImageIndex = 0
     TabOrder = 0
@@ -75,6 +75,7 @@ object FrmModsSettings: TFrmModsSettings
     Sizeable = False
     Align = alTop
     Caption = 'Game folders and files'
+    ExplicitWidth = 823
     object Label_13: TbsSkinStdLabel
       Left = 3
       Top = 34
@@ -93,7 +94,7 @@ object FrmModsSettings: TFrmModsSettings
       Caption = 'Conan Exiles MOD folder (*.pak)'
     end
     object Button_ValidateFolders: TbsSkinSpeedButton
-      Left = 671
+      Left = 661
       Top = 21
       Width = 151
       Height = 123
@@ -420,6 +421,7 @@ object FrmModsSettings: TFrmModsSettings
       Align = alRight
       Spacing = 1
       OnClick = Button_ValidateFoldersClick
+      ExplicitLeft = 671
       ExplicitTop = 1
       ExplicitHeight = 98
     end
@@ -496,8 +498,8 @@ object FrmModsSettings: TFrmModsSettings
   end
   object StatusBar_1: TbsSkinStatusBar
     Left = 0
-    Top = 564
-    Width = 823
+    Top = 554
+    Width = 813
     Height = 30
     HintImageIndex = 0
     TabOrder = 1
@@ -531,25 +533,27 @@ object FrmModsSettings: TFrmModsSettings
     Caption = 'StatusBar_1'
     Align = alBottom
     SizeGrip = False
+    ExplicitTop = 564
+    ExplicitWidth = 823
     object HTMLText_GameFoldersAndFilesMsg: TDzHTMLText
       Left = 0
       Top = 0
-      Width = 823
+      Width = 52
       Height = 30
       Align = alClient
       Lines.Strings = (
         '<fs:14>Ready</fs>')
       AutoWidth = True
-      ExplicitWidth = 52
     end
   end
   object grid_mods: TcxGrid
     Left = 0
     Top = 145
     Width = 457
-    Height = 419
+    Height = 409
     Align = alLeft
     TabOrder = 2
+    ExplicitHeight = 419
     object DBTableView_1: TcxGridDBTableView
       DragMode = dmAutomatic
       Navigator.Buttons.CustomButtons = <>
@@ -599,6 +603,12 @@ object FrmModsSettings: TFrmModsSettings
         Visible = False
         Width = 600
       end
+      object GridDBColumn_7: TcxGridDBColumn
+        Caption = 'Cache last update'
+        DataBinding.FieldName = 'modlastupdatedate'
+        PropertiesClassName = 'TcxDateEditProperties'
+        Properties.DisplayFormat = 'mm/dd/yyyy'
+      end
     end
     object GridLevel_1: TcxGridLevel
       GridView = DBTableView_1
@@ -632,6 +642,31 @@ object FrmModsSettings: TFrmModsSettings
     Radio = False
     Checked = False
     GroupIndex = 0
+  end
+  object HtmlViewer_1: THtmlViewer
+    Left = 473
+    Top = 145
+    Width = 340
+    Height = 409
+    BorderStyle = htSingle
+    DefBackground = clGradientActiveCaption
+    DefPreFontName = '@Arial Unicode MS'
+    HistoryMaxCount = 0
+    ImageCacheCount = 20
+    NoSelect = False
+    PrintMarginBottom = 2.000000000000000000
+    PrintMarginLeft = 2.000000000000000000
+    PrintMarginRight = 2.000000000000000000
+    PrintMarginTop = 2.000000000000000000
+    PrintScale = 1.000000000000000000
+    Text = ''
+    ViewImages = False
+    Align = alClient
+    TabOrder = 4
+    Touch.InteractiveGestures = [igPan]
+    Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia]
+    ExplicitWidth = 350
+    ExplicitHeight = 419
   end
   object BusinessSkinForm_Main: TbsBusinessSkinForm
     UseRibbon = False
@@ -832,7 +867,7 @@ object FrmModsSettings: TFrmModsSettings
     SkinData = FrmMain.SkinData_Main
     AdapterType = bsaUseNames
     TabsBGTransparent = False
-    AutoAddNames = False
+    AutoAddNames = True
     AutoAddClasses = False
     VScrollSkinDataName = 'vscrollbar'
     HScrollSkinDataName = 'hscrollbar'

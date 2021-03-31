@@ -14,7 +14,9 @@ object DataModule1: TDataModule1
       
         'Database=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CE' +
         'MM\Win32\Debug\cemm.sfp'
+      'DateTimeFormat=DateTime'
       'DriverID=SQLite')
+    Connected = True
     LoginPrompt = False
     UpdateTransaction = Transaction_1
     Left = 32
@@ -65,5 +67,19 @@ object DataModule1: TDataModule1
       'select * from settings order by value')
     Left = 176
     Top = 72
+  end
+  object Query_test: TFDQuery
+    Connection = con_1
+    Transaction = Transaction_1
+    SQL.Strings = (
+      'select * from test')
+    Left = 240
+    Top = 224
+  end
+  object ds_query_test: TDataSource
+    AutoEdit = False
+    DataSet = Query_test
+    Left = 232
+    Top = 288
   end
 end

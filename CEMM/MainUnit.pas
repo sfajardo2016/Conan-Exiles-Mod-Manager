@@ -331,7 +331,7 @@ end;
 
 
 	DM:= TDataModule1.Create(FrmMain);
-	db := ExtractFilePath(Application.ExeName) + 'cemm.sfp';
+	db := ExtractFilePath(Application.ExeName) + 'cem.db';
 
 	if not (dm.SetupData ( db )) then begin
 		varcoded.LogW('Can not setup the DB:' + db + #13+#13+' '+ dm.LastMessage);

@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{F7A0D2A9-2F30-4BD0-9054-E6D24AB1B7E3}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="PlugInDemo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\CEMBrowserLitev1.1\PlgCEMPluginBrowserLite.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\CEMBrowserLitev1.1\PlgPlugInCEMPluginBrowserFull.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="PlugInDemo">
+        <MSBuild Projects="PlugInDemo.dproj"/>
+    </Target>
+    <Target Name="PlugInDemo:Clean">
+        <MSBuild Projects="PlugInDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PlugInDemo:Make">
+        <MSBuild Projects="PlugInDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PlgCEMPluginBrowserLite">
+        <MSBuild Projects="..\CEMBrowserLitev1.1\PlgCEMPluginBrowserLite.dproj"/>
+    </Target>
+    <Target Name="PlgCEMPluginBrowserLite:Clean">
+        <MSBuild Projects="..\CEMBrowserLitev1.1\PlgCEMPluginBrowserLite.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PlgCEMPluginBrowserLite:Make">
+        <MSBuild Projects="..\CEMBrowserLitev1.1\PlgCEMPluginBrowserLite.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PlgPlugInCEMPluginBrowserFull">
+        <MSBuild Projects="..\CEMBrowserLitev1.1\PlgPlugInCEMPluginBrowserFull.dproj"/>
+    </Target>
+    <Target Name="PlgPlugInCEMPluginBrowserFull:Clean">
+        <MSBuild Projects="..\CEMBrowserLitev1.1\PlgPlugInCEMPluginBrowserFull.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PlgPlugInCEMPluginBrowserFull:Make">
+        <MSBuild Projects="..\CEMBrowserLitev1.1\PlgPlugInCEMPluginBrowserFull.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="PlugInDemo;PlgCEMPluginBrowserLite;PlgPlugInCEMPluginBrowserFull"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="PlugInDemo:Clean;PlgCEMPluginBrowserLite:Clean;PlgPlugInCEMPluginBrowserFull:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="PlugInDemo:Make;PlgCEMPluginBrowserLite:Make;PlgPlugInCEMPluginBrowserFull:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

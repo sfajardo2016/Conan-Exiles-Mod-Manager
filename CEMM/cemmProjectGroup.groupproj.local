@@ -4,6 +4,6 @@
     <Transaction>2021/03/19 17:39:42.000.856,C:\Users\User\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\cemmProjectGroup.groupproj</Transaction>
   </Transactions>
 	<Default.Personality>
-		<Projects ActiveProject="D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMM\cemm.dproj"/>
+		<Projects ActiveProject="D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMMBrowser\cemmbrowser.dproj"/>
 	</Default.Personality>
 </BorlandProject>

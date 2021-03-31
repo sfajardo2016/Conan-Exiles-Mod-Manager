@@ -9,6 +9,9 @@
         <Projects Include="cemm.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="..\CEMMBrowserLite\CEMMBrowserLite.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
     <Target Name="cemm:Make">
         <MSBuild Projects="cemm.dproj" Targets="Make"/>
     </Target>
+    <Target Name="CEMMBrowserLite">
+        <MSBuild Projects="..\CEMMBrowserLite\CEMMBrowserLite.dproj"/>
+    </Target>
+    <Target Name="CEMMBrowserLite:Clean">
+        <MSBuild Projects="..\CEMMBrowserLite\CEMMBrowserLite.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CEMMBrowserLite:Make">
+        <MSBuild Projects="..\CEMMBrowserLite\CEMMBrowserLite.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="cemmbrowser;cemm"/>
+        <CallTarget Targets="cemmbrowser;cemm;CEMMBrowserLite"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="cemmbrowser:Clean;cemm:Clean"/>
+        <CallTarget Targets="cemmbrowser:Clean;cemm:Clean;CEMMBrowserLite:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="cemmbrowser:Make;cemm:Make"/>
+        <CallTarget Targets="cemmbrowser:Make;cemm:Make;CEMMBrowserLite:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

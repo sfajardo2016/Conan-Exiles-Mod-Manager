@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2021/03/31 12:04:20.000.363,=C:\WINDOWS\System32\PlugInPlugInCEMPluginBrowserFull.pas</Transaction>
+    <Transaction>2021/03/31 12:05:04.000.007,C:\WINDOWS\System32\PlugInPlugInCEMPluginBrowserFull.dfm=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\PlugIns\CEMBrowserLitev1.1\PlugInPlugInCEMPluginBrowserFull.dfm</Transaction>
+    <Transaction>2021/03/31 12:05:04.000.007,C:\WINDOWS\System32\PlugInPlugInCEMPluginBrowserFull.pas=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\PlugIns\CEMBrowserLitev1.1\PlugInPlugInCEMPluginBrowserFull.pas</Transaction>
+    <Transaction>2021/03/31 12:05:08.000.889,C:\WINDOWS\System32\PlgPlugInCEMPluginBrowserFull.dproj=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\PlugIns\CEMBrowserLitev1.1\PlgPlugInCEMPluginBrowserFull.dproj</Transaction>
+    <Transaction>2021/03/31 12:12:33.000.856,=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\PlugIns\CEMBrowserLitev1.1\FormBrowserUnit2.pas</Transaction>
+  </Transactions>
+</BorlandProject>

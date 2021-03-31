@@ -53,12 +53,10 @@ type
     BusinessSkinForm_Main: TbsBusinessSkinForm;
     FormStorage_Main: TJvFormStorage;
     AppIniFileStorage_Main: TJvAppIniFileStorage;
-    HTMLParser_1: TJvHTMLParser;
     Varcoded: TVarCodedxe81;
     memo: TMemo;
-    spl1: TSplitter;
 
-		procedure VisitDOM2Msg(var aMessage : TMessage); message MINIBROWSER_VISITDOM_FULL;
+	procedure VisitDOM2Msg(var aMessage : TMessage); message MINIBROWSER_VISITDOM_FULL;
 
 
     procedure FormShow(Sender: TObject);
@@ -99,6 +97,9 @@ type
       const request: ICefRequest; user_gesture, isRedirect: Boolean;
       out Result: Boolean);
     procedure Slider_BrowserZoomChanged(Sender: TObject);
+    procedure Chromium1ConsoleMessage(Sender: TObject;
+      const browser: ICefBrowser; level: Cardinal; const message,
+      source: ustring; line: Integer; out Result: Boolean);
 
 	private
 			FIPCServer: TIPCServer;
@@ -238,17 +239,13 @@ begin
 /// </remarks>
 
 ThisURL := request.Url;
-memo.lines.add(ThisURL );
+
 if ((ThisURL.ToUpper.Contains('FILEDETAILS/CHANGELOG')) or
 //(ThisURL.ToUpper.Contains('FILEDETAILS/DISCUSSIONS')) or  //NO DISCUTTIONS and it needs to load more pages
 	 (ThisURL.ToUpper.Contains('FILEDETAILS/?ID=')) or
 	 (ThisURL.ToUpper.Contains('FILEDETAILS/COMMENTS'))) and
 	 (ThisURL.ToUpper.Contains(ThisModID)) then Result := false ELSE Result := Not (CanLoadANewPage); //let
 
-
-
-
-//if   then Result := true else Result := false;
 
 end;
 
@@ -326,6 +323,22 @@ end;
 
 
 
+procedure TFrmMain.Chromium1ConsoleMessage(Sender: TObject;
+  const browser: ICefBrowser; level: Cardinal; const message,
+  source: ustring; line: Integer; out Result: Boolean);
+	var
+	ThisMessage: String;
+begin
+	ThisMessage := message;
+
+	if (ThisMessage.Length > 0) and (ThisMessage.StartsWith('CEMM')) THEN BEGIN
+
+		ThisMessage := ThisMessage.Replace('CEMM','');
+		ThisModDescription := ThisMessage;
+	END;
+
+end;
+
 procedure TFrmMain.Chromium1LoadEnd(Sender: TObject;
   const browser: ICefBrowser; const frame: ICefFrame;
   httpStatusCode: Integer);
@@ -343,7 +356,7 @@ begin
       TempHandle := WinApi.Windows.GetWindow(Browser.Host.WindowHandle, GW_OWNER);
       if (TempHandle <> Handle) then
         WinApi.Windows.SetFocus(TempHandle);
-    end;
+		end;
 end;
 
 procedure TFrmMain.Chromium1LoadError(Sender: TObject;
@@ -393,6 +406,7 @@ begin
 				ShowDefaultPage;
 
 			End else begin
+				GetModDescription('');
 				PostMessage(Handle, MINIBROWSER_VISITDOM_FULL, 0, 0);
 			end;
 			Chromium1.ZoomLevel := Slider_BrowserZoom.Value*0.1;
@@ -441,7 +455,7 @@ var
 begin
 	ThisZoom := Slider_BrowserZoom.Value*0.1;
 	Chromium1.ZoomLevel := ThisZoom;
-	StatusPanel_Zoom.Caption := 'Zoom ' + ThisZoom.ToString();
+
 end;
 
 procedure TFrmMain.Chromium1StatusMessage(Sender: TObject;
@@ -515,7 +529,7 @@ except
 end;
 
 	FreeAndNil(FIPCServer);
-  FResponse.Free;
+	FResponse.Free;
   FRequest.Free;
   FNavigation.Free;
 end;
@@ -608,7 +622,8 @@ Var
 	MyText: TStringlist;
 	i:Integer;
 	FinalPageText: String;
-  BlankLines:Boolean;
+	BlankLines:Boolean;
+	WaitingForDescription: Boolean;
 begin
 
 	UpdateCache:= Request.Data.ReadBoolean('UpdateCache');
@@ -650,6 +665,11 @@ begin
 
 
 	//Get Description
+
+
+
+	//create cache page
+	(*
 
 	MyText:= TStringlist.create;
 	try
@@ -697,27 +717,23 @@ begin
 		MyText.Text := FinalPageText;
 		MyText.Add('</div></div></div></div></div></div></div></div></div></div>');
 
-		MyText.SaveToFile('.\page.html');
+	 //	MyText.SaveToFile('.\page.html');
 //		CanLoadANewPage:=True;
 //		Chromium1.LoadString(MyText.Text );
+
+		ThisModDescription := MyText.Text;
 
 	finally
 		MyText.Free
 	end; {try}
 
-
-
-
-
-
-
-
+            *)
 	Response.ID := datetimetostr(now);
 
 
 
 	Response.Data.WriteString('WindowsTitle',PageTitle );
- //	Response.Data.WriteString('ModDescription', GetModDescription(PageFullText )); //Var PageFullText is filled onTextResultAvailable
+ 	Response.Data.WriteString('ModDescription', ThisModDescription );
 	TaskDone();
 
 
@@ -740,35 +756,13 @@ exit;
 end;
 
 function TFrmMain.GetModDescription(ThisFullText:String): String;
-var
-	ThisResult: String;
-	iPosOpenDiv:Integer;
-	iPosCloseDiv:Integer;
-	iPosLastClosedDiv: Integer;
-	DivTagIsClosed: Boolean;
-	TempString1: String;
-	TempString2: String;
-	FinalString: String;
-	iTags:Integer;
-	iHowManyOpened, iHowManyClosed: Integer;
 
-	frame: ICefFrame;
-	code: string;
 
 Begin
 
+Chromium1.ExecuteJavaScript('var MyDesc = document.getElementsByClassName("workshopItemDescription").highlightContent;console.log("CEMM"+MyDesc.innerHTML);', 'about:blank', 0);
 
-ThisModDescription := 'N/A';
-
-ThisModDescription := ThisFullText.Substring( pos('<div class="workshopItemDescription" id="highlightContent">',ThisFullText)-1);
-
-//Count open and close
-
-ThisModDescription := ThisModDescription.Replace('<div class="workshopItemDescription" id="highlightContent">','').Trim();
-
-
-
-result := ThisResult;
+result := '';
 end;
 
 
@@ -783,9 +777,9 @@ end;
 
 procedure TFrmMain.VisitDOM2Msg(var aMessage : TMessage);
 var
-  TempMsg : ICefProcessMessage;
+	TempMsg : ICefProcessMessage;
 begin
-  // Use the ArgumentList property if you need to pass some parameters.
+	// Use the ArgumentList property if you need to pass some parameters.
 	TempMsg := TCefProcessMessageRef.New(RETRIEVEDOM_MSGNAME_FULL); // Same name than TCefCustomRenderProcessHandler.MessageName
 	Chromium1.SendProcessMessage(PID_RENDERER, TempMsg);
 end;
