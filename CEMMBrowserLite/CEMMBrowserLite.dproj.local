@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject>
-	<Transactions>
-    <Transaction>2021/03/30 10:08:04.000.274,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit7.pas</Transaction>
-    <Transaction>2021/03/30 10:08:41.000.628,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMMBrowserLite\MainUnit.pas=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit7.pas</Transaction>
-    <Transaction>2021/03/30 10:08:41.000.628,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMMBrowserLite\MainUnit.dfm=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit7.dfm</Transaction>
-    <Transaction>2021/03/30 10:08:57.000.379,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMMBrowserLite\CEMMBrowserLite.dproj=C:\Users\User\Documents\Embarcadero\Studio\Projects\Project4.dproj</Transaction>
-  </Transactions>
-</BorlandProject>

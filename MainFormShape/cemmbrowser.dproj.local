@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2021/03/17 15:57:41.850,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMMBrowser\MainFormShape\cemmbrowser.dproj=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMMBrowser\MainFormShape\Project2.dproj</Transaction>
+    <Transaction>2021/03/17 15:57:54.438,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMMBrowser\MainFormShape\MainUnit.pas=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMMBrowser\MainFormShape\AdvShaperDemo.pas</Transaction>
+    <Transaction>2021/03/17 15:57:54.438,D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMMBrowser\MainFormShape\MainUnit.dfm=D:\Dev\varcoded\ConanExiles\Conan-Exiles-Mod-Manager\CEMMBrowser\MainFormShape\AdvShaperDemo.dfm</Transaction>
+  </Transactions>
+</BorlandProject>
